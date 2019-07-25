@@ -1,5 +1,5 @@
-import Socket from 'socket.io'
+import Socket from 'socket.io';
 
-export default function (server) {
-	return Socket(server)
+export default function(server) {
+  return Socket(server);
 }

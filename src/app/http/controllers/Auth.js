@@ -1,206 +1,199 @@
-import auth from 'libraries/auth'
-import app from 'app'
-import Conekta from 'libraries/conekta'
-import {sockets} from 'server'
-import request from 'request-promise'
-import md5 from 'md5'
-import {createCustomer} from 'helpers/users'
+import auth from 'libraries/auth';
+import app from 'app';
+import Conekta from 'libraries/conekta';
+import {sockets} from 'server';
+import request from 'request-promise';
+import md5 from 'md5';
+import {createCustomer} from 'helpers/users';
 
 export default class Auth {
+  static async login(req, res) {
+    res.boom.badRequest();
 
-	static async login (req, res) {
-		
-		res.boom.badRequest()
+    // if (req.body.email && req.body.password) {
+    // 	try {
+    // 		const params = { email: req.body.email }
+    // 		const token = await auth.connect(params, req.body.password)
+    // 		const user = await User.findOne(params).populate('profile')
+    // 		res.send({...user.toObject(), token})
+    // 	}
 
-		// if (req.body.email && req.body.password) {
-		// 	try {
-		// 		const params = { email: req.body.email }
-		// 		const token = await auth.connect(params, req.body.password)
-		// 		const user = await User.findOne(params).populate('profile')
-		// 		res.send({...user.toObject(), token})
-		// 	}
-			
-		// 	catch (err) {
-		// 		console.log(err)
-		// 		res.boom.badRequest(err.message)
-		// 	}
-		// }
-		
-		// else {
-		// 	res.boom.badRequest('Email and password are required fields.')
-		// }
-		
-	}
+    // 	catch (err) {
+    // 		console.log(err)
+    // 		res.boom.badRequest(err.message)
+    // 	}
+    // }
 
-	static async facebook(req, res) {
-		res.boom.badRequest()
-		// let data = null
-		// let result = null
-		// let user = null
-		// let profile = null
-		// request(`https://graph.facebook.com/v3.2/me?access_token=${req.body.authResponse.accessToken}&fields=email,gender,birthday,first_name,last_name`)
-		// 	.then(async body => {
-		// 		const data = JSON.parse(body)
-		// 		if (data.id === req.body.id && data.id == req.body.authResponse.userID) {
-		// 			let email = data.email
-					
-		// 			profile = await Profile.findOne({social: { facebook: data.id }})
+    // else {
+    // 	res.boom.badRequest('Email and password are required fields.')
+    // }
+  }
 
-		// 			if (!profile) {
-		// 				const userFields = {}
-		// 				userFields.firstName = data.first_name
-		// 				userFields.lastName = data.last_name
-		// 				userFields.social = { facebook: data.id }
-		// 				userFields.password = await auth.hash(md5(data.id))
+  static async facebook(req, res) {
+    res.boom.badRequest();
+    // let data = null
+    // let result = null
+    // let user = null
+    // let profile = null
+    // request(`https://graph.facebook.com/v3.2/me?access_token=${req.body.authResponse.accessToken}&fields=email,gender,birthday,first_name,last_name`)
+    // 	.then(async body => {
+    // 		const data = JSON.parse(body)
+    // 		if (data.id === req.body.id && data.id == req.body.authResponse.userID) {
+    // 			let email = data.email
 
-		// 				if (data.email) {
-		// 					userFields.email = data.email
-		// 				}
+    // 			profile = await Profile.findOne({social: { facebook: data.id }})
 
-		// 				if (data.gender) {
-		// 					userFields.gender = data.gender
-		// 				}
+    // 			if (!profile) {
+    // 				const userFields = {}
+    // 				userFields.firstName = data.first_name
+    // 				userFields.lastName = data.last_name
+    // 				userFields.social = { facebook: data.id }
+    // 				userFields.password = await auth.hash(md5(data.id))
 
-		// 				if (data.birthday) {
-		// 					userFields.dob = new Date(data.birthday)
-		// 				}
+    // 				if (data.email) {
+    // 					userFields.email = data.email
+    // 				}
 
-		// 				const customer = await createCustomer(userFields)
+    // 				if (data.gender) {
+    // 					userFields.gender = data.gender
+    // 				}
 
-		// 				user = customer.user
-		// 				profile = customer.profile
+    // 				if (data.birthday) {
+    // 					userFields.dob = new Date(data.birthday)
+    // 				}
 
-		// 			}
+    // 				const customer = await createCustomer(userFields)
 
-		// 			user = await User.findOne({ profile: profile.id }).populate('profile')
-		// 			const token = await auth.social(user.id)
-		// 			result = {...user.toObject(), token}
-		// 			res.send(result)
-		// 		}
-				
-		// 	})
-			
-		// 	.catch(err => {
-		// 		res.boom.unauthorized(err.message)
-		// 	})
-	}
+    // 				user = customer.user
+    // 				profile = customer.profile
 
-	static async google(req, res) {
-		res.boom.badRequest()
-		// let data = null
-		// let result = null
-		// let user = null
-		// let profile = null
-		// request(`https://www.googleapis.com/userinfo/v2/me?access_token=${req.body.authResponse.access_token}`)
-		// 	.then(async body => {
-		// 		const data = JSON.parse(body)
+    // 			}
 
-		// 		if (data.id === req.body.id && data.id == req.body.id && req.body.email === data.email) {
-		// 			let email = data.email
+    // 			user = await User.findOne({ profile: profile.id }).populate('profile')
+    // 			const token = await auth.social(user.id)
+    // 			result = {...user.toObject(), token}
+    // 			res.send(result)
+    // 		}
 
-		// 			profile = await Profile.findOne({social: { google: data.id }})
+    // 	})
 
-		// 			if (!profile) {
-		// 				const customer = await createCustomer({
-		// 					firstName: data.given_name,
-		// 					lastName: data.family_name,
-		// 					social: {
-		// 						google: data.id
-		// 					},
-		// 					email: data.email,
-		// 					password: await auth.hash(md5(data.id)),
-		// 				})
+    // 	.catch(err => {
+    // 		res.boom.unauthorized(err.message)
+    // 	})
+  }
 
-		// 				user = customer.user
-		// 				profile = customer.profile
-		// 			}
+  static async google(req, res) {
+    res.boom.badRequest();
+    // let data = null
+    // let result = null
+    // let user = null
+    // let profile = null
+    // request(`https://www.googleapis.com/userinfo/v2/me?access_token=${req.body.authResponse.access_token}`)
+    // 	.then(async body => {
+    // 		const data = JSON.parse(body)
+
+    // 		if (data.id === req.body.id && data.id == req.body.id && req.body.email === data.email) {
+    // 			let email = data.email
+
+    // 			profile = await Profile.findOne({social: { google: data.id }})
+
+    // 			if (!profile) {
+    // 				const customer = await createCustomer({
+    // 					firstName: data.given_name,
+    // 					lastName: data.family_name,
+    // 					social: {
+    // 						google: data.id
+    // 					},
+    // 					email: data.email,
+    // 					password: await auth.hash(md5(data.id)),
+    // 				})
+
+    // 				user = customer.user
+    // 				profile = customer.profile
+    // 			}
 
 
-		// 			user = await User.findOne({ profile: profile.id }).populate('profile')
-		// 			const token = await auth.social(user.id)
-		// 			result = {...user.toObject(), token}
-		// 			res.send(result)
-		// 		}
-				
-		// 	})
-			
-		// 	.catch(err => {
-		// 		res.boom.unauthorized(err.message)
-		// 	})
+    // 			user = await User.findOne({ profile: profile.id }).populate('profile')
+    // 			const token = await auth.social(user.id)
+    // 			result = {...user.toObject(), token}
+    // 			res.send(result)
+    // 		}
 
-	}
+    // 	})
 
-	static async register (req, res) {
-		res.boom.badRequest()
-		// try {
-			
-		// 	let profile = new Profile()
-		// 	let user = new User()
-			
-		// 	user.nickname = req.body.email.split('@')[0]
-		// 	user.email = req.body.email
-		// 	user.password = await auth.hash(req.body.password)
-		// 	user.profile = profile.id
-		// 	profile.firstName = req.body.first_name
-		// 	profile.lastName = req.body.last_name
-		// 	profile.dob = req.body.dob
-		// 	profile.phone = `+52${req.body.phone}`
-		// 	profile.address = {}
-		// 	profile.address.country = req.body.country
-		// 	profile.address.region = req.body.region
-		// 	profile.address.city = req.body.city
+    // 	.catch(err => {
+    // 		res.boom.unauthorized(err.message)
+    // 	})
+  }
 
-		// 	const customer = await Conekta.Customer.create({
-		// 		name: `${profile.firstName} ${profile.lastName}`,
-		// 		email: user.email,
-		// 		phone: profile.phone
-		// 	})
+  static async register(req, res) {
+    res.boom.badRequest();
+    // try {
 
-		// 	profile.conekta = customer._id
+    // 	let profile = new Profile()
+    // 	let user = new User()
 
-		// 	user = await user.save()
-		// 	profile = await profile.save()
+    // 	user.nickname = req.body.email.split('@')[0]
+    // 	user.email = req.body.email
+    // 	user.password = await auth.hash(req.body.password)
+    // 	user.profile = profile.id
+    // 	profile.firstName = req.body.first_name
+    // 	profile.lastName = req.body.last_name
+    // 	profile.dob = req.body.dob
+    // 	profile.phone = `+52${req.body.phone}`
+    // 	profile.address = {}
+    // 	profile.address.country = req.body.country
+    // 	profile.address.region = req.body.region
+    // 	profile.address.city = req.body.city
 
-		// 	res.send({})
-		// }
+    // 	const customer = await Conekta.Customer.create({
+    // 		name: `${profile.firstName} ${profile.lastName}`,
+    // 		email: user.email,
+    // 		phone: profile.phone
+    // 	})
 
-		// catch (err) {
-		// 	res.status(400).send(err)
-		// }
-	}
+    // 	profile.conekta = customer._id
 
-	static async verify () {}
+    // 	user = await user.save()
+    // 	profile = await profile.save()
 
-	static async recover () {}
-	
-	static async disable () {}
-	
-	static async enable () {}
+    // 	res.send({})
+    // }
 
-	static async whoami (req, res) {
-		
-		res.boom.badRequest()
+    // catch (err) {
+    // 	res.status(400).send(err)
+    // }
+  }
 
-		// try {
-			
-		// 	const user = req.user
-			
-		// 	if (user.id) {
-		// 		res.send(user)
-		// 	}
+  static async verify() {}
 
-		// 	else {
-		// 		let err = new Error
-		// 		err.status = 403
-		// 		err.message = "Forbidden"
-		// 	}
+  static async recover() {}
 
-		// }
+  static async disable() {}
 
-		// catch (err) {
-		// 	res.status(err.status).send(err)
-		// }
+  static async enable() {}
 
-	}
+  static async whoami(req, res) {
+    res.boom.badRequest();
 
+    // try {
+
+    // 	const user = req.user
+
+    // 	if (user.id) {
+    // 		res.send(user)
+    // 	}
+
+    // 	else {
+    // 		let err = new Error
+    // 		err.status = 403
+    // 		err.message = "Forbidden"
+    // 	}
+
+    // }
+
+    // catch (err) {
+    // 	res.status(err.status).send(err)
+    // }
+  }
 }

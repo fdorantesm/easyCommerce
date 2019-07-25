@@ -1,27 +1,27 @@
-import conekta from 'libraries/conekta'
-import lang from 'libraries/lang'
+import conekta from 'libraries/conekta';
+import lang from 'libraries/lang';
 
 const api = {
-	customer: {},
-	order: {},
-	card: {},
-}
+  customer: {},
+  order: {},
+  card: {},
+};
 
 api.customer.create = async (params) => {
-	let customer = await conekta.Customer.create(params)
-	return customer
-}
+  const customer = await conekta.Customer.create(params);
+  return customer;
+};
 
 api.customer.all = async () => {
-	let clientes = await conekta.Customer.find()
-	if (clientes.toObject().total) {
-		return clientes
-	}
+  const clientes = await conekta.Customer.find();
+  if (clientes.toObject().total) {
+    return clientes;
+  }
 
-	let err = new Error('Bad Request')
-	err.status = 400
-	err.text = 'NotFound'
-	throw err
-}
+  const err = new Error('Bad Request');
+  err.status = 400;
+  err.text = 'NotFound';
+  throw err;
+};
 
-export default api
+export default api;

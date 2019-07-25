@@ -1,8 +1,8 @@
-import Router from 'router'
-import TestController from 'controllers/Test'
+import Router from 'router';
+import TestController from 'controllers/Test';
 
-const router = Router()
+const router = Router();
 
-router.get('/hello', TestController.hello)
+router.get('/hello', TestController.hello);
 
-export default router
+export default router;

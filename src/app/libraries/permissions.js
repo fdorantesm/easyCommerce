@@ -1,3 +1,3 @@
-import acl from 'acl'
+import acl from 'acl';
 
-export default new acl(new acl.memoryBackend())
+export default new acl(new acl.memoryBackend());

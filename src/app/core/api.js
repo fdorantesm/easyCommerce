@@ -1,50 +1,48 @@
-import middlewares from 'core/middlewares'
-import routes from 'core/routes'
-import permissions from 'config/acl'
-import path from 'path'
-import fs from 'fs'
-import config from 'core/config'
+import middlewares from 'core/middlewares';
+import routes from 'core/routes';
+import permissions from 'config/acl';
+import path from 'path';
+import fs from 'fs';
+import config from 'core/config';
 
 export default (app) => {
+  config(app);
 
-	config(app)
+  if (process.env.APP_VIEWS_ENGINE) {
+    const views = path.join(process.env.APP_PATH, 'views');
+    fs.existsSync(views) || fs.mkdirSync(views);
+  }
 
-	if (process.env.APP_VIEWS_ENGINE) {
-		const views = path.join(process.env.APP_PATH, 'views')
-		fs.existsSync(views) || fs.mkdirSync(views)
-	}
+  switch (process.env.ENV) {
+    case 'local':
 
-	switch (process.env.ENV) {
-		case 'local':
-			
-		break;
-		
-		case 'test':
-			
-		break;
+      break;
 
-		case 'production':
-			
-		break;
+    case 'test':
 
-	}
+      break;
 
-	permissions()
-	
-	middlewares(app)
+    case 'production':
 
-	routes(app)
+      break;
+  }
 
-	app.use((req, res, next) => {
-        let err = new Error('Not Found')
-        err.status = 404
-        next(err)
-    })
+  permissions();
 
-    app.use((error, req, res, next) => {
-        res.status(error.status || 500)
-        res.render('error', {error, env: process.env.ENV})
-    })
+  middlewares(app);
 
-	return app
-}
+  routes(app);
+
+  app.use((req, res, next) => {
+    const err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+  });
+
+  app.use((error, req, res, next) => {
+    res.status(error.status || 500);
+    res.render('error', {error, env: process.env.ENV});
+  });
+
+  return app;
+};

@@ -1,3 +1,3 @@
-import Router from 'express/lib/router'
+import Router from 'express/lib/router';
 
-export default Router
+export default Router;

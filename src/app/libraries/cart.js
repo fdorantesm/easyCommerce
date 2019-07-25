@@ -4,175 +4,174 @@
  * @namespace libraries
  */
 export default class Cart {
-    /**
+  /**
      * Constructor Method
      * @param {String} key
      */
-    constructor (options = {}) {
-      if (options.key) {
-        this._key = options.key
-      }
-      this._tax = options.tax || 16
-      this._type = options.type || 'default'
-      this._products = []
+  constructor(options = {}) {
+    if (options.key) {
+      this._key = options.key;
     }
-  
-    /**
+    this._tax = options.tax || 16;
+    this._type = options.type || 'default';
+    this._products = [];
+  }
+
+  /**
      * Add product
      * @param {Object} product
      * @return {Array} products
      */
-    async addProduct (product, qty) {
-      if (!Object.prototype.hasOwnProperty.call(product, 'id')) {
-        throw new Error('CartProductMissingIdException')
-      }
-      if (!Object.prototype.hasOwnProperty.call(product, 'price')) {
-        throw new Error('CartProductMissingPriceException')
-      }
-      if (!Object.prototype.hasOwnProperty.call(product, 'name')) {
-        throw new Error('CartProductMissingNameException')
-      }
-      if (parseInt(qty) < 1) {
-        throw new Error('CartProductQuantityException')
-      }
-      product.price = parseFloat(Number(product.price).toFixed(2))
-      return this._products.push({ ...product, qty })
+  async addProduct(product, qty) {
+    if (!Object.prototype.hasOwnProperty.call(product, 'id')) {
+      throw new Error('CartProductMissingIdException');
     }
-  
-    /**
+    if (!Object.prototype.hasOwnProperty.call(product, 'price')) {
+      throw new Error('CartProductMissingPriceException');
+    }
+    if (!Object.prototype.hasOwnProperty.call(product, 'name')) {
+      throw new Error('CartProductMissingNameException');
+    }
+    if (parseInt(qty) < 1) {
+      throw new Error('CartProductQuantityException');
+    }
+    product.price = parseFloat(Number(product.price).toFixed(2));
+    return this._products.push({...product, qty});
+  }
+
+  /**
      * Increase product qty
      * @void This function doesn't return a vualue
      * @param {Object} product Product must to have 'id' key
      * @param {Integer} qty This number must be an integer positive value
      */
-    async increaseProduct (product, qty) {
-      if (parseInt(qty) > 0) {
-        const index = this._products.findIndex(item => item.id === product.id)
-        if (index > -1) {
-          this._products[index].qty += parseInt(qty)
-        } else {
-          throw new Error('CartProductDoesntExistsException')
-        }
+  async increaseProduct(product, qty) {
+    if (parseInt(qty) > 0) {
+      const index = this._products.findIndex((item) => item.id === product.id);
+      if (index > -1) {
+        this._products[index].qty += parseInt(qty);
       } else {
-        throw new Error('CartProductQuantityException')
+        throw new Error('CartProductDoesntExistsException');
       }
+    } else {
+      throw new Error('CartProductQuantityException');
     }
-  
-    /**
+  }
+
+  /**
      * Increase product qty
      * @void This function doesn't return a vualue
      * @param {Object} product Product must to have 'id' key
      * @param {Integer} qty This number must be an integer positive value
      */
-    async decreaseProduct (product, qty) {
-      if (parseInt(qty) > 0) {
-        const index = this._products.findIndex(item => item.id === product.id)
-        if (index > -1) {
-          this._products[index].qty -= parseInt(qty)
-          if (this._products[index].qty <= 0) {
-            this._products = this._products.filter(item => item.id !== parseInt(product.id))
-          }
-        } else {
-          throw new Error('CartProductDoesntExistsException')
+  async decreaseProduct(product, qty) {
+    if (parseInt(qty) > 0) {
+      const index = this._products.findIndex((item) => item.id === product.id);
+      if (index > -1) {
+        this._products[index].qty -= parseInt(qty);
+        if (this._products[index].qty <= 0) {
+          this._products = this._products.filter((item) => item.id !== parseInt(product.id));
         }
       } else {
-        throw new Error('CartProductQuantityException')
+        throw new Error('CartProductDoesntExistsException');
       }
+    } else {
+      throw new Error('CartProductQuantityException');
     }
-  
-    /**
+  }
+
+  /**
      * Remove product from cart
      */
-    async removeProduct (id) {
-      this._products = this._products.filter(product => product.id !== parseInt(id))
-      return this
-    }
-  
-    /**
+  async removeProduct(id) {
+    this._products = this._products.filter((product) => product.id !== parseInt(id));
+    return this;
+  }
+
+  /**
      * Clear cart
      */
-    async clear () {
-      this._products = []
-      return this
-    }
-  
-    /**
+  async clear() {
+    this._products = [];
+    return this;
+  }
+
+  /**
      * Return cart in JSON format
      */
-    json () {
-      return {
-        key: this._key,
-        content: this._products,
-        type: this._type,
-        tax: this._tax,
-        total: this.total,
-        grandTotal: this.grandTotal,
-        items: this.items
-      }
-    }
-  
-    /**
+  json() {
+    return {
+      key: this._key,
+      content: this._products,
+      type: this._type,
+      tax: this._tax,
+      total: this.total,
+      grandTotal: this.grandTotal,
+      items: this.items,
+    };
+  }
+
+  /**
      * Cart type setter
      * @param {String} type
      */
-    set type (type) {
-      this._type = type
-    }
-  
-    /**
+  set type(type) {
+    this._type = type;
+  }
+
+  /**
      * Set cart key
      */
-    set key (key) {
-      this._key = key
-    }
-  
-    /**
+  set key(key) {
+    this._key = key;
+  }
+
+  /**
      * Set taxes
      */
-    set tax (tax) {
-      this._tax = tax
-    }
-  
-    /**
+  set tax(tax) {
+    this._tax = tax;
+  }
+
+  /**
      * Get tax percentage
      */
-    get tax () {
-      return this._tax
-    }
-  
-    /**
+  get tax() {
+    return this._tax;
+  }
+
+  /**
      * Get total products amount
      */
-    get total () {
-      return this._products.reduce((sum, curr) => {
-        return sum + (curr.price * curr.qty)
-      }, 0)
-    }
-  
-    /**
+  get total() {
+    return this._products.reduce((sum, curr) => {
+      return sum + (curr.price * curr.qty);
+    }, 0);
+  }
+
+  /**
      * Get grand total amount
      */
-    get grandTotal () {
-      return this._products.reduce((sum, curr) => {
-        return parseFloat((sum + ((curr.price * (1 + ((curr.tax || this._tax) / 100))) * curr.qty)).toFixed(2))
-      }, 0)
-    }
-  
-    /**
+  get grandTotal() {
+    return this._products.reduce((sum, curr) => {
+      return parseFloat((sum + ((curr.price * (1 + ((curr.tax || this._tax) / 100))) * curr.qty)).toFixed(2));
+    }, 0);
+  }
+
+  /**
      * Get total items
      */
-    get items () {
-      return this._products.reduce((sum, curr) => {
-        return sum + curr.qty
-      }, 0)
-    }
-  
-    /**
+  get items() {
+    return this._products.reduce((sum, curr) => {
+      return sum + curr.qty;
+    }, 0);
+  }
+
+  /**
      * Get cart content
      */
-    get content () {
-      return this._products
-    }
+  get content() {
+    return this._products;
   }
-  
-  
+}
+

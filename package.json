@@ -7,11 +7,13 @@
   "scripts": {
     "test": "echo 'no tests ready",
     "clean": "rm -rf ./app ./bin",
-    "start": "nodemon --config .nodemon  src/bin/www.js --exec babel-node",
+    "start": "nodemon --config .nodemon --exec 'npm run lint && babel-node src/bin/server'",
     "start:es5": "forever start -c \"babel-node --presets env,stage-2\" bin/www.js",
     "build": "npm run clean && babel src -d . -D",
     "start:forever": "forever start bin/www.js",
-    "release": "npm run build && npm run start:forever"
+    "release": "npm run build && npm run start:forever",
+    "lint": "eslint src/.",
+    "lint:fix": "eslint src/. --fix"
   },
   "keywords": [],
   "author": "",
@@ -56,8 +58,12 @@
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-stage-2": "^7.0.0",
     "@babel/runtime": "^7.3.1",
+    "babel-eslint": "^10.0.2",
     "babel-loader": "^8.0.5",
     "babel-plugin-module-resolver": "^3.2.0",
+    "eslint": "^6.1.0",
+    "eslint-config-google": "^0.13.0",
+    "eslint-plugin-babel": "^5.3.0",
     "webpack": "^4.29.4",
     "webpack-cli": "^3.2.3",
     "webpack-node-externals": "^1.7.2"

@@ -1,6 +1,6 @@
-import {sockets} from 'server'
+import {sockets} from 'server';
 
-const {ws, wss} = sockets
+const {ws, wss} = sockets;
 
 
-export {ws, wss}
+export {ws, wss};

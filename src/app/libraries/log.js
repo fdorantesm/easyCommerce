@@ -1,9 +1,9 @@
-import { createLogger, transports, format } from 'winston'
-import env from 'env'
+import {createLogger, transports, format} from 'winston';
+import env from 'env';
 
-const { combine, timestamp, label, printf } = format
+const {combine, timestamp, label, printf} = format;
 
-const logLevel = 'info'
+const logLevel = 'info';
 
 const logger = createLogger({
   level: logLevel,
@@ -13,35 +13,35 @@ const logger = createLogger({
     warn: 2,
     info: 3,
     debug: 4,
-    trace: 5
+    trace: 5,
   },
   transports: [
     new (transports.Console)({
       colorize: true,
-      timestamp: true
+      timestamp: true,
     }),
     new (transports.File)({
-    	filename: `${process.env.SRC_PATH}/app/logs/${process.env.APP_ALIAS}.log`
-    })
+    	filename: `${process.env.SRC_PATH}/app/logs/${process.env.APP_ALIAS}.log`,
+    }),
   ],
   format: combine(
-    timestamp(),
-    printf(info => {
-      return `${info.timestamp} ${info.level}: ${info.message}`
-    })
-  )
-})
+      timestamp(),
+      printf((info) => {
+        return `${info.timestamp} ${info.level}: ${info.message}`;
+      })
+  ),
+});
 
-const origLog = logger.log
+const origLog = logger.log;
 
 logger.log = (level, msg) => {
   if (msg instanceof Error) {
-    const args = Array.prototype.slice.call(arguments)
-    args[1] = msg.stack
-    origLog.apply(logger, args)
+    const args = Array.prototype.slice.call(arguments);
+    args[1] = msg.stack;
+    origLog.apply(logger, args);
   } else {
-    origLog.apply(logger, arguments)
+    origLog.apply(logger, arguments);
   }
-}
+};
 
-export default logger
+export default logger;
