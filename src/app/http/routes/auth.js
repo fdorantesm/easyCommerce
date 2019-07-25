@@ -1,6 +1,6 @@
 import Router from 'router'
-import AuthController from 'controller/Auth'
-import middleware from 'middleware/auth'
+import AuthController from 'controllers/Auth'
+import middleware from 'middlewares/auth'
 
 const router = Router()
 

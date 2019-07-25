@@ -1,4 +1,4 @@
-import log from 'library/log'
+import log from 'libraries/log'
 
 export default class TestController {
     static async hello (req, res) {

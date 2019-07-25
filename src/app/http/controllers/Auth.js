@@ -1,10 +1,10 @@
-import auth from 'library/auth'
+import auth from 'libraries/auth'
 import app from 'app'
-import Conekta from 'library/conekta'
+import Conekta from 'libraries/conekta'
 import {sockets} from 'server'
 import request from 'request-promise'
 import md5 from 'md5'
-import {createCustomer} from 'helper/users'
+import {createCustomer} from 'helpers/users'
 
 export default class Auth {
 

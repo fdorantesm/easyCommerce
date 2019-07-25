@@ -1,5 +1,5 @@
 import Router from 'router'
-import TestController from 'controller/test'
+import TestController from 'controllers/Test'
 
 const router = Router()
 

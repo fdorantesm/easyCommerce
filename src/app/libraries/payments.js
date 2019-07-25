@@ -1,5 +1,5 @@
-import conekta from 'library/conekta'
-import lang from 'library/lang'
+import conekta from 'libraries/conekta'
+import lang from 'libraries/lang'
 
 const api = {
 	customer: {},

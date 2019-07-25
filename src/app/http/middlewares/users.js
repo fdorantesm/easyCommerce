@@ -1,4 +1,4 @@
-import spatie from "helper/spatie"
+import spatie from "helpers/spatie"
 
 export const fetchAllUsers = async (req, res, next) => {
 	if (await spatie.can(req.user.id, 'list', 'user'))

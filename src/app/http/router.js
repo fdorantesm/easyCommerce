@@ -3,8 +3,8 @@ import Router from 'router'
 const router = Router()
 
 // Routes
-import auth from 'route/auth'
-import test from 'route/test'
+import auth from 'routes/auth'
+import test from 'routes/test'
 
 router.get('/', async (req, res) => {
     res.render('index', {app: process.env.APP_NAME})

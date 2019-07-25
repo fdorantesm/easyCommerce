@@ -1,5 +1,5 @@
-import auth from 'library/auth'
-import spatie from "helper/spatie"
+import auth from 'libraries/auth'
+import spatie from "helpers/spatie"
 
 class Auth {
 

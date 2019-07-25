@@ -1,4 +1,4 @@
-import acl from 'library/permissions'
+import acl from 'libraries/permissions'
 
 class Spatie {
 

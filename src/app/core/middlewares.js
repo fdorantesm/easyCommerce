@@ -9,8 +9,8 @@ import rfs from 'rotating-file-stream'
 import serve from 'serve-static'
 import i18n from 'i18n'
 import locales from 'config/i18n'
-import Auth from 'middleware/auth'
-import acl from 'library/permissions'
+import Auth from 'middlewares/auth'
+import acl from 'libraries/permissions'
 import boom from 'express-boom'
 import fileUpload from 'express-fileupload'
 import path from 'path'
@@ -31,9 +31,12 @@ export default (app) => {
 		)
 	}))
 	
-	app.use(`/${process.env.APP_STATIC}`, serve(process.env.PWD + "/"+ process.env.APP_STATIC))
-	app.use(serve(process.env.PWD + "/"+ process.env.APP_PUBLIC))
-	app.use(favicon(process.env.APP_STATIC + '/favicon.png'))
+	app.use(serve(path.join(process.env.PWD, process.env.APP_PUBLIC)))
+	app.use(path.join('/', process.env.APP_STATIC), serve(path.join(process.env.PWD, process.env.APP_STATIC)))
+	
+	if (fs.existsSync(path.join(process.env.PWD, process.env.APP_STATIC, 'favicon.png'))) {
+		app.use(favicon(path.join(process.env.APP_STATIC, 'favicon.png')))
+	}
 
 	app.use(bodyParser.json())
 	app.use(bodyParser.urlencoded({ extended: false }))

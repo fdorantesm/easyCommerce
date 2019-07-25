@@ -2,7 +2,7 @@ import fs from 'fs'
 import http from 'http'
 import https from 'https'
 import app from 'app'
-import Socket from 'library/io'
+import Socket from 'libraries/io'
 
 const port = process.env.APP_PORT
 
