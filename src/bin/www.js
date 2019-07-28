@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 
-import debug from 'debug';
-import {server, sockets} from 'server';
+import {sockets} from 'server';
 
-const {ws, wss} = sockets;
+const {wss} = sockets;
 
 // ws.on('connection', client => console.log('welcome', client.id))
 wss.on('connection', (socket) => {

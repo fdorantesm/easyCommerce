@@ -33,6 +33,7 @@ export const editOwnUser = async (req, res, next) => {
 };
 
 export const editUser = async (req, res, next) => {
+  // eslint-disable-next-line max-len
   if (await spatie.can(req.user.id, ['update:own'], 'user') || await spatie.can(req.user.id, ['update:any'], 'user')) {
     next();
   } else {

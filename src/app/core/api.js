@@ -4,8 +4,12 @@ import permissions from 'config/acl';
 import path from 'path';
 import fs from 'fs';
 import config from 'core/config';
+import debug from 'debug';
+
+const dbugger = debug('api:express');
 
 export default (app) => {
+  dbugger('booting %o', 'ecommerce');
   config(app);
 
   if (process.env.APP_VIEWS_ENGINE) {

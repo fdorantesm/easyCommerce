@@ -1,7 +1,7 @@
 import {createLogger, transports, format} from 'winston';
-import env from 'env';
+import env from 'env'; // eslint-disable-line
 
-const {combine, timestamp, label, printf} = format;
+const {combine, timestamp, printf} = format;
 
 const logLevel = 'info';
 
@@ -21,7 +21,7 @@ const logger = createLogger({
       timestamp: true,
     }),
     new (transports.File)({
-    	filename: `${process.env.SRC_PATH}/app/logs/${process.env.APP_ALIAS}.log`,
+      filename: `${process.env.SRC_PATH}/app/logs/${process.env.APP_ALIAS}.log`,
     }),
   ],
   format: combine(

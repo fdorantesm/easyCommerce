@@ -1,59 +1,59 @@
+/* eslint-disable no-invalid-this */
+import dotenv from 'dotenv/config'; // eslint-disable-line
+import env from 'env'; // eslint-disable-line
+import loader from 'loader'; // eslint-disable-line
 import fs from 'fs';
 import http from 'http';
 import https from 'https';
 import app from 'app';
-import Socket from 'libraries/io';
+import socket from 'libraries/io';
 
-const port = process.env.APP_PORT;
+const APP_SSL_KEY = process.env.APP_SSL_KEY;
+const APP_SSL_CERT = process.env.APP_SSL_CERT;
+const APP_SSL_PASSPHRASE = process.env.APP_SSL_PASSPHRASE;
+const APP_PORT = process.env.APP_PORT;
+const APP_SSL_PORT = process.env.APP_SSL_PORT;
 
-const key = fs.readFileSync(process.env.APP_SSL_KEY);
-const cert = fs.readFileSync(process.env.APP_SSL_CERT);
-
-const secure = {
-  key,
-  cert,
-  passphrase: process.env.APP_SSL_PASSPHRASE,
-};
+// eslint-disable-next-line max-len
+const isAppSSL = APP_SSL_KEY && APP_SSL_CERT && APP_SSL_PASSPHRASE && APP_SSL_PORT;
 
 const server = {
   http: http.createServer(app),
-  https: https.createServer(secure, app),
 };
 
-server.http.listen(process.env.APP_PORT);
+server.http.listen(APP_PORT);
 server.http.on('error', onError);
 server.http.on('listening', onListening);
 
-server.https.listen(process.env.APP_SSL_PORT);
-server.https.on('error', onError);
-server.https.on('listening', onListening);
-
 const sockets = {
-  ws: Socket(server.http),
-  wss: Socket(server.https),
+  ws: socket(server.http),
 };
 
-function normalizePort(val) {
-  const port = parseInt(val, 10);
-
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
-
-  if (port >= 0) {
-    // port number
-    return port;
-  }
-
-  return false;
+if (isAppSSL) {
+  const key = fs.readFileSync(APP_SSL_KEY);
+  const cert = fs.readFileSync(APP_SSL_CERT);
+  const secure = {
+    key,
+    cert,
+    passphrase: APP_SSL_PASSPHRASE,
+  };
+  server.https = https.createServer(secure, app);
+  server.https.listen(APP_SSL_PORT);
+  server.https.on('error', onError);
+  server.https.on('listening', onListening);
+  sockets.wss = socket(server.https);
 }
 
+/**
+ * HTTP Error Callback
+ * @param {Error} error
+ */
 function onError(error) {
   if (error.syscall !== 'listen') {
     throw error;
   }
 
+  // eslint-disable-next-line max-len
   const bind = typeof error.port === 'string'? 'Pipe ' + error.port : 'Port ' + error.port;
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -69,32 +69,15 @@ function onError(error) {
       throw error;
   }
 }
-
+/**
+ * Listen handle callback
+ */
 function onListening() {
   const protocol = this.cert ? 'https' : 'http';
   const addr = (this.cert ? server.https : server.http).address();
   const bind = typeof addr === 'string'? 'pipe ' + addr : ':' + addr.port;
   console.log(`Listening on ${protocol}://localhost${bind}`);
 }
-
-// const key = fs.readFileSync(process.env.APP_SSL_KEY)
-// const cert = fs.readFileSync(process.env.APP_SSL_CERT)
-
-// const port = normalizePort(process.env.APP_PORT)
-// app.set('http', port)
-
-// const portSSL = normalizePort(process.env.APP_SSL_PORT)
-// app.set('https', portSSL)
-
-// const server = http.createServer(app)
-// server.listen(port)
-// server.on('error', onError)
-// server.on('listening', onListening)
-
-// const serverSecure = https.createServer({ key, cert, passphrase: process.env.APP_SSL_PASSPHRASE }, app)
-// serverSecure.listen(portSSL)
-// serverSecure.on('error', onError)
-// serverSecure.on('listening', onListening)
 
 export {server};
 export {sockets};

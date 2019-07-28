@@ -15,33 +15,34 @@ const validationOptions = {
   stripUnknown: true, // remove unknown keys from the validated data
 };
 
+/**
+ * Schema request validator
+ * @param {Request} req
+ * @param {Response} res
+ * @param {Function} next
+ * @return {Function} returns Joi validation
+ */
 export default (req, res, next) => {
-  let route;
   const path = trimStart((req.route.path !== '/' ? req.route.path : ''), '/');
-  route = trimEnd(`${req.baseUrl}/${path}`, '/');
+  const route = trimEnd(`${req.baseUrl}/${path}`, '/');
 
   const key = `${req.method.toUpperCase()} ${route}`;
 
   if (includes(methods, req.method.toLowerCase()) && has(Schemas, key)) {
-    // get schema for the current route
     const schema = get(Schemas, key);
-
     if (schema) {
-      // Validate req.body using the schema and validation options
       return Joi.validate(req.body, schema, validationOptions, (err, data) => {
         if (err) {
-          // Send back the JSON error response
+          // eslint-disable-next-line max-len
           const boom = Boom.badData('Invalid request data. Please review request and try again.', err.details);
           next(boom);
         } else {
-          // Replace req.body with the data after Joi validation
           req.body = data;
           next();
         }
       });
     }
   }
-
   next();
 };
 

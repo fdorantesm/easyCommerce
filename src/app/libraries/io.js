@@ -1,5 +1,9 @@
-import Socket from 'socket.io';
-
+import socket from 'socket.io';
+/**
+ * Generate socket instance
+ * @param {HTTP} server
+ * @return {Socket}
+ */
 export default function(server) {
-  return Socket(server);
+  return socket(server);
 }

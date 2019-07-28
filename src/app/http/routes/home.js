@@ -1,5 +1,6 @@
 import Router from 'router';
 
+// eslint-disable-next-line new-cap
 const router = Router();
 
 router.get('/', (req, res) => {

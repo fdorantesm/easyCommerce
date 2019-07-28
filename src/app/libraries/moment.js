@@ -1,5 +1,5 @@
 import moment from 'moment';
-import momentTimezone from 'moment-timezone';
+import momentTimezone from 'moment-timezone'; // eslint-disable-line
 
 export const dateformat = {
   datetime: 'YYYY-MM-DD HH:mm:ss',

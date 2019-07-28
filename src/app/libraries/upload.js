@@ -6,7 +6,15 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+/**
+ * Class to manage file uploads
+ */
 export default class Upload {
+  /**
+   * Uploads file from local storage to cloudinary
+   * @param {String} file
+   * @return {Promise}
+   */
   static imageFromFile(file) {
     return new Promise((resolve, reject) => {
       return cloudinary.uploader.upload(file, (err, res) => {
@@ -19,8 +27,14 @@ export default class Upload {
     });
   }
 
+  /**
+   * Uploads file from stream to cloudinary
+   * @param {Stream} file
+   * @return {Promise}
+   */
   static image(file) {
     return new Promise((resolve, reject) => {
+      // eslint-disable-next-line max-len
       const stream = cloudinary.v2.uploader.upload_stream({resource_type: 'image'}, (err, res) => {
         if (err) {
           reject(err);

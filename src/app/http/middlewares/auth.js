@@ -1,40 +1,39 @@
-import auth from 'libraries/auth';
-import spatie from 'helpers/spatie';
-
-class Auth {
+/**
+ * Auth middleware class
+ */
+export default class Auth {
+  /**
+   * Binds token to request if exists
+   * @void
+   * @param {Request} req
+   * @param {Response} res
+   * @param {Function} next
+   */
   static async handshake(req, res, next) {
+    // eslint-disable-next-line max-len
     const token = req.headers['authorization'] || req.body.token || req.query.token || null;
     if (token) req.authorization = token;
     next();
   }
 
+  /**
+   * Binds authorized user to request
+   * @void
+   * @param {Request} req
+   * @param {Response} res
+   * @param {Function} next
+   */
   static async authorization(req, res, next) {
-    try {
-      const authorized = await auth.verify(req.authorization);
-      // if (authorized) {
-      // 	req.user = await User.findOne({ token: req.authorization }).populate(['role'])
-      // 	spatie.addUserRoles(req.user.id, req.user.role.name)
-      // 	req.permissions = await spatie.permissions(req.user.id)
-      // 	req.token = authorized.data
-      // 	req.session = {
-      // 		userId: req.user.id
-      // 	}
-      // 	// req.acl = {
-      // 	// 	user: req.user.id,
-      // 	// 	role: req.user.role.name,
-      // 	// 	level: req.user.role.level || 0,
-      // 	// 	perms: req.permissions
-      // 	// }
-      // }
-    } catch (e) {
-      req.acl = {
-        role: 'guest',
-      };
-    } finally {
-      next();
-    }
+    next();
   }
 
+  /**
+   * Grants or denies access if authenticated
+   * @void
+   * @param {Request} req
+   * @param {Response} res
+   * @param {Function} next
+   */
   static async authenticated(req, res, next) {
     try {
       if (req.user) {
@@ -47,5 +46,3 @@ class Auth {
     }
   }
 }
-
-export default Auth;

@@ -10,13 +10,17 @@ import serve from 'serve-static';
 import i18n from 'i18n';
 import locales from 'config/i18n';
 import Auth from 'middlewares/auth';
-import acl from 'libraries/permissions';
 import boom from 'express-boom';
 import fileUpload from 'express-fileupload';
 import path from 'path';
 
+const PWD = process.env.PWD;
+const APP_PATH = process.env.APP_PATH;
+const APP_PUBLIC = process.env.APP_PUBLIC;
+const APP_STATIC= process.env.APP_STATIC;
+
 export default (app) => {
-  const logDirectory = path.join(process.env.APP_PATH, 'logs');
+  const logDirectory = path.join(APP_PATH, 'logs');
 
   fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
 
@@ -24,17 +28,22 @@ export default (app) => {
   app.use(logger('combined', {
     stream: rfs(
         'access.log', {
-	  			interval: '1d',
-	  			path: logDirectory,
+          interval: '1d',
+          path: logDirectory,
         }
     ),
   }));
 
-  app.use(serve(path.join(process.env.PWD, process.env.APP_PUBLIC)));
-  app.use(path.join('/', process.env.APP_STATIC), serve(path.join(process.env.PWD, process.env.APP_STATIC)));
 
-  if (fs.existsSync(path.join(process.env.PWD, process.env.APP_STATIC, 'favicon.png'))) {
-    app.use(favicon(path.join(process.env.APP_STATIC, 'favicon.png')));
+  if (APP_PUBLIC) {
+    app.use(serve(path.join(PWD, APP_PUBLIC)));
+  }
+
+  if (APP_STATIC) {
+    app.use(path.join('/', APP_STATIC), serve(path.join(PWD, APP_STATIC)));
+    if (fs.existsSync(path.join(PWD, APP_STATIC, 'favicon.png'))) {
+      app.use(favicon(path.join(APP_STATIC, 'favicon.png')));
+    }
   }
 
   app.use(bodyParser.json());

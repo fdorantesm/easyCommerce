@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import acl from 'libraries/permissions';
 
 acl.allow([

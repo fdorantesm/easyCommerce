@@ -6,7 +6,7 @@
 export default class Cart {
   /**
      * Constructor Method
-     * @param {String} key
+     * @param {Object} options
      */
   constructor(options = {}) {
     if (options.key) {
@@ -20,7 +20,8 @@ export default class Cart {
   /**
      * Add product
      * @param {Object} product
-     * @return {Array} products
+     * @param {Integer} qty
+     * @return {Array<Product>}
      */
   async addProduct(product, qty) {
     if (!Object.prototype.hasOwnProperty.call(product, 'id')) {
@@ -70,6 +71,7 @@ export default class Cart {
       if (index > -1) {
         this._products[index].qty -= parseInt(qty);
         if (this._products[index].qty <= 0) {
+          // eslint-disable-next-line max-len
           this._products = this._products.filter((item) => item.id !== parseInt(product.id));
         }
       } else {
@@ -82,14 +84,18 @@ export default class Cart {
 
   /**
      * Remove product from cart
+     * @param {Integer} id
+     * @return {Array<Product>}
      */
   async removeProduct(id) {
+    // eslint-disable-next-line max-len
     this._products = this._products.filter((product) => product.id !== parseInt(id));
     return this;
   }
 
   /**
      * Clear cart
+     * @return {Cart}
      */
   async clear() {
     this._products = [];
@@ -98,6 +104,7 @@ export default class Cart {
 
   /**
      * Return cart in JSON format
+     * @return {Object}
      */
   json() {
     return {
@@ -114,6 +121,7 @@ export default class Cart {
   /**
      * Cart type setter
      * @param {String} type
+     * @void
      */
   set type(type) {
     this._type = type;
@@ -121,6 +129,8 @@ export default class Cart {
 
   /**
      * Set cart key
+     * @param {String} key
+     * @void
      */
   set key(key) {
     this._key = key;
@@ -128,6 +138,8 @@ export default class Cart {
 
   /**
      * Set taxes
+     * @void
+     * @param {Integer} tax
      */
   set tax(tax) {
     this._tax = tax;
@@ -135,6 +147,7 @@ export default class Cart {
 
   /**
      * Get tax percentage
+     * @void
      */
   get tax() {
     return this._tax;
@@ -142,6 +155,7 @@ export default class Cart {
 
   /**
      * Get total products amount
+     * @return {Number}
      */
   get total() {
     return this._products.reduce((sum, curr) => {
@@ -151,15 +165,18 @@ export default class Cart {
 
   /**
      * Get grand total amount
+     * @return {Number}
      */
   get grandTotal() {
     return this._products.reduce((sum, curr) => {
+      // eslint-disable-next-line max-len
       return parseFloat((sum + ((curr.price * (1 + ((curr.tax || this._tax) / 100))) * curr.qty)).toFixed(2));
     }, 0);
   }
 
   /**
      * Get total items
+     * @return {Integer}
      */
   get items() {
     return this._products.reduce((sum, curr) => {
@@ -169,6 +186,7 @@ export default class Cart {
 
   /**
      * Get cart content
+     * @return {Array<Product>}
      */
   get content() {
     return this._products;

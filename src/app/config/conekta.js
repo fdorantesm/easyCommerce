@@ -1,9 +1,13 @@
 const Conekta = {};
 Conekta.locale = 'en';
-Conekta.keys = (env = 'local') => {
+
+const CONEKTA_PUBLIC_KEY = process.env.CONEKTA_PUBLIC_KEY;
+const CONEKTA_PRIVATE_KEY = process.env.CONEKTA_PRIVATE_KEY;
+
+Conekta.keys = () => {
   return {
-    'public': (env=='prod' ? process.env.CONEKTA_LIVE_PUBLIC : process.env.CONEKTA_TEST_PUBLIC),
-    'private': (env=='prod' ? process.env.CONEKTA_LIVE_PRIVATE : process.env.CONEKTA_TEST_PRIVATE),
+    'public': CONEKTA_PUBLIC_KEY,
+    'private': CONEKTA_PRIVATE_KEY,
   };
 };
 
