@@ -35,6 +35,4 @@ function getEnv(environment = null) {
   return path.join($root, `.env${suffix}`);
 }
 
-console.log(process.env);
-
 export default process.env;

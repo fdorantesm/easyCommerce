@@ -5,7 +5,6 @@ import has from 'lodash/has';
 import includes from 'lodash/includes';
 import Joi from 'joi';
 import Schemas from 'schemas';
-import Boom from 'boom';
 import methods from 'methods';
 
 // Joi validation options
@@ -34,8 +33,7 @@ export default (req, res, next) => {
       return Joi.validate(req.body, schema, validationOptions, (err, data) => {
         if (err) {
           // eslint-disable-next-line max-len
-          const boom = Boom.badData('Invalid request data. Please review request and try again.', err.details);
-          next(boom);
+          return res.boom.badData('Invalid request data. Please review request and try again.', {errors: err.details});
         } else {
           req.body = data;
           next();
@@ -45,4 +43,3 @@ export default (req, res, next) => {
   }
   next();
 };
-

@@ -1,7 +1,7 @@
 import auth from 'libraries/auth';
 import User from 'models/User';
 import Profile from 'models/Profile';
-import Conekta from 'libraries/conekta';
+import Conekta from 'libraries/conekta'; // eslint-disable-line
 import request from 'request-promise';
 import md5 from 'md5';
 import {createCustomer, defineNickname} from 'helpers/users';
@@ -138,7 +138,7 @@ export default class Auth {
       profile.firstName = req.body.first_name;
       profile.lastName = req.body.last_name;
       profile.dob = req.body.dob;
-      profile.phone = `+52${req.body.phone}`;
+      profile.phone = req.body.phone;
       profile.address = {};
       profile.address.country = req.body.country;
       profile.address.region = req.body.region;
@@ -150,7 +150,8 @@ export default class Auth {
         phone: profile.phone,
       });
 
-      profile.conekta = customer._id;
+      // eslint-disable-next-line max-len
+      profile.conekta = Object.prototype.hasOwnProperty.call(customer, '_id') ? customer._id : null;
       user.nickname = await defineNickname(
           `${req.body.first_name} ${req.body.last_name}`.toLowerCase()
       );
@@ -159,9 +160,10 @@ export default class Auth {
       profile = await profile.save();
 
       res.send({
-        message: req.__('Your account was created succesfully'),
+        message: res.__('Your account was created succesfully'),
       });
     } catch (err) {
+      console.log({err});
       if (err.name && err.name === 'ValidationError') {
         res.boom.badData(null, {
           ...err,
