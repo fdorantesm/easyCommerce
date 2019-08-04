@@ -23,10 +23,10 @@ export default class Auth {
         const user = await User.findOne(params).populate('profile');
         res.send({...user.toObject(), token});
       } catch (err) {
-        res.boom.badRequest(req.text(err.message));
+        res.boom.badRequest(res.__(err.message));
       }
     } else {
-      res.boom.badRequest(req.text('Email and password are required fields'));
+      res.boom.badRequest(res.__('Email and password are required fields'));
     }
   }
 
@@ -75,7 +75,7 @@ export default class Auth {
           }
         })
         .catch((err) => {
-          res.boom.unauthorized(req.text(err.message));
+          res.boom.unauthorized(res.__(err.message));
         });
   }
 
@@ -118,7 +118,7 @@ export default class Auth {
           }
         })
         .catch((err) => {
-          res.boom.unauthorized(req.text(err.message));
+          res.boom.unauthorized(res.__(err.message));
         });
   }
 

@@ -1,9 +1,10 @@
-// import User from 'model/user'
+import User from 'models/User';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 const APP_SECURE_SALT = process.env.APP_SECURE_SALT;
 const APP_SECURE_KEY = process.env.APP_SECURE_KEY;
+const APP_SECURE_EXPIRATION = process.env.APP_SECURE_EXPIRATION;
 
 /**
  * Class to handle authentication
@@ -16,7 +17,31 @@ export default class Auth {
    * @param {String} password
    */
   static async connect(params, password) {
+    if ('email' in params && password) {
+      const user = await User.findOne(params);
+      if (!user) {
+        throw new Error('UserAuthenticationException');
+      }
 
+      const match = await Auth.compare(password, user.password);
+
+      if (match) {
+        const payload = {
+          sub: user.id,
+          type: 'Bearer',
+        };
+        const options = {
+          expiresIn: APP_SECURE_EXPIRATION,
+        };
+        const token = jwt.sign(payload, APP_SECURE_KEY, options);
+        user.token = token;
+        user.lastLogin = new Date();
+        await user.save();
+        return `Bearer ${token}`;
+      } else {
+        throw new Error('UserAuthenticationException');
+      }
+    }
   }
 
   /**
