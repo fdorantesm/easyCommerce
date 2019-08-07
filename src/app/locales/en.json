@@ -1,3 +1,7 @@
 {
-	"Your account was created succesfully": "Your account was created succesfully"
+	"Your account was created succesfully": "Your account was created succesfully",
+	"Please check all form fields": "Please check all form fields",
+	"User is not defined": "User is not defined",
+	"APP_SECURE_EXPIRATION is not defined": "APP_SECURE_EXPIRATION is not defined",
+	"UserAuthenticationException": "UserAuthenticationException"
 }

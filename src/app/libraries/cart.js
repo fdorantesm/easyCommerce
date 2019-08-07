@@ -5,9 +5,9 @@
  */
 export default class Cart {
   /**
-     * Constructor Method
-     * @param {Object} options
-     */
+   * Constructor Method
+   * @param {Object} options
+   */
   constructor(options = {}) {
     if (options.key) {
       this._key = options.key;
@@ -18,11 +18,11 @@ export default class Cart {
   }
 
   /**
-     * Add product
-     * @param {Object} product
-     * @param {Integer} qty
-     * @return {Array<Product>}
-     */
+   * Add product
+   * @param {Object} product
+   * @param {Integer} qty
+   * @return {Array<Product>}
+   */
   async addProduct(product, qty) {
     if (!Object.prototype.hasOwnProperty.call(product, 'id')) {
       throw new Error('CartProductMissingIdException');
@@ -41,16 +41,18 @@ export default class Cart {
   }
 
   /**
-     * Increase product qty
-     * @void This function doesn't return a vualue
-     * @param {Object} product Product must to have 'id' key
-     * @param {Integer} qty This number must be an integer positive value
-     */
+   * Increase product qty
+   * @void This function doesn't return a vualue
+   * @param {Object} product Product must to have 'id' key
+   * @param {Integer} qty This number must be an integer positive value
+   */
   async increaseProduct(product, qty) {
     if (parseInt(qty) > 0) {
-      const index = this._products.findIndex((item) => item.id === product.id);
+      // eslint-disable-next-line max-len
+      const index = this._products.findIndex((item) => item.id.toString() === product.id.toString());
       if (index > -1) {
         this._products[index].qty += parseInt(qty);
+        console.log(this._products[index].qty);
       } else {
         throw new Error('CartProductDoesntExistsException');
       }
@@ -60,11 +62,11 @@ export default class Cart {
   }
 
   /**
-     * Increase product qty
-     * @void This function doesn't return a vualue
-     * @param {Object} product Product must to have 'id' key
-     * @param {Integer} qty This number must be an integer positive value
-     */
+   * Increase product qty
+   * @void This function doesn't return a vualue
+   * @param {Object} product Product must to have 'id' key
+   * @param {Integer} qty This number must be an integer positive value
+   */
   async decreaseProduct(product, qty) {
     if (parseInt(qty) > 0) {
       const index = this._products.findIndex((item) => item.id === product.id);
@@ -83,33 +85,33 @@ export default class Cart {
   }
 
   /**
-     * Remove product from cart
-     * @param {Integer} id
-     * @return {Array<Product>}
-     */
+   * Remove product from cart
+   * @param {Integer} id
+   * @return {Array<Product>}
+   */
   async removeProduct(id) {
     // eslint-disable-next-line max-len
-    this._products = this._products.filter((product) => product.id !== parseInt(id));
+    this._products = this._products.filter((product) => product.id.toString() !== id.toString());
     return this;
   }
 
   /**
-     * Clear cart
-     * @return {Cart}
-     */
+   * Clear cart
+   * @return {Cart}
+   */
   async clear() {
     this._products = [];
     return this;
   }
 
   /**
-     * Return cart in JSON format
-     * @return {Object}
-     */
+   * Return cart in JSON format
+   * @return {Object}
+   */
   json() {
     return {
       key: this._key,
-      content: this._products,
+      products: this._products,
       type: this._type,
       tax: this._tax,
       total: this.total,
@@ -119,44 +121,44 @@ export default class Cart {
   }
 
   /**
-     * Cart type setter
-     * @param {String} type
-     * @void
-     */
+   * Cart type setter
+   * @param {String} type
+   * @void
+   */
   set type(type) {
     this._type = type;
   }
 
   /**
-     * Set cart key
-     * @param {String} key
-     * @void
-     */
+   * Set cart key
+   * @param {String} key
+   * @void
+   */
   set key(key) {
     this._key = key;
   }
 
   /**
-     * Set taxes
-     * @void
-     * @param {Integer} tax
-     */
+   * Set taxes
+   * @void
+   * @param {Integer} tax
+   */
   set tax(tax) {
     this._tax = tax;
   }
 
   /**
-     * Get tax percentage
-     * @void
-     */
+   * Get tax percentage
+   * @void
+   */
   get tax() {
     return this._tax;
   }
 
   /**
-     * Get total products amount
-     * @return {Number}
-     */
+   * Get total products amount
+   * @return {Number}
+   */
   get total() {
     return this._products.reduce((sum, curr) => {
       return sum + (curr.price * curr.qty);
@@ -164,9 +166,9 @@ export default class Cart {
   }
 
   /**
-     * Get grand total amount
-     * @return {Number}
-     */
+   * Get grand total amount
+   * @return {Number}
+   */
   get grandTotal() {
     return this._products.reduce((sum, curr) => {
       // eslint-disable-next-line max-len
@@ -175,9 +177,9 @@ export default class Cart {
   }
 
   /**
-     * Get total items
-     * @return {Integer}
-     */
+   * Get total items
+   * @return {Integer}
+   */
   get items() {
     return this._products.reduce((sum, curr) => {
       return sum + curr.qty;
@@ -185,11 +187,10 @@ export default class Cart {
   }
 
   /**
-     * Get cart content
-     * @return {Array<Product>}
-     */
+   * Get cart content
+   * @return {Array<Product>}
+   */
   get content() {
     return this._products;
   }
 }
-
