@@ -28,7 +28,6 @@ export default class Auth {
       if (match) {
         const payload = {
           sub: user.id,
-          type: 'Bearer',
         };
         const options = {
           expiresIn: APP_SECURE_EXPIRATION,

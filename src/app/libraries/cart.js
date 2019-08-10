@@ -52,7 +52,6 @@ export default class Cart {
       const index = this._products.findIndex((item) => item.id.toString() === product.id.toString());
       if (index > -1) {
         this._products[index].qty += parseInt(qty);
-        console.log(this._products[index].qty);
       } else {
         throw new Error('CartProductDoesntExistsException');
       }
@@ -115,7 +114,7 @@ export default class Cart {
       type: this._type,
       tax: this._tax,
       total: this.total,
-      grandTotal: this.grandTotal,
+      subtotal: this.subtotal,
       items: this.items,
     };
   }
@@ -159,21 +158,22 @@ export default class Cart {
    * Get total products amount
    * @return {Number}
    */
-  get total() {
-    return this._products.reduce((sum, curr) => {
-      return sum + (curr.price * curr.qty);
-    }, 0);
+  get subtotal() {
+    return parseFloat(Number(this._products.reduce((sum, curr) => {
+      // eslint-disable-next-line max-len
+      return sum + ((curr.price / (1 + (this._tax / 100)) * curr.qty));
+    }, 0)).toFixed(2));
   }
 
   /**
    * Get grand total amount
    * @return {Number}
    */
-  get grandTotal() {
-    return this._products.reduce((sum, curr) => {
+  get total() {
+    return parseFloat(Number(this._products.reduce((sum, curr) => {
       // eslint-disable-next-line max-len
-      return parseFloat((sum + ((curr.price * (1 + ((curr.tax || this._tax) / 100))) * curr.qty)).toFixed(2));
-    }, 0);
+      return sum + (curr.price * curr.qty);
+    }, 0)).toFixed(2));
   }
 
   /**

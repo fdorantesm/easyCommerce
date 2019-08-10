@@ -38,6 +38,7 @@ export default class MongoShoppingCart extends ShoppingCart {
         throw new Error('CartProductQuantityException');
       }
     } catch (err) {
+      console.log(err);
       throw new Error('CartProductMissingProductException');
     }
   }

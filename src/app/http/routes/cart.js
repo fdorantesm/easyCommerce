@@ -1,6 +1,6 @@
 import Router from 'router';
 import CartController from 'controllers/Cart';
-
+// import CartMiddlewares from 'middlewares/cart';
 // eslint-disable-next-line new-cap
 const router = Router();
 

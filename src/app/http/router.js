@@ -9,6 +9,7 @@ const router = Router();
 import auth from 'routes/auth';
 import test from 'routes/test';
 import cart from 'routes/cart';
+import order from 'routes/order';
 
 router.get('/', async (req, res) => {
   res.render('index', {app: APP_NAME});
@@ -17,5 +18,6 @@ router.get('/', async (req, res) => {
 router.use('/auth', auth);
 router.use('/test', test);
 router.use('/cart', cart);
+router.use('/order', order);
 
 export default router;

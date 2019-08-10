@@ -4,14 +4,11 @@ import mongoose from 'mongoose';
 // eslint-disable-next-line max-len
 import mongooseBeautifulUniqueValidation from 'mongoose-beautiful-unique-validation';
 import mongoosePaginate from 'mongoose-paginate-v2';
-import mongooseFindOrCreate from 'mongoose-findorcreate';
 
 const fields = {
-  key: {
-    type: String,
-    required: true,
-    minLength: 6,
-    unique: true
+  customer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   },
   products: [{
     id: {
@@ -32,9 +29,31 @@ const fields = {
       required: true
     }
   }],
-  type: {
+  status: {
     type: String,
-    default: 'default'
+    default: 'created'
+  },
+  subtotal: {
+    type: Number,
+    required: true
+  },
+  total: {
+    type: Number,
+    required: true
+  },
+  gatewayCustomerId: {
+    type: String
+  },
+  gatewayOrderId: {
+    type: String
+  },
+  gift: {
+    type: Boolean,
+    default: false
+  },
+  bill: {
+    type: Boolean,
+    default: false
   }
 };
 
@@ -43,10 +62,9 @@ const options = {
   timestamps: true
 };
 
-const Cart = new mongoose.Schema(fields, options);
+const Order = new mongoose.Schema(fields, options);
 
-Cart.plugin(mongoosePaginate);
-Cart.plugin(mongooseBeautifulUniqueValidation);
-Cart.plugin(mongooseFindOrCreate);
+Order.plugin(mongoosePaginate);
+Order.plugin(mongooseBeautifulUniqueValidation);
 
-export default mongoose.model('Cart', Cart);
+export default mongoose.model('Order', Order);

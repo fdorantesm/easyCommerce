@@ -29,6 +29,7 @@ export default class CartController {
       const cart = new ShoppingCart({key: req.body.key});
       await cart.restore();
       const product = await Product.findById(req.body.product);
+      console.log(product);
       await cart.addProduct({
         id: product._id,
         price: product.price,
