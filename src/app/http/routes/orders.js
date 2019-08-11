@@ -10,6 +10,7 @@ router.post('/',
     AuthMiddlewares.authentication,
     AuthMiddlewares.authenticated,
     CartMiddlewares.bindCart,
+    CartMiddlewares.validateTotal,
     OrderController.create
 );
 

@@ -10,20 +10,9 @@ const fields = {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
-  products: [{
-    _id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product',
-      required: true
-    },
-    qty: {
-      type: Number,
-      required: true
-    },
-    price: {
-      type: Number,
-      required: true
-    }
+  summary: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'OrderProduct'
   }],
   status: {
     type: String,

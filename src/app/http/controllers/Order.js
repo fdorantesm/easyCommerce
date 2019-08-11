@@ -3,7 +3,8 @@ import {Order as ConektaOrder} from 'libraries/conekta';
 import Order from 'models/Order';
 import Payment from 'models/Payment';
 import Delivery from 'models/Delivery';
-
+import deepPopulate from 'deep-populate';
+import OrderProducts from 'models/OrderProducts';
 /**
  * Order Controller
  */
@@ -18,49 +19,15 @@ export default class OrderController {
     // eslint-disable-next-line max-len
     const payBefore = moment().startOf('hour').add(1, 'hour').add(7, 'day').hours(20);
 
-    if (cart.total === 0) {
-      return res.boom.conflict(res.__('The cart amount is not greater than 0'));
-    }
-
-    if (cart.total > 10000 && req.body.method === 'oxxo') {
-      // eslint-disable-next-line max-len
-      return res.boom.conflict(res.__('The maximum cash amount is $10,000 pesos, try again using SPEI method.'));
-    }
-
-    if (cart.total > 5000 && req.body.method === 'card') {
-      // eslint-disable-next-line max-len
-      return res.boom.conflict(res.__('The maximum card amount is $5,000 pesos, try again using SPEI method.'));
-    }
-
-    if (cart.total > 9999999 && req.body.method === 'spei') {
-      // eslint-disable-next-line max-len
-      return res.boom.conflict(res.__(`The maximum SPEI amount is $9'999,999 pesos.`));
-    }
-
     try {
       const orderParams = {};
       orderParams.products = cart.content;
       orderParams.discounts = [
-        // {
-        //   code: 'Youtube',
-        //   amount: 999,
-        //   type: 'campaign'
-        // },
         {
           code: 'freeShipping',
           amount: 150,
           type: 'coupon'
-        },
-        // {
-        //   code: 'perdonanos',
-        //   amount: 200,
-        //   type: 'loyalty'
-        // },
-        // {
-        //   code: 'agostolocochon',
-        //   amount: 100,
-        //   type: 'coupon'
-        // }
+        }
       ];
 
       orderParams.customer = {
@@ -120,12 +87,23 @@ export default class OrderController {
       orderData.gatewayOrderId = conekta.order._id;
       orderData.bill = req.body.bill;
       orderData.gift = req.body.gift;
-      orderData.products = cart.content.map((item) => ({
-        _id: item.id,
-        price: item.price,
-        qty: item.qty
-      }));
-      const orderDB = new Order(orderData);
+      orderData.summary = [];
+      const orderDB = new Order();
+
+      cart.content.map(async (product) => {
+        const orderProduct = new OrderProducts({
+          order: orderDB._id,
+          product: product.id,
+          qty: product.qty,
+          price: product.price
+        });
+        orderData.summary.push(orderProduct._id);
+        console.log({product});
+        await orderProduct.save();
+      });
+
+      Object.keys(orderData).map((prop) => orderDB[prop] = orderData[prop]);
+
       await orderDB.save();
 
       const paymentData = {};
@@ -228,7 +206,7 @@ export default class OrderController {
       attachPaymentAndDelivery.deliveries.push(deliveryDB._id);
       await attachPaymentAndDelivery.save();
 
-      await cart.clear();
+      // await cart.clear();
 
       // eslint-disable-next-line max-len
       res.status(201).send({
@@ -251,29 +229,12 @@ export default class OrderController {
   static async getOrder(req, res) {
     try {
       // eslint-disable-next-line max-len
-      const fields = ['total', 'products', 'deliveries', 'payments', 'customer', 'status', 'gift', 'createdAt', 'updatedAt'];
-      // eslint-disable-next-line max-len
-      const order = await Order.findById(req.params.order).populate([
-        {
-          path: 'payments',
-          select: ['status', 'method', 'amount', 'currency', 'paidAt'],
-        },
-        {
-          path: 'deliveries',
-          select: ['from', 'to', 'status', 'amount', 'carrier']
-        },
-        {
-          path: 'products._id'
-        },
-        {
-          path: 'customer',
-          select: ['profile'],
-          populate: {
-            path: 'profile',
-            select: ['firstName', 'lastName']
-          }
-        }
-      ]).select(fields);
+      const fields = ['total', 'summary', 'deliveries', 'payments', 'customer', 'status', 'gift', 'createdAt', 'updatedAt'];
+      let order = Order.findById(req.params.order);
+      if (req.query.with) {
+        order.populate(deepPopulate(req.query.with));
+      }
+      order = await order.select(fields);
       res.send({
         data: order
       });
@@ -289,7 +250,12 @@ export default class OrderController {
    */
   static async getAll(req, res) {
     try {
-      const orders = await Order.paginate({}, {page: req.query.page || 1});
+      const options = {};
+      options.page = req.query.page || 1;
+      if (req.query.with) {
+        options.populate = deepPopulate(req.query.with);
+      }
+      const orders = await Order.paginate({}, options);
       res.send({
         data: orders
       });
