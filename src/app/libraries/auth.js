@@ -18,6 +18,7 @@ export default class Auth {
    */
   static async connect(params, password) {
     if ('email' in params && password) {
+      // eslint-disable-next-line max-len
       const user = await User.findOne(params).select(['+password', 'lastLogin', 'token']);
       console.log(user);
       if (!user) {
