@@ -289,7 +289,7 @@ export default class OrderController {
    */
   static async getAll(req, res) {
     try {
-      const orders = await Order.find({});
+      const orders = await Order.paginate({}, {page: req.query.page || 1});
       res.send({
         data: orders
       });
