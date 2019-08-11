@@ -9,7 +9,7 @@ import {createCustomer, defineNickname} from 'helpers/users';
 /**
  * Auth Controller
  */
-export default class Auth {
+class AuthController {
   /**
   * Login method
   * @param {Request} req
@@ -207,3 +207,5 @@ export default class Auth {
     res.send({user});
   }
 }
+
+export default AuthController;

@@ -5,10 +5,11 @@ import Payment from 'models/Payment';
 import Delivery from 'models/Delivery';
 import deepPopulate from 'deep-populate';
 import OrderProducts from 'models/OrderProducts';
+
 /**
  * Order Controller
  */
-export default class OrderController {
+class OrderController {
   /**
    * Create order
    * @param {Request} req
@@ -264,3 +265,5 @@ export default class OrderController {
     }
   }
 }
+
+export default OrderController;

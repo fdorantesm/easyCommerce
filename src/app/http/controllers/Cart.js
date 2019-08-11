@@ -3,8 +3,12 @@ import Product from 'models/Product';
 
 /**
  * Cart Controller
+ * @class
+ * @hideconstructor
+ * @description Handles shopping cart events like add products,
+ * remove products, clear cart, create and retrieve cart.
  */
-export default class CartController {
+class CartController {
   /**
    * Get cart
    * @param {Request} req
@@ -21,8 +25,11 @@ export default class CartController {
   }
   /**
    * Add product
-   * @param {Request} req
-   * @param {Response} res
+   * @module CartController
+   * @function
+   * @param {e.Request} req
+   * @param {e.Response} res
+   * @return {undefined}
    */
   static async addProduct(req, res) {
     try {
@@ -79,3 +86,5 @@ export default class CartController {
     }
   }
 }
+
+export default CartController;
