@@ -8,5 +8,7 @@
 	"The maximum card amount is $5,000 pesos, try again using SPEI method.": "The maximum card amount is $5,000 pesos, try again using SPEI method.",
 	"The maximum SPEI amount is $9'999,999 pesos.": "The maximum SPEI amount is $9'999,999 pesos.",
 	"The cart amount is not greater than 0": "The cart amount is not greater than 0",
-	"The cart is empty": "The cart is empty"
+	"The cart is empty": "The cart is empty",
+	"data and hash arguments required": "data and hash arguments required",
+	"Invalid select": " select only takes 1 argument"
 }

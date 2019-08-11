@@ -18,25 +18,30 @@ export default class Auth {
    */
   static async connect(params, password) {
     if ('email' in params && password) {
-      const user = await User.findOne(params);
+      const user = await User.findOne(params).select(['+password', 'lastLogin', 'token']);
+      console.log(user);
       if (!user) {
         throw new Error('UserAuthenticationException');
       }
 
-      const match = await Auth.compare(password, user.password);
+      const match = await Auth.compare(password || '', user.password);
 
       if (match) {
-        const payload = {
+        const data = {
           sub: user.id,
         };
         const options = {
           expiresIn: APP_SECURE_EXPIRATION,
         };
-        const token = jwt.sign(payload, APP_SECURE_KEY, options);
+        const token = jwt.sign(data, APP_SECURE_KEY, options);
+        const payload = await jwt.verify(token, APP_SECURE_KEY);
         user.token = token;
         user.lastLogin = new Date();
         await user.save();
-        return `Bearer ${token}`;
+        return {
+          accessToken: `Bearer ${token}`,
+          expiresAt: payload.exp
+        };
       } else {
         throw new Error('UserAuthenticationException');
       }

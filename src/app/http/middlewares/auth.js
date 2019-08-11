@@ -53,7 +53,7 @@ export default class Auth {
         // };
       }
     } catch (e) {
-      console.log(e);
+      console.log(e.name);
       req.acl = {
         role: 'guest',
       };

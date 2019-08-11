@@ -19,10 +19,12 @@ export default class Auth {
     if (req.body.email && req.body.password) {
       try {
         const params = {email: req.body.email};
-        const token = await auth.connect(params, req.body.password);
+        console.log(req.body);
+        const accessToken = await auth.connect(params, req.body.password);
         const user = await User.findOne(params).populate('profile');
-        res.send({...user.toObject(), token});
+        res.send({...user.toObject(), ...accessToken});
       } catch (err) {
+        console.log(err);
         res.boom.badRequest(res.__(err.message));
       }
     } else {
