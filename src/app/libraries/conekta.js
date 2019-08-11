@@ -224,7 +224,7 @@ export class Order {
 
       const order = await conekta.Order.create(conektaOrder);
       // eslint-disable-next-line max-len
-      const charge = await orderResult.createCharge({payment_method: paymentMethod});
+      const charge = await order.createCharge({payment_method: paymentMethod});
 
       return {
         order,

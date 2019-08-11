@@ -68,7 +68,6 @@ const fields = {
 };
 
 const options = {
-  discriminatorKey: '_type',
   timestamps: true
 };
 

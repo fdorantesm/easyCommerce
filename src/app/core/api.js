@@ -5,6 +5,8 @@ import path from 'path';
 import fs from 'fs';
 import config from 'core/config';
 import debug from 'debug';
+// eslint-disable-next-line no-unused-vars
+import mongoose from 'libraries/mongoose';
 
 const dbugger = debug('api:express');
 

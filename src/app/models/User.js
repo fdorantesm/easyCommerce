@@ -20,7 +20,8 @@ const fields = {
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    select: false
   },
   profile: {
     type: mongoose.Schema.Types.ObjectId,
@@ -37,7 +38,8 @@ const fields = {
     default: 0
   },
   token: {
-    type: String
+    type: String,
+    select: false
   },
   lastLogin: {
     type: Date

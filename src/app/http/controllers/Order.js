@@ -1,5 +1,5 @@
 import moment from 'libraries/moment';
-import {Order as ConektaOrder} from 'libraries/fake/conekta';
+import {Order as ConektaOrder} from 'libraries/conekta';
 import Order from 'models/Order';
 import Payment from 'models/Payment';
 import Delivery from 'models/Delivery';
@@ -120,8 +120,12 @@ export default class OrderController {
       orderData.gatewayOrderId = conekta.order._id;
       orderData.bill = req.body.bill;
       orderData.gift = req.body.gift;
+      orderData.products = cart.content.map((item) => ({
+        _id: item.id,
+        price: item.price,
+        qty: item.qty
+      }));
       const orderDB = new Order(orderData);
-
       await orderDB.save();
 
       const paymentData = {};
@@ -129,7 +133,7 @@ export default class OrderController {
       paymentData.status = conekta.charge.status;
       paymentData.amount = conekta.charge.amount / 100;
       paymentData.fee = conekta.charge.fee / 100;
-      paymentData.method = conekta.charge.payment_method.type;
+      paymentData.method = req.body.method;
       paymentData.order = orderDB._id;
 
       if (['oxxo', 'spei'].includes(req.body.method)) {
@@ -138,10 +142,10 @@ export default class OrderController {
 
       if (req.body.method === 'spei') {
         // eslint-disable-next-line max-len
-        paymentData.receivingAccountBank = orderParams.payment_method.receiving_account_bank;
+        paymentData.receivingAccountBank = conekta.charge.payment_method.receiving_account_bank;
         // eslint-disable-next-line max-len
-        paymentData.receivingAccountNumber = orderParams.payment_method.receiving_account_number;
-        paymentData.clabe = orderParams.payment_method.clabe;
+        paymentData.receivingAccountNumber = conekta.charge.payment_method.receiving_account_number;
+        paymentData.clabe = conekta.charge.payment_method.clabe;
       }
 
       if (req.body.method === 'oxxo') {
@@ -219,13 +223,77 @@ export default class OrderController {
       await deliveryDB.save();
 
       // eslint-disable-next-line max-len
-      res.send({
+      const attachPaymentAndDelivery = await Order.findById(orderDB._id);
+      attachPaymentAndDelivery.payments.push(paymentDB._id);
+      attachPaymentAndDelivery.deliveries.push(deliveryDB._id);
+      await attachPaymentAndDelivery.save();
+
+      await cart.clear();
+
+      // eslint-disable-next-line max-len
+      res.status(201).send({
         payment: paymentDB,
-        order: orderDB,
+        order: attachPaymentAndDelivery,
         delivery: deliveryDB
       });
     } catch (err) {
       console.log(err);
+      res.boom.badData(err);
+    }
+  }
+
+  /**
+   * Get single order
+   * @description Returns order entry
+   * @param {Request} req
+   * @param {Response} res
+   */
+  static async getOrder(req, res) {
+    try {
+      // eslint-disable-next-line max-len
+      const fields = ['total', 'products', 'deliveries', 'payments', 'customer', 'status', 'gift', 'createdAt', 'updatedAt'];
+      // eslint-disable-next-line max-len
+      const order = await Order.findById(req.params.order).populate([
+        {
+          path: 'payments',
+          select: ['status', 'method', 'amount', 'currency', 'paidAt'],
+        },
+        {
+          path: 'deliveries',
+          select: ['from', 'to', 'status', 'amount', 'carrier']
+        },
+        {
+          path: 'products._id'
+        },
+        {
+          path: 'customer',
+          select: ['profile'],
+          populate: {
+            path: 'profile',
+            select: ['firstName', 'lastName']
+          }
+        }
+      ]).select(fields);
+      res.send({
+        data: order
+      });
+    } catch (err) {
+      res.boom.badData(err);
+    }
+  }
+
+  /**
+   * Get orders
+   * @param {Request} req
+   * @param {Response} res
+   */
+  static async getAll(req, res) {
+    try {
+      const orders = await Order.find({});
+      res.send({
+        data: orders
+      });
+    } catch (err) {
       res.boom.badData(err);
     }
   }

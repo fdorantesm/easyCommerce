@@ -14,7 +14,7 @@ const APP_PATH = process.env.APP_PATH;
 // eslint-disable-next-line no-unused-vars
 const table = new CliTable({
   head: ['Method', 'Path'],
-  colWidths: [30, 50],
+  colWidths: [15, 25],
 });
 
 /**

@@ -11,13 +11,9 @@ const fields = {
     ref: 'User'
   },
   products: [{
-    id: {
+    _id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Product',
-      required: true
-    },
-    name: {
-      type: String,
       required: true
     },
     qty: {
@@ -54,7 +50,15 @@ const fields = {
   bill: {
     type: Boolean,
     default: false
-  }
+  },
+  payments: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Payment'
+  }],
+  deliveries: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Delivery'
+  }],
 };
 
 const options = {

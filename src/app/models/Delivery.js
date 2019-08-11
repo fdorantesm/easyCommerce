@@ -5,7 +5,7 @@ import mongooseBeautifulUniqueValidation from 'mongoose-beautiful-unique-validat
 import mongoosePaginate from 'mongoose-paginate-v2';
 // eslint-disable-next-line no-unused-vars
 import mongooseGeoJsonSchema from 'mongoose-geojson-schema';
-import haversine from 'haversine';
+// import haversine from 'haversine';
 
 const fields = {
   from: {
@@ -123,18 +123,16 @@ const options = {
 
 const Delivery = new mongoose.Schema(fields, options);
 
-Delivery.set('toJSON', {virtuals: true});
-Delivery.set('toObject', {virtuals: true});
+// Delivery.set('toJSON', {virtuals: true});
+// Delivery.set('toObject', {virtuals: true});
 
 Delivery.plugin(mongoosePaginate);
 Delivery.plugin(mongooseBeautifulUniqueValidation);
 
-Delivery.virtual('distance').get(function() {
-  const options = {format: '[lon,lat]'};
-  // eslint-disable-next-line max-len,no-invalid-this
-  console.log(this.from.location.coordinates, this.to.location.coordinates);
-  // eslint-disable-next-line max-len,no-invalid-this
-  return haversine(this.from.location.coordinates, this.to.location.coordinates, options);
-});
+// Delivery.virtual('distance').get(function() {
+// const options = {format: '[lon,lat]'};
+// eslint-disable-next-line max-len,no-invalid-this
+// return haversine(this.from.location.coordinates, this.to.location.coordinates, options);
+// });
 
 export default mongoose.model('Delivery', Delivery);

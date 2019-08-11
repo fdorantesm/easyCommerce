@@ -1,7 +1,6 @@
 /* eslint-disable no-invalid-this */
 import dotenv from 'dotenv/config'; // eslint-disable-line
 import env from 'env'; // eslint-disable-line
-import loader from 'loader'; // eslint-disable-line
 import fs from 'fs';
 import http from 'http';
 import https from 'https';
