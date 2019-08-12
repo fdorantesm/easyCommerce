@@ -92,6 +92,7 @@ class OrderController {
             // eslint-disable-next-line max-len
             return res.boom.badData(res.__('The coupon has reached its redemption limit.'));
           }
+          // eslint-disable-next-line max-len
           if (redeptionsByUser >= coupon.limits.user && coupon.limits.user > 0) {
             // eslint-disable-next-line max-len
             return res.boom.badData(res.__('You have used this coupon.'));

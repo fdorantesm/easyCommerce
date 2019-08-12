@@ -14,5 +14,6 @@
 	"The minimum amount to apply this coupon is $100": "The minimum amount to apply this coupon is $100",
 	"The coupon has reached its redemption limit.": "The coupon has reached its redemption limit.",
 	"You have used this coupon.": "You have used this coupon.",
-	"The coupon code doesn't exist.": "The coupon code doesn't exist."
+	"The coupon code doesn't exist.": "The coupon code doesn't exist.",
+	"There was a problem while trying to resolve your request": "There was a problem while trying to resolve your request"
 }
