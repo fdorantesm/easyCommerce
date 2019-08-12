@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import mongooseBeautifulUniqueValidation from 'mongoose-beautiful-unique-validation';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import mongooseTypeEmail from 'mongoose-type-email'; // eslint-disable-line
+import mongooseSoftDelete from 'mongoose-softdelete';
 
 const fields = {
   nickname: {
@@ -74,5 +75,6 @@ User.set('toObject', {
 
 User.plugin(mongoosePaginate);
 User.plugin(mongooseBeautifulUniqueValidation);
+User.plugin(mongooseSoftDelete);
 
 export default mongoose.model('User', User);

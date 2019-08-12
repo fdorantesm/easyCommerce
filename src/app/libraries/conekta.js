@@ -176,10 +176,12 @@ export class Order {
       }));
 
       if (params.discounts) {
-        conektaOrder.discount_lines = params.discounts.map((discount) => {
-          discount.amount *= 100;
-          return discount;
-        });
+        if (params.discounts.length > 0) {
+          conektaOrder.discount_lines = params.discounts.map((discount) => {
+            discount.amount *= 100;
+            return discount;
+          });
+        }
       }
 
       conektaOrder.currency = 'MXN';

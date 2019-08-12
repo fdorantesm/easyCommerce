@@ -48,6 +48,10 @@ const fields = {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Delivery'
   }],
+  coupon: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Coupon'
+  }
 };
 
 const options = {

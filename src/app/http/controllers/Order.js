@@ -5,6 +5,7 @@ import Payment from 'models/Payment';
 import Delivery from 'models/Delivery';
 import deepPopulate from 'deep-populate';
 import OrderProducts from 'models/OrderProducts';
+import Coupon from 'models/Coupon';
 
 /**
  * Order Controller
@@ -17,19 +18,15 @@ class OrderController {
    */
   static async create(req, res) {
     const cart = req.cart;
+    const shipping = 150;
+    const grantTotal = cart.total + shipping;
+    let discountable = false;
+    let coupon;
     // eslint-disable-next-line max-len
     const payBefore = moment().startOf('hour').add(1, 'hour').add(7, 'day').hours(20);
-
     try {
       const orderParams = {};
       orderParams.products = cart.content;
-      orderParams.discounts = [
-        {
-          code: 'freeShipping',
-          amount: 150,
-          type: 'coupon'
-        }
-      ];
 
       orderParams.customer = {
         id: req.user.profile.conekta
@@ -44,8 +41,10 @@ class OrderController {
       });
 
       orderParams.shippings = [{
-        amount: 150
+        amount: shipping
       }];
+
+      orderParams.discounts = [];
 
       orderParams.receiver = {
         // eslint-disable-next-line max-len
@@ -77,12 +76,64 @@ class OrderController {
         orderParams.payment_method.expires_at = payBefore.unix();
       }
 
+      if (req.body.coupon) {
+        coupon = await Coupon.findOne({code: req.body.coupon});
+        if (!coupon) {
+          return res.boom.badData(res.__(`The coupon code doesn't exist.`));
+        } else {
+          const redemptions = await Order.count({coupon: coupon._id});
+          // eslint-disable-next-line max-len
+          const redeptionsByUser = await Order.count({customer: req.user._id, coupon: coupon._id});
+          if (redemptions >= coupon.limits.uses) {
+            // eslint-disable-next-line max-len
+            return res.boom.badData(res.__('The coupon has reached its redemption limit.'));
+          }
+          if (redeptionsByUser >= coupon.limits.user) {
+            // eslint-disable-next-line max-len
+            return res.boom.badData(res.__('You have used this coupon.'));
+          }
+
+          // eslint-disable-next-line max-len
+          if (coupon.limits.minimumAmount && coupon.limits.minimumAmount > grantTotal) {
+            // eslint-disable-next-line max-len
+            return res.boom.badData(res.__(`The minimum amount to apply this coupon is $${coupon.limits.minimumAmount}`));
+          }
+
+          discountable = true;
+          const discountCoupon = {
+            code: coupon.code,
+            type: 'coupon'
+          };
+
+          if (coupon.type === 'amount') {
+            discountCoupon.amount = coupon.value;
+          }
+
+          if (coupon.type === 'percentage') {
+            const discountAmount = (cart.total + shipping) * (coupon.value/100);
+            // eslint-disable-next-line max-len
+            if (coupon.limits.maximumAmount && discountAmount > coupon.limits.maximumAmount) {
+              discountCoupon.amount = coupon.limits.maximumAmount;
+            } else {
+              discountCoupon.amount = discountAmount;
+            }
+          }
+
+          orderParams.discounts.push(discountCoupon);
+
+          console.log(discountCoupon);
+        }
+      }
+
       const conekta = await ConektaOrder.create(orderParams);
 
       const orderData = {};
       orderData.customer = req.user._id;
       orderData.subtotal = cart.subtotal;
       orderData.total = cart.total;
+      if (discountable) {
+        orderData.coupon = coupon._id;
+      }
       orderData.gatewayCustomerId = req.user.profile.conekta;
 
       orderData.gatewayOrderId = conekta.order._id;

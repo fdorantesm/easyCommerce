@@ -10,5 +10,8 @@
 	"The cart amount is not greater than 0": "The cart amount is not greater than 0",
 	"The cart is empty": "The cart is empty",
 	"data and hash arguments required": "data and hash arguments required",
-	"Invalid select": " select only takes 1 argument"
+	"Invalid select": " select only takes 1 argument",
+	"The minimum amount to apply this coupon is $100": "The minimum amount to apply this coupon is $100",
+	"The coupon has reached its redemption limit.": "The coupon has reached its redemption limit.",
+	"You have used this coupon.": "You have used this coupon."
 }
