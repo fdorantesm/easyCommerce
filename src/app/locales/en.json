@@ -13,5 +13,6 @@
 	"Invalid select": " select only takes 1 argument",
 	"The minimum amount to apply this coupon is $100": "The minimum amount to apply this coupon is $100",
 	"The coupon has reached its redemption limit.": "The coupon has reached its redemption limit.",
-	"You have used this coupon.": "You have used this coupon."
+	"You have used this coupon.": "You have used this coupon.",
+	"The coupon code doesn't exist.": "The coupon code doesn't exist."
 }

@@ -21,6 +21,8 @@ class OrderController {
     const shipping = 150;
     const grantTotal = cart.total + shipping;
     let discountable = false;
+    let gatewayable = true;
+    let conekta;
     let coupon;
     // eslint-disable-next-line max-len
     const payBefore = moment().startOf('hour').add(1, 'hour').add(7, 'day').hours(20);
@@ -80,19 +82,20 @@ class OrderController {
         coupon = await Coupon.findOne({code: req.body.coupon});
         if (!coupon) {
           return res.boom.badData(res.__(`The coupon code doesn't exist.`));
+        } else if (!coupon.enabled) {
+          return res.boom.badData(res.__('The coupons is not available.'));
         } else {
           const redemptions = await Order.count({coupon: coupon._id});
           // eslint-disable-next-line max-len
           const redeptionsByUser = await Order.count({customer: req.user._id, coupon: coupon._id});
-          if (redemptions >= coupon.limits.uses) {
+          if (redemptions >= coupon.limits.uses && coupon.limits.uses > 0) {
             // eslint-disable-next-line max-len
             return res.boom.badData(res.__('The coupon has reached its redemption limit.'));
           }
-          if (redeptionsByUser >= coupon.limits.user) {
+          if (redeptionsByUser >= coupon.limits.user && coupon.limits.user > 0) {
             // eslint-disable-next-line max-len
             return res.boom.badData(res.__('You have used this coupon.'));
           }
-
           // eslint-disable-next-line max-len
           if (coupon.limits.minimumAmount && coupon.limits.minimumAmount > grantTotal) {
             // eslint-disable-next-line max-len
@@ -102,7 +105,8 @@ class OrderController {
           discountable = true;
           const discountCoupon = {
             code: coupon.code,
-            type: 'coupon'
+            type: 'coupon',
+            amount: 0
           };
 
           if (coupon.type === 'amount') {
@@ -112,7 +116,7 @@ class OrderController {
           if (coupon.type === 'percentage') {
             const discountAmount = (cart.total + shipping) * (coupon.value/100);
             // eslint-disable-next-line max-len
-            if (coupon.limits.maximumAmount && discountAmount > coupon.limits.maximumAmount) {
+            if (coupon.limits.maximumAmount && discountAmount > coupon.limits.maximumAmount && coupon.limits.maximumAmount > 0) {
               discountCoupon.amount = coupon.limits.maximumAmount;
             } else {
               discountCoupon.amount = discountAmount;
@@ -121,22 +125,32 @@ class OrderController {
 
           orderParams.discounts.push(discountCoupon);
 
-          console.log(discountCoupon);
+          if (!(cart.total - discountCoupon.amount > 0)) {
+            gatewayable = false;
+          }
         }
       }
 
-      const conekta = await ConektaOrder.create(orderParams);
-
       const orderData = {};
+
+      if (gatewayable) {
+        conekta = await ConektaOrder.create(orderParams);
+      }
+
+
       orderData.customer = req.user._id;
       orderData.subtotal = cart.subtotal;
+      orderData.gatewayCustomerId = req.user.profile.conekta;
       orderData.total = cart.total;
+
       if (discountable) {
         orderData.coupon = coupon._id;
       }
-      orderData.gatewayCustomerId = req.user.profile.conekta;
 
-      orderData.gatewayOrderId = conekta.order._id;
+      if (gatewayable) {
+        orderData.gatewayOrderId = conekta.order._id;
+      }
+
       orderData.bill = req.body.bill;
       orderData.gift = req.body.gift;
       orderData.summary = [];
@@ -150,7 +164,6 @@ class OrderController {
           price: product.price
         });
         orderData.summary.push(orderProduct._id);
-        console.log({product});
         await orderProduct.save();
       });
 
@@ -159,31 +172,39 @@ class OrderController {
       await orderDB.save();
 
       const paymentData = {};
-      paymentData.gatewayChargeId = conekta.charge.id;
-      paymentData.status = conekta.charge.status;
-      paymentData.amount = conekta.charge.amount / 100;
-      paymentData.fee = conekta.charge.fee / 100;
-      paymentData.method = req.body.method;
+      if (gatewayable) {
+        paymentData.gatewayChargeId = conekta.charge.id;
+        paymentData.status = conekta.charge.status;
+        paymentData.amount = conekta.charge.amount / 100;
+        paymentData.fee = conekta.charge.fee / 100;
+        paymentData.method = req.body.method;
+      } else {
+        paymentData.method = 'coupon';
+        paymentData.amount = 0;
+        paymentData.fee = 0;
+        paymentData.status = 'paid';
+        paymentData.paidAt = moment();
+      }
+
       paymentData.order = orderDB._id;
 
-      if (['oxxo', 'spei'].includes(req.body.method)) {
-        paymentData.referenceExpiration = payBefore;
-      }
-
-      if (req.body.method === 'spei') {
-        // eslint-disable-next-line max-len
-        paymentData.receivingAccountBank = conekta.charge.payment_method.receiving_account_bank;
-        // eslint-disable-next-line max-len
-        paymentData.receivingAccountNumber = conekta.charge.payment_method.receiving_account_number;
-        paymentData.clabe = conekta.charge.payment_method.clabe;
-      }
-
-      if (req.body.method === 'oxxo') {
-        paymentData.reference = conekta.charge.payment_method.reference;
-      }
-
-      if (req.body.method === 'card') {
-        paymentData.paidAt = moment();
+      if (gatewayable) {
+        if (['oxxo', 'spei'].includes(req.body.method)) {
+          paymentData.referenceExpiration = payBefore;
+        }
+        if (req.body.method === 'spei') {
+          // eslint-disable-next-line max-len
+          paymentData.receivingAccountBank = conekta.charge.payment_method.receiving_account_bank;
+          // eslint-disable-next-line max-len
+          paymentData.receivingAccountNumber = conekta.charge.payment_method.receiving_account_number;
+          paymentData.clabe = conekta.charge.payment_method.clabe;
+        }
+        if (req.body.method === 'oxxo') {
+          paymentData.reference = conekta.charge.payment_method.reference;
+        }
+        if (req.body.method === 'card') {
+          paymentData.paidAt = moment();
+        }
       }
 
       const paymentDB = new Payment(paymentData);
