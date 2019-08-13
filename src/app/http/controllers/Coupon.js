@@ -63,7 +63,26 @@ class CouponController {
    */
   static async getCoupon(req, res) {
     try {
-      const coupon = await Coupon.findById(req.body.coupon);
+      const coupon = await Coupon.findById(req.params.coupon);
+      res.send({
+        data: coupon
+      });
+    } catch (err) {
+      console.log(err);
+      // eslint-disable-next-line max-len
+      res.boom.badRequest(res.__('There was a problem while trying to resolve your request'));
+    }
+  }
+
+  /**
+   * Update coupon
+   * @param {Request} req
+   * @param {Response} res
+   */
+  static async updateCoupon(req, res) {
+    try {
+      // eslint-disable-next-line max-len
+      const coupon = await Coupon.findOneAndUpdate({_id: req.params.coupon}, req.body);
       res.send({
         data: coupon
       });

@@ -6,6 +6,7 @@ const router = Router();
 
 router.get('/', CouponController.getCoupons);
 router.get('/:coupon', CouponController.getCoupon);
+router.post('/:coupon', CouponController.updateCoupon);
 router.post('/', CouponController.createCoupon);
 
 export default router;
