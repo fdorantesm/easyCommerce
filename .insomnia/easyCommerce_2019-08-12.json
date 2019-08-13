@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2019-08-13T04:21:35.816Z",
+	"__export_date": "2019-08-13T04:35:15.714Z",
 	"__export_source": "insomnia.desktop.app:v6.0.2",
 	"resources": [
 		{
@@ -90,6 +90,17 @@
 			"metaSortKey": -1565404120808,
 			"modified": 1565404120807,
 			"name": "Order",
+			"parentId": "fld_0398582cbf2247cab9ec0ac317b41eb7",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_80739621ea374d3184e3f1bda1cf5605",
+			"created": 1565670189862,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1565670189862,
+			"modified": 1565670189862,
+			"name": "Coupons",
 			"parentId": "fld_0398582cbf2247cab9ec0ac317b41eb7",
 			"_type": "request_group"
 		},
@@ -630,6 +641,84 @@
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
 			"url": "{{ baseURL  }}/orders?with=summary.product,deliveries,payments,customer.profile",
+			"_type": "request"
+		},
+		{
+			"_id": "req_04ec25ec35ed434788b7919b00d04818",
+			"authentication": {},
+			"body": {},
+			"created": 1565670200769,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1565670200769,
+			"method": "GET",
+			"modified": 1565670840525,
+			"name": "Get coupons",
+			"parameters": [],
+			"parentId": "fld_80739621ea374d3184e3f1bda1cf5605",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ baseURL  }}/coupons",
+			"_type": "request"
+		},
+		{
+			"_id": "req_d7c44e712a3246f5b4d2b5db28196571",
+			"authentication": {},
+			"body": {},
+			"created": 1565670477996,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1565570796333,
+			"method": "GET",
+			"modified": 1565670514625,
+			"name": "Get coupon",
+			"parameters": [],
+			"parentId": "fld_80739621ea374d3184e3f1bda1cf5605",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ baseURL  }}/coupons/5d50bdb112ac677ceb506991",
+			"_type": "request"
+		},
+		{
+			"_id": "req_23b57a8131514be5b3e29664fafdeb4c",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"limits\": {\n\t\t\t\"user\": 1,\n\t\t\t\"uses\": 1000,\n\t\t\t\"expiration\": 30,\n\t\t\t\"minimumAmount\": 250,\n\t\t\t\"maximumAmount\": 250\n\t\t},\n\t\t\"public\": true,\n\t\t\"code\": \"Test\",\n\t\t\"type\": \"percentage\",\n\t\t\"value\": 50,\n\t\t\"enabled\": true\n}"
+			},
+			"created": 1565670775929,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_b6259911a8b2473587d3d97e78d0e615",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1565521094115,
+			"method": "POST",
+			"modified": 1565670827333,
+			"name": "Create coupon",
+			"parameters": [],
+			"parentId": "fld_80739621ea374d3184e3f1bda1cf5605",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ baseURL  }}/coupons",
 			"_type": "request"
 		}
 	]
