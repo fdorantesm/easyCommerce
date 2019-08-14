@@ -1,5 +1,6 @@
 import Coupon from 'models/Coupon';
 import moment from 'libraries/moment';
+import merge from 'lodash/merge';
 
 /**
  * Coupon Controller
@@ -82,9 +83,11 @@ class CouponController {
   static async updateCoupon(req, res) {
     try {
       // eslint-disable-next-line max-len
-      const coupon = await Coupon.findOneAndUpdate({_id: req.params.coupon}, req.body);
+      const coupon = await Coupon.findById(req.params.coupon);
+      const data = merge(coupon, req.body);
+      await coupon.update(data);
       res.send({
-        data: coupon
+        data: data
       });
     } catch (err) {
       console.log(err);
