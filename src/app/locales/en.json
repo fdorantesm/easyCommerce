@@ -15,5 +15,8 @@
 	"The coupon has reached its redemption limit.": "The coupon has reached its redemption limit.",
 	"You have used this coupon.": "You have used this coupon.",
 	"The coupon code doesn't exist.": "The coupon code doesn't exist.",
-	"There was a problem while trying to resolve your request": "There was a problem while trying to resolve your request"
+	"There was a problem while trying to resolve your request": "There was a problem while trying to resolve your request",
+	"The %s was not found,": "The %s was not found,",
+	"The %s was deleted successfully": "The %s was deleted successfully",
+	"The %s was not found": "The %s was not found"
 }

@@ -50,6 +50,10 @@ const fields = {
   },
   enabled: {
     type: Boolean
+  },
+  deleted: {
+    type: Boolean,
+    default: false
   }
 };
 

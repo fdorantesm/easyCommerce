@@ -14,7 +14,8 @@ class CouponController {
    */
   static async getCoupons(req, res) {
     try {
-      const coupons = await Coupon.paginate({}, {page: req.query.page || 1});
+      // eslint-disable-next-line max-len
+      const coupons = await Coupon.paginate({deleted: false}, {page: req.query.page || 1});
       res.send(coupons);
     } catch (err) {
       console.log(err);
@@ -82,13 +83,36 @@ class CouponController {
    */
   static async updateCoupon(req, res) {
     try {
-      // eslint-disable-next-line max-len
       const coupon = await Coupon.findById(req.params.coupon);
       const data = merge(coupon, req.body);
       await coupon.update(data);
       res.send({
         data: data
       });
+    } catch (err) {
+      console.log(err);
+      // eslint-disable-next-line max-len
+      res.boom.badRequest(res.__('There was a problem while trying to resolve your request'));
+    }
+  }
+  /**
+   * Delete coupon method
+   * @param {Request} req
+   * @param {Response} res
+   */
+  static async deleteCoupon(req, res) {
+    try {
+      const coupon = await Coupon.findById(req.params.coupon);
+      if (coupon && !coupon.deleted) {
+        coupon.softdelete();
+        res.send({
+          message: res.__('The %s was deleted successfully', 'coupon')
+        });
+      } else {
+        res.status(404).send({
+          message: res.__('The %s was not found', 'coupon')
+        });
+      }
     } catch (err) {
       console.log(err);
       // eslint-disable-next-line max-len
