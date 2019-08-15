@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import mongooseSoftDelete from 'mongoose-softdelete';
+// eslint-disable-next-line max-len
 import mongooseBeautifulUniqueValidation from 'mongoose-beautiful-unique-validation';
 import mongoosePaginate from 'mongoose-paginate-v2';
 

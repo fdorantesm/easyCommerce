@@ -1,5 +1,4 @@
 import Category from 'models/Category';
-import moment from 'libraries/moment';
 import merge from 'lodash/merge';
 
 /**
@@ -75,11 +74,11 @@ class CategoryController {
     try {
       const category = await Category.findById(req.params.id);
       if (category) {
-          const data = merge(category, req.body);
-          await category.update(data);
-          res.send({
-            data: data
-          });
+        const data = merge(category, req.body);
+        await category.update(data);
+        res.send({
+          data: data
+        });
       } else {
         res.status(404).send({
           message: res.__('The %s was not found', 'category')

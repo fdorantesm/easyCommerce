@@ -29,6 +29,7 @@ class ProductController {
    */
   static async getProduct(req, res) {
     try {
+      // eslint-disable-next-line max-len
       const product = await Product.findOne({_id: req.params.product, deleted: false});
       res.send({
         data: product
