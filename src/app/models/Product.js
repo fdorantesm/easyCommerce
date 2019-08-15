@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 // eslint-disable-next-line max-len
 import mongooseBeautifulUniqueValidation from 'mongoose-beautiful-unique-validation';
 import mongoosePaginate from 'mongoose-paginate-v2';
+import mongooseSoftdelete from 'mongoose-softdelete';
 
 const fields = {
   name: {
@@ -16,6 +17,10 @@ const fields = {
   },
   sku: {
     type: String
+  },
+  deleted: {
+    type: Boolean,
+    default: false
   }
 };
 
@@ -28,5 +33,6 @@ const Product = new mongoose.Schema(fields, options);
 
 Product.plugin(mongoosePaginate);
 Product.plugin(mongooseBeautifulUniqueValidation);
+Product.plugin(mongooseSoftdelete);
 
 export default mongoose.model('Product', Product);
