@@ -1,0 +1,1101 @@
+{
+	"_type": "export",
+	"__export_format": 3,
+	"__export_date": "2019-08-15T04:12:31.270Z",
+	"__export_source": "insomnia.desktop.app:v6.0.2",
+	"resources": [
+		{
+			"_id": "wrk_6091f9f29ef3423ab0812fa29fd00c6e",
+			"created": 1564331169730,
+			"description": "",
+			"modified": 1564331169730,
+			"name": "easyCommerce",
+			"parentId": null,
+			"_type": "workspace"
+		},
+		{
+			"_id": "env_180c0e8b288d4d1fa9da8e42ad086cae",
+			"color": null,
+			"created": 1564331169993,
+			"data": {
+				"baseURL": "https://localhost:9001",
+				"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZDNkZTA3YWQwMDcyMTE1NTBhODYxMGEiLCJpYXQiOjE1NjU1MDc0MzIsImV4cCI6MTU2NTU5MzgzMn0.6Hc9Wa7HboSJEdeaZJ0KSGZhIO6IiHaCrCh4CDAu5tY"
+			},
+			"isPrivate": false,
+			"metaSortKey": 1564331169993,
+			"modified": 1565507558547,
+			"name": "New Environment",
+			"parentId": "wrk_6091f9f29ef3423ab0812fa29fd00c6e",
+			"_type": "environment"
+		},
+		{
+			"_id": "jar_afb4b4bf972b4b3faba671f31bfd526e",
+			"cookies": [],
+			"created": 1564331170006,
+			"modified": 1564331170006,
+			"name": "Default Jar",
+			"parentId": "wrk_6091f9f29ef3423ab0812fa29fd00c6e",
+			"_type": "cookie_jar"
+		},
+		{
+			"_id": "fld_0398582cbf2247cab9ec0ac317b41eb7",
+			"created": 1564331534598,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1564331534598,
+			"modified": 1564331541296,
+			"name": "API",
+			"parentId": "wrk_6091f9f29ef3423ab0812fa29fd00c6e",
+			"_type": "request_group"
+		},
+		{
+			"_id": "env_8188b95adfe84867a5ed4ea59a0e1e92",
+			"color": "#ff00a1",
+			"created": 1564331257098,
+			"data": {},
+			"isPrivate": false,
+			"metaSortKey": 1564331257098,
+			"modified": 1565507535802,
+			"name": "Local",
+			"parentId": "env_180c0e8b288d4d1fa9da8e42ad086cae",
+			"_type": "environment"
+		},
+		{
+			"_id": "fld_7973c15d18e34c93a0ca0c252af7e517",
+			"created": 1564331567142,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1564331567142,
+			"modified": 1564331567142,
+			"name": "Auth",
+			"parentId": "fld_0398582cbf2247cab9ec0ac317b41eb7",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_f29edf8bcea94f9a983c5be0eb235bcb",
+			"created": 1565151515574,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1565151515574,
+			"modified": 1565151515574,
+			"name": "Cart",
+			"parentId": "fld_0398582cbf2247cab9ec0ac317b41eb7",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_aa624bc8eead414e9b089eb189caaede",
+			"created": 1565404120807,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1565404120808,
+			"modified": 1565404120807,
+			"name": "Order",
+			"parentId": "fld_0398582cbf2247cab9ec0ac317b41eb7",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_80739621ea374d3184e3f1bda1cf5605",
+			"created": 1565670189862,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1565670189862,
+			"modified": 1565670189862,
+			"name": "Coupons",
+			"parentId": "fld_0398582cbf2247cab9ec0ac317b41eb7",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_9d92c6fc898a4e4bbeeb5474edc5d1d6",
+			"created": 1565837828242,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1565837828242,
+			"modified": 1565837828242,
+			"name": "Products",
+			"parentId": "fld_0398582cbf2247cab9ec0ac317b41eb7",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_7e438e0a99b24efa8667dfedfcc8c4c9",
+			"created": 1565841960560,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1565754009052,
+			"modified": 1565841973377,
+			"name": "Categories",
+			"parentId": "fld_0398582cbf2247cab9ec0ac317b41eb7",
+			"_type": "request_group"
+		},
+		{
+			"_id": "req_dd52b50fafa54ec091eee31b0fb6a1a1",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/x-www-form-urlencoded",
+				"params": [
+					{
+						"id": "pair_969ad1ee51fb461c8837deeb5d740c11",
+						"name": "email",
+						"value": "fedormon@gmail.com"
+					},
+					{
+						"id": "pair_8b3f83e093d145b087ad3f643751048c",
+						"name": "password",
+						"value": "easycommerce"
+					},
+					{
+						"disabled": false,
+						"id": "pair_111702253d1547a994584af19629bfe0",
+						"name": "first_name",
+						"value": "Fernando"
+					},
+					{
+						"id": "pair_bf02151f421a4492a0e41a8199cd9411",
+						"name": "last_name",
+						"value": "Dorantes"
+					},
+					{
+						"id": "pair_333554a343244002922f783573492161",
+						"name": "phone",
+						"value": "+524771179504"
+					}
+				]
+			},
+			"created": 1564331590712,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_0c80db6b2f7b4dac867b7fe4e90648dd",
+					"name": "Content-Type",
+					"value": "application/x-www-form-urlencoded"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1564331590713,
+			"method": "POST",
+			"modified": 1565551631769,
+			"name": "Register",
+			"parameters": [],
+			"parentId": "fld_7973c15d18e34c93a0ca0c252af7e517",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ baseURL  }}/auth/register",
+			"_type": "request"
+		},
+		{
+			"_id": "req_d7774ea638534ce6a8f4064f03f5f810",
+			"authentication": {
+				"disabled": true,
+				"prefix": "",
+				"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZDNkZTA3YWQwMDcyMTE1NTBhODYxMGEiLCJ0eXBlIjoiQmVhcmVyIiwiaWF0IjoxNTY1NDA5Mjc3LCJleHAiOjE1NjU0OTU2Nzd9.TM3UL45Rag958NGLYd5xb2TzR7e5BgKs3DjuYR3-fJc",
+				"type": "bearer"
+			},
+			"body": {
+				"mimeType": "application/x-www-form-urlencoded",
+				"params": [
+					{
+						"id": "pair_1ae5257f1ad74c77b8d8ac92de0c770c",
+						"name": "email",
+						"value": "fdorantesm@gmail.com"
+					},
+					{
+						"id": "pair_90359af3ddcc49ca83e578b7c3807209",
+						"name": "password",
+						"value": "easycommerce"
+					}
+				]
+			},
+			"created": 1564953128309,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e000d65ee1f349249f7471c17b066bdb",
+					"name": "Content-Type",
+					"value": "application/x-www-form-urlencoded"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1564953128309,
+			"method": "POST",
+			"modified": 1565562707882,
+			"name": "Login",
+			"parameters": [],
+			"parentId": "fld_7973c15d18e34c93a0ca0c252af7e517",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ baseURL  }}/auth/login",
+			"_type": "request"
+		},
+		{
+			"_id": "req_208ff1b8fec54143bcb0dc71f3e4bfb4",
+			"authentication": {},
+			"body": {},
+			"created": 1565151522999,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1565151522999,
+			"method": "GET",
+			"modified": 1565587868284,
+			"name": "Get cart",
+			"parameters": [],
+			"parentId": "fld_f29edf8bcea94f9a983c5be0eb235bcb",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ baseURL  }}/cart?key=dorantesmito",
+			"_type": "request"
+		},
+		{
+			"_id": "req_f57ce8166cce4350b00ec75d5bec1cb3",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/x-www-form-urlencoded",
+				"params": [
+					{
+						"id": "pair_fd8af37ba3254d84b1ca7cc1c82cc8e1",
+						"name": "key",
+						"value": "dorantesmito"
+					},
+					{
+						"disabled": false,
+						"id": "pair_46d3e7f292b34b4f9fd7ad9ba50d458f",
+						"name": "product",
+						"value": "5d4ea4499f3bea798f6f32cf"
+					},
+					{
+						"id": "pair_49f45fb5ab4e423984e01fd8d6863e3d",
+						"name": "qty",
+						"value": "1"
+					},
+					{
+						"disabled": true,
+						"id": "pair_3bced43a368f4dd5923d0c5555764a51",
+						"name": "product",
+						"value": "5d4e73169f3bea798f6f32ce"
+					},
+					{
+						"disabled": true,
+						"id": "pair_85e1197a3f734395bb0e693af6cd776b",
+						"name": "product",
+						"value": "5d4a614a10ece2e9e8836c28"
+					}
+				]
+			},
+			"created": 1565152189368,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_919ab194b21c4cb58585d25fa53f0eba",
+					"name": "Content-Type",
+					"value": "application/x-www-form-urlencoded"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1565052325654,
+			"method": "POST",
+			"modified": 1565589109906,
+			"name": "Add product",
+			"parameters": [],
+			"parentId": "fld_f29edf8bcea94f9a983c5be0eb235bcb",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ baseURL  }}/cart",
+			"_type": "request"
+		},
+		{
+			"_id": "req_7139c5758ebe40778cffc7cb2537ee68",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/x-www-form-urlencoded",
+				"params": [
+					{
+						"id": "pair_fd8af37ba3254d84b1ca7cc1c82cc8e1",
+						"name": "key",
+						"value": "dorantesmito"
+					}
+				]
+			},
+			"created": 1565157647167,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_919ab194b21c4cb58585d25fa53f0eba",
+					"name": "Content-Type",
+					"value": "application/x-www-form-urlencoded"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1565002726981.5,
+			"method": "DELETE",
+			"modified": 1565587872053,
+			"name": "Clear Cart",
+			"parameters": [],
+			"parentId": "fld_f29edf8bcea94f9a983c5be0eb235bcb",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ baseURL  }}/cart",
+			"_type": "request"
+		},
+		{
+			"_id": "req_13d074f4cbaa4b2aacf271b2e05a95e8",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/x-www-form-urlencoded",
+				"params": [
+					{
+						"id": "pair_fd8af37ba3254d84b1ca7cc1c82cc8e1",
+						"name": "key",
+						"value": "asd"
+					},
+					{
+						"id": "pair_46d3e7f292b34b4f9fd7ad9ba50d458f",
+						"name": "product",
+						"value": "5d4a614a10ece2e9e8836c28"
+					}
+				]
+			},
+			"created": 1565158025063,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_919ab194b21c4cb58585d25fa53f0eba",
+					"name": "Content-Type",
+					"value": "application/x-www-form-urlencoded"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1565027526317.75,
+			"method": "PATCH",
+			"modified": 1565408728924,
+			"name": "Delete product",
+			"parameters": [],
+			"parentId": "fld_f29edf8bcea94f9a983c5be0eb235bcb",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ baseURL  }}/cart",
+			"_type": "request"
+		},
+		{
+			"_id": "req_245c07e8e9044252b8290868e47c6aee",
+			"authentication": {
+				"disabled": false,
+				"prefix": "",
+				"token": "{{ token  }}",
+				"type": "bearer"
+			},
+			"body": {
+				"mimeType": "application/x-www-form-urlencoded",
+				"params": [
+					{
+						"id": "pair_436edb0b826f46638c99e5ed6237e9fb",
+						"name": "cart_key",
+						"value": "dorantesmito"
+					},
+					{
+						"id": "pair_cfc8c3ac88bd4b229062cdf525cc67e5",
+						"name": "method",
+						"value": "oxxo"
+					},
+					{
+						"id": "pair_982dfba983f745b2b355eef322e1dc67",
+						"name": "token",
+						"value": "tok_test_visa_4242"
+					},
+					{
+						"id": "pair_80ee9bd72f9849acb2dd3b6ca43ceaad",
+						"name": "from_latitude",
+						"value": "19.4328333"
+					},
+					{
+						"id": "pair_34b84c0ad9304a94a51cbbdd76468508",
+						"name": "from_longitude",
+						"value": "-99.1331602"
+					},
+					{
+						"id": "pair_99e8a536c9424a30905bb42f5ab983a3",
+						"name": "to_latitude",
+						"value": "20.5955459"
+					},
+					{
+						"id": "pair_6e112be2a4ac4d1a8be57a37eb16949c",
+						"name": "to_longitude",
+						"value": "-100.3928641"
+					},
+					{
+						"id": "pair_bb9b684ce3544a7586a925160688cb18",
+						"name": "from_address_line1",
+						"value": "Juárez 701"
+					},
+					{
+						"id": "pair_3bc5e994357f4c84909aec5561724c2b",
+						"name": "from_address_line2",
+						"value": ""
+					},
+					{
+						"id": "pair_32e8e4e209d643e58ac816e1d25e040d",
+						"name": "from_address_line3",
+						"value": "Centro"
+					},
+					{
+						"id": "pair_6d38dfdfac854887a3d6fd41a60dbbed",
+						"name": "from_address_city",
+						"value": "Cuautémoc"
+					},
+					{
+						"id": "pair_ba368e6d93c44ae680cf4b3bd209eb68",
+						"name": "from_address_state",
+						"value": "Ciudad de México"
+					},
+					{
+						"id": "pair_f5b16e61c62144578f0e8422c3fcb6d6",
+						"name": "from_address_country",
+						"value": "México"
+					},
+					{
+						"id": "pair_383954aa407d4e85af2b628086f2bad3",
+						"name": "from_address_references",
+						"value": "Edificio verde"
+					},
+					{
+						"id": "pair_a965f2e72fbb4dd08e848f5a52982cf3",
+						"name": "from_address_between_streets",
+						"value": "Hidalgo y Lázaro Cárdenas"
+					},
+					{
+						"id": "pair_219a65675131473692580348e74979e8",
+						"name": "from_address_zip",
+						"value": "02100"
+					},
+					{
+						"id": "pair_68edf6d1feff4fa0a1c990578ede3afb",
+						"name": "from_sender_name",
+						"value": "Fernando Dorantes"
+					},
+					{
+						"id": "pair_f7e7f4c609c14ca8ad8af8617a5fe400",
+						"name": "from_sender_phone",
+						"value": "+524771179504"
+					},
+					{
+						"id": "pair_56b40d69b82e4a6a8f73b2a35f96824f",
+						"name": "to_address_line1",
+						"value": "Corregidora 18"
+					},
+					{
+						"id": "pair_b2e8680549d24bd69ef383ea8f365f4b",
+						"name": "to_address_line2",
+						"value": "Edif C int 901"
+					},
+					{
+						"id": "pair_02fde95801684e5cbc348d400621fd48",
+						"name": "to_address_line3",
+						"value": "Centro"
+					},
+					{
+						"id": "pair_c8f38a12abba41fb99bc49dfe6d92700",
+						"name": "to_address_references",
+						"value": "Edificio blanco"
+					},
+					{
+						"id": "pair_03d10f4af6c74296b6f1346d7951cdd4",
+						"name": "to_address_between_streets",
+						"value": "Pasteur y Calzada independencia"
+					},
+					{
+						"id": "pair_dd41d5351be44d3190bd289e5357e1a4",
+						"name": "to_address_city",
+						"value": "Querétaro"
+					},
+					{
+						"id": "pair_795c1d7de0b3449a89f26e0568d8817c",
+						"name": "to_address_state",
+						"value": "Querétaro"
+					},
+					{
+						"id": "pair_593bd3ccd19542f3a324b6f1905d7eb4",
+						"name": "to_address_country",
+						"value": "México"
+					},
+					{
+						"id": "pair_a36425241c384fbe8446e4c088aa26f6",
+						"name": "to_address_zip",
+						"value": "76000"
+					},
+					{
+						"id": "pair_17c349b971024090ad5764cd44e0ed17",
+						"name": "to_receiver_name",
+						"value": "Sharon Díaz"
+					},
+					{
+						"id": "pair_04227762ff424666bfce187f1dcc0ce7",
+						"name": "to_receiver_phone",
+						"value": "+525555555555"
+					},
+					{
+						"id": "pair_8bbcce19e0c24e1b9a99aa4ee028ef09",
+						"name": "amount",
+						"value": "150"
+					},
+					{
+						"id": "pair_f8bbf90ce8364480be7b6a544df15bbb",
+						"name": "carrier",
+						"value": "redpack"
+					},
+					{
+						"id": "pair_1db794f2203e484db9ee5da5ed6e5b29",
+						"name": "type",
+						"value": "2 day"
+					},
+					{
+						"id": "pair_2d25f2071b984f9195f15aceb623a2b4",
+						"name": "secured",
+						"value": "false"
+					},
+					{
+						"id": "pair_144b29a7d64946d0a32ac3b1982c4a75",
+						"name": "bill",
+						"value": "true"
+					},
+					{
+						"id": "pair_418258cbb5744f14b02b66dfb37356ce",
+						"name": "coupon",
+						"value": "Ferchis"
+					}
+				]
+			},
+			"created": 1565404135284,
+			"description": "Make an order and payment\n\nUser must be authenticated to ceate an order.\n\n## Body\n\n| Parameter      | Type            | Required                 |\n|----------------|:---------------:|:------------------------:|\n| cart_key | String | yes |\n| method | String | yes |\n| token | String | if method equals to card |\n| from_latitude | Double | yes |\n| from_longitude | Double | yes |\n| to_latitude | Double | yes |\n| to_longitude | Double | yes |\n| from_address_line1 | String | yes |\n| from_address_line2 | String | no |\n| from_address_line3 | String | yes |\n| from_address_city | String | yes |\n| from_address_state | String | yes |\n| from_address_country | String | yes |\n| from_address_references | String | yes |\n| from_address_between_streets | String | no |\n| from_address_zip | String | yes |\n| from_sender_name | String | yes |\n| from_sender_phone | String | yes |\n| to_address_line1 | String | yes |\n| to_address_line2 | String | no |\n| to_address_line3 | String | yes |\n| to_address_references | String | yes |\n| to_address_between_streets | String | no |\n| to_address_city | String | yes |\n| to_address_state | String | yes |\n| to_address_country | String | yes |\n| to_address_zip | String | yes |\n| to_receiver_name | String | yes |\n| to_receiver_phone | String | yes |\n| shipping_type | String | yes |\n| shipping_secured | Boolean | yes |\n| bill | Boolean | no |\n| gift | Boolean | no |\n\n## Response\n\n```js\n{\n\t\"payment\": {\n\t\t\"status\": \"pending_payment\",\n\t\t\"refunded\": false,\n\t\t\"currency\": \"MXN\",\n\t\t\"_id\": \"5d4f12d253e27749dfe76890\",\n\t\t\"gatewayChargeId\": \"5d4e48bc431e7278b6daaecb\",\n\t\t\"amount\": 250.25,\n\t\t\"fee\": 10.16,\n\t\t\"method\": \"oxxo\",\n\t\t\"order\": \"5d4f12d253e27749dfe7688f\",\n\t\t\"referenceExpiration\": \"2019-08-18T01:00:00.000Z\",\n\t\t\"reference\": \"98000003288639\",\n\t\t\"createdAt\": \"2019-08-10T18:54:10.523Z\",\n\t\t\"updatedAt\": \"2019-08-10T18:54:10.523Z\",\n\t\t\"__v\": 0\n\t},\n\t\"order\": {\n\t\t\"status\": \"created\",\n\t\t\"gift\": false,\n\t\t\"bill\": true,\n\t\t\"_id\": \"5d4f12d253e27749dfe7688f\",\n\t\t\"customer\": \"5d3de07ad007211550a8610a\",\n\t\t\"subtotal\": 172.41,\n\t\t\"total\": 200,\n\t\t\"gatewayCustomerId\": \"cus_2m48aLFZjNLR1CPtc\",\n\t\t\"gatewayOrderId\": \"ord_2m8CZ3mJXGjeT1dTq\",\n\t\t\"products\": [],\n\t\t\"createdAt\": \"2019-08-10T18:54:10.498Z\",\n\t\t\"updatedAt\": \"2019-08-10T18:54:10.498Z\",\n\t\t\"__v\": 0\n\t},\n\t\"delivery\": {\n\t\t\"from\": {\n\t\t\t\"address\": {\n\t\t\t\t\"line1\": \"Juárez 701\",\n\t\t\t\t\"line2\": \"\",\n\t\t\t\t\"line3\": \"Centro\",\n\t\t\t\t\"betweenStreets\": \"Hidalgo y Lázaro Cárdenas\",\n\t\t\t\t\"references\": \"Edificio verde\",\n\t\t\t\t\"zip\": \"02100\",\n\t\t\t\t\"city\": \"Cuautémoc\",\n\t\t\t\t\"state\": \"Ciudad de México\",\n\t\t\t\t\"country\": \"México\"\n\t\t\t},\n\t\t\t\"sender\": {\n\t\t\t\t\"name\": \"Fernando Dorantes\",\n\t\t\t\t\"phone\": \"+524771179504\"\n\t\t\t},\n\t\t\t\"location\": {\n\t\t\t\t\"coordinates\": [\n\t\t\t\t\t-99.1331602,\n\t\t\t\t\t19.4328333\n\t\t\t\t],\n\t\t\t\t\"type\": \"Point\"\n\t\t\t}\n\t\t},\n\t\t\"to\": {\n\t\t\t\"address\": {\n\t\t\t\t\"line1\": \"Corregidora 18\",\n\t\t\t\t\"line2\": \"Edif C int 901\",\n\t\t\t\t\"line3\": \"Centro\",\n\t\t\t\t\"betweenStreets\": \"Pasteur y Calzada independencia\",\n\t\t\t\t\"references\": \"Edificio blanco\",\n\t\t\t\t\"zip\": \"76000\",\n\t\t\t\t\"city\": \"Querétaro\",\n\t\t\t\t\"state\": \"Querétaro\",\n\t\t\t\t\"country\": \"México\"\n\t\t\t},\n\t\t\t\"receiver\": {\n\t\t\t\t\"name\": \"John Parker\",\n\t\t\t\t\"phone\": \"+525555555555\"\n\t\t\t},\n\t\t\t\"location\": {\n\t\t\t\t\"coordinates\": [\n\t\t\t\t\t-100.3928641,\n\t\t\t\t\t20.5955459\n\t\t\t\t],\n\t\t\t\t\"type\": \"Point\"\n\t\t\t}\n\t\t},\n\t\t\"status\": \"created\",\n\t\t\"_id\": \"5d4f12d253e27749dfe76891\",\n\t\t\"amount\": 150,\n\t\t\"carrier\": \"redpack\",\n\t\t\"type\": \"2 day\",\n\t\t\"secured\": false,\n\t\t\"order\": \"5d4f12d253e27749dfe7688f\",\n\t\t\"createdAt\": \"2019-08-10T18:54:10.571Z\",\n\t\t\"updatedAt\": \"2019-08-10T18:54:10.571Z\",\n\t\t\"__v\": 0,\n\t\t\"distance\": 184.48982068463263,\n\t\t\"id\": \"5d4f12d253e27749dfe76891\"\n\t}\n}\n```",
+			"headers": [
+				{
+					"id": "pair_89e456d85d964a82b266e7eccc017db8",
+					"name": "Content-Type",
+					"value": "application/x-www-form-urlencoded"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1565404135284,
+			"method": "POST",
+			"modified": 1565670049256,
+			"name": "Create order",
+			"parameters": [],
+			"parentId": "fld_aa624bc8eead414e9b089eb189caaede",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ baseURL  }}/orders",
+			"_type": "request"
+		},
+		{
+			"_id": "req_9f166586d2d3400691dce57b65ad4239",
+			"authentication": {
+				"token": "{{ token  }}",
+				"type": "bearer"
+			},
+			"body": {},
+			"created": 1565471391897,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1565471391897,
+			"method": "GET",
+			"modified": 1565588950784,
+			"name": "Get order",
+			"parameters": [],
+			"parentId": "fld_aa624bc8eead414e9b089eb189caaede",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ baseURL  }}/orders/5d50fd32d86b91216eb12b29?with=summary.product,deliveries,payments,customer.profile,coupon",
+			"_type": "request"
+		},
+		{
+			"_id": "req_941ce5fdc55146d5bdc217f802cff044",
+			"authentication": {
+				"disabled": false,
+				"prefix": "",
+				"token": "{{ token  }}",
+				"type": "bearer"
+			},
+			"body": {},
+			"created": 1565478980711,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1565437763590.5,
+			"method": "GET",
+			"modified": 1565506856592,
+			"name": "Get orders",
+			"parameters": [],
+			"parentId": "fld_aa624bc8eead414e9b089eb189caaede",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ baseURL  }}/orders?with=summary.product,deliveries,payments,customer.profile",
+			"_type": "request"
+		},
+		{
+			"_id": "req_04ec25ec35ed434788b7919b00d04818",
+			"authentication": {},
+			"body": {},
+			"created": 1565670200769,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1565670200769,
+			"method": "GET",
+			"modified": 1565840762843,
+			"name": "Get coupons",
+			"parameters": [],
+			"parentId": "fld_80739621ea374d3184e3f1bda1cf5605",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ baseURL  }}/coupons",
+			"_type": "request"
+		},
+		{
+			"_id": "req_d7c44e712a3246f5b4d2b5db28196571",
+			"authentication": {},
+			"body": {},
+			"created": 1565670477996,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1565570796333,
+			"method": "GET",
+			"modified": 1565760075819,
+			"name": "Get coupon",
+			"parameters": [],
+			"parentId": "fld_80739621ea374d3184e3f1bda1cf5605",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ baseURL  }}/coupons/5d523db3dadee31948711329",
+			"_type": "request"
+		},
+		{
+			"_id": "req_23b57a8131514be5b3e29664fafdeb4c",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"limits\": {\n\t\t\t\"user\": 1,\n\t\t\t\"uses\": 1000,\n\t\t\t\"expiration\": 30,\n\t\t\t\"minimumAmount\": 250,\n\t\t\t\"maximumAmount\": 250\n\t\t},\n\t\t\"public\": true,\n\t\t\"code\": \"Test\",\n\t\t\"type\": \"percentage\",\n\t\t\"value\": 50,\n\t\t\"enabled\": true\n}"
+			},
+			"created": 1565670775929,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_b6259911a8b2473587d3d97e78d0e615",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1565521094115,
+			"method": "POST",
+			"modified": 1565759325547,
+			"name": "Create coupon",
+			"parameters": [],
+			"parentId": "fld_80739621ea374d3184e3f1bda1cf5605",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ baseURL  }}/coupons",
+			"_type": "request"
+		},
+		{
+			"_id": "req_60cc00e3875043a98c033a414f9811dc",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"limits\": {\n\t\t\"user\": 0,\n\t\t\"uses\": 0\n\t},\n\t\"code\": \"LaDividimos\"\n}"
+			},
+			"created": 1565759239483,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_b6259911a8b2473587d3d97e78d0e615",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1565496243006,
+			"method": "POST",
+			"modified": 1565762627134,
+			"name": "Update coupon",
+			"parameters": [],
+			"parentId": "fld_80739621ea374d3184e3f1bda1cf5605",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ baseURL  }}/coupons/5d523db3dadee31948711329",
+			"_type": "request"
+		},
+		{
+			"_id": "req_eac9322c5ed9453eaadfa831e2b40912",
+			"authentication": {},
+			"body": {},
+			"created": 1565837838454,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1565837838454,
+			"method": "GET",
+			"modified": 1565839525787,
+			"name": "Get products",
+			"parameters": [],
+			"parentId": "fld_9d92c6fc898a4e4bbeeb5474edc5d1d6",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ baseURL  }}/products",
+			"_type": "request"
+		},
+		{
+			"_id": "req_252259ad19994473bb64c8562fe06757",
+			"authentication": {},
+			"body": {},
+			"created": 1565837859542,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1565754019611.5,
+			"method": "GET",
+			"modified": 1565839533156,
+			"name": "Get product",
+			"parameters": [],
+			"parentId": "fld_9d92c6fc898a4e4bbeeb5474edc5d1d6",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ baseURL  }}/products/5d4a614a10ece2e9e8836c28",
+			"_type": "request"
+		},
+		{
+			"_id": "req_1f41239717294e289bfbb677fec5ccbe",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/x-www-form-urlencoded",
+				"params": [
+					{
+						"id": "pair_c3fe50fe1a5046c69ff0a14ef4a40b77",
+						"name": "name",
+						"value": "Detergente Blanca Nieves"
+					},
+					{
+						"id": "pair_0c75de71edcc4249b093ef9875a43668",
+						"name": "price",
+						"value": "32.50"
+					}
+				]
+			},
+			"created": 1565838145195,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_73d212bb7c904440bcbf8a09140c94e2",
+					"name": "Content-Type",
+					"value": "application/x-www-form-urlencoded"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1565838145195,
+			"method": "POST",
+			"modified": 1565839342778,
+			"name": "Create product",
+			"parameters": [],
+			"parentId": "fld_9d92c6fc898a4e4bbeeb5474edc5d1d6",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{baseURL}}/products",
+			"_type": "request"
+		},
+		{
+			"_id": "req_6a0d20506e154c939d7e7cbe856895c9",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/x-www-form-urlencoded",
+				"params": [
+					{
+						"id": "pair_c3fe50fe1a5046c69ff0a14ef4a40b77",
+						"name": "name",
+						"value": "Chorizo"
+					},
+					{
+						"id": "pair_0c75de71edcc4249b093ef9875a43668",
+						"name": "price",
+						"value": "101.23"
+					}
+				]
+			},
+			"created": 1565838885626,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_73d212bb7c904440bcbf8a09140c94e2",
+					"name": "Content-Type",
+					"value": "application/x-www-form-urlencoded"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1565837991824.5,
+			"method": "POST",
+			"modified": 1565839475648,
+			"name": "Update product",
+			"parameters": [],
+			"parentId": "fld_9d92c6fc898a4e4bbeeb5474edc5d1d6",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{baseURL}}/products/5d4a614a10ece2e9e8836c28",
+			"_type": "request"
+		},
+		{
+			"_id": "req_2b7450b6034246cabe0230a080f87ff6",
+			"authentication": {},
+			"body": {},
+			"created": 1565839205729,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_73d212bb7c904440bcbf8a09140c94e2",
+					"name": "Content-Type",
+					"value": "application/x-www-form-urlencoded"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1565837915139.25,
+			"method": "DELETE",
+			"modified": 1565839528450,
+			"name": "Delete product",
+			"parameters": [],
+			"parentId": "fld_9d92c6fc898a4e4bbeeb5474edc5d1d6",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{baseURL}}/products/5d4a614a10ece2e9e8836c28",
+			"_type": "request"
+		},
+		{
+			"_id": "req_b08f787d48e34bdd828d8aa46113f248",
+			"authentication": {},
+			"body": {},
+			"created": 1565841960568,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1565837838454,
+			"method": "GET",
+			"modified": 1565842204288,
+			"name": "Get categories",
+			"parameters": [],
+			"parentId": "fld_7e438e0a99b24efa8667dfedfcc8c4c9",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ baseURL  }}/categories",
+			"_type": "request"
+		},
+		{
+			"_id": "req_bbeb16c7944f46528efed7ea1e5e47ae",
+			"authentication": {},
+			"body": {},
+			"created": 1565841960575,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1565754019611.5,
+			"method": "GET",
+			"modified": 1565842200722,
+			"name": "Get category",
+			"parameters": [],
+			"parentId": "fld_7e438e0a99b24efa8667dfedfcc8c4c9",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ baseURL  }}/categories/5d4a614a10ece2e9e8836c28",
+			"_type": "request"
+		},
+		{
+			"_id": "req_b05e417c9e3b4e4aa12992a442161d31",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/x-www-form-urlencoded",
+				"params": [
+					{
+						"id": "pair_c3fe50fe1a5046c69ff0a14ef4a40b77",
+						"name": "name",
+						"value": "Abarrotes"
+					},
+					{
+						"id": "pair_0c75de71edcc4249b093ef9875a43668",
+						"name": "slug",
+						"value": "abarrotes"
+					}
+				]
+			},
+			"created": 1565841960582,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_73d212bb7c904440bcbf8a09140c94e2",
+					"name": "Content-Type",
+					"value": "application/x-www-form-urlencoded"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1565838145195,
+			"method": "POST",
+			"modified": 1565842231808,
+			"name": "Create category",
+			"parameters": [],
+			"parentId": "fld_7e438e0a99b24efa8667dfedfcc8c4c9",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{baseURL}}/categories",
+			"_type": "request"
+		},
+		{
+			"_id": "req_f20d8c7c0c2e4419807e802876257d24",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/x-www-form-urlencoded",
+				"params": [
+					{
+						"id": "pair_c3fe50fe1a5046c69ff0a14ef4a40b77",
+						"name": "name",
+						"value": "Chorizo"
+					},
+					{
+						"id": "pair_0c75de71edcc4249b093ef9875a43668",
+						"name": "price",
+						"value": "101.23"
+					}
+				]
+			},
+			"created": 1565841960587,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_73d212bb7c904440bcbf8a09140c94e2",
+					"name": "Content-Type",
+					"value": "application/x-www-form-urlencoded"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1565837991824.5,
+			"method": "POST",
+			"modified": 1565842242961,
+			"name": "Update category",
+			"parameters": [],
+			"parentId": "fld_7e438e0a99b24efa8667dfedfcc8c4c9",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{baseURL}}/categories/5d4a614a10ece2e9e8836c28",
+			"_type": "request"
+		},
+		{
+			"_id": "req_a83d40228a904663b4a084d56c6380c5",
+			"authentication": {},
+			"body": {},
+			"created": 1565841960591,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_73d212bb7c904440bcbf8a09140c94e2",
+					"name": "Content-Type",
+					"value": "application/x-www-form-urlencoded"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1565837915139.25,
+			"method": "DELETE",
+			"modified": 1565842210745,
+			"name": "Delete category",
+			"parameters": [],
+			"parentId": "fld_7e438e0a99b24efa8667dfedfcc8c4c9",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{baseURL}}/categories/5d4a614a10ece2e9e8836c28",
+			"_type": "request"
+		}
+	]
+}
