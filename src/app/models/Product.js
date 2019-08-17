@@ -1,5 +1,4 @@
 /* eslint-disable new-cap */
-
 import mongoose from 'mongoose';
 // eslint-disable-next-line max-len
 import mongooseBeautifulUniqueValidation from 'mongoose-beautiful-unique-validation';
@@ -18,6 +17,10 @@ const fields = {
   sku: {
     type: String
   },
+  files: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'File'
+  }],
   deleted: {
     type: Boolean,
     default: false

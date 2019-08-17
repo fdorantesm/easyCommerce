@@ -1,6 +1,5 @@
-import Product from 'models/Product';
 import merge from 'lodash/merge';
-
+import Product from 'models/Product';
 /**
  * Product Class Controller
  */
@@ -12,7 +11,12 @@ class ProductController {
    */
   static async getProducts(req, res) {
     try {
-      const products = await Product.paginate({deleted: false});
+      const options = {
+        page: req.query.page || 1,
+        populate: req.populate
+      };
+      // eslint-disable-next-line max-len
+      const products = await Product.paginate({deleted: false}, options);
       res.send({
         data: products
       });
@@ -30,7 +34,7 @@ class ProductController {
   static async getProduct(req, res) {
     try {
       // eslint-disable-next-line max-len
-      const product = await Product.findOne({_id: req.params.product, deleted: false});
+      const product = await Product.findOne({_id: req.params.product, deleted: false}).populate(req.populate);
       res.send({
         data: product
       });
