@@ -1,4 +1,4 @@
-import conekta from 'conekta-promises';
+import conekta from 'conekta';
 
 conekta.locale = process.env.CONEKTA_LOCALE;
 conekta.api_key = process.env.CONEKTA_PRIVATE;
