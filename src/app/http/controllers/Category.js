@@ -13,8 +13,11 @@ class CategoryController {
    */
   static async getCategories(req, res) {
     try {
-      // eslint-disable-next-line max-len
-      const categories = await Category.paginate({deleted: false}, {page: req.query.page || 1});
+      const options = {
+        page: req.query.page || 1,
+        populate: req.populate
+      };
+      const categories = await Category.paginate({deleted: false}, options);
       res.send(categories);
     } catch (err) {
       console.log(err);
@@ -54,7 +57,8 @@ class CategoryController {
    */
   static async getCategory(req, res) {
     try {
-      const category = await Category.findById(req.params.id);
+      // eslint-disable-next-line max-len
+      const category = await Category.findById(req.params.id).populate(req.populate);
       res.send({
         data: category
       });
