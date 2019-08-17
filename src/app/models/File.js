@@ -7,6 +7,15 @@ const fields = {
     unique: true,
     sparse: true
   },
+  format: {
+    type: String
+  },
+  etag: {
+    type: String
+  },
+  signature: {
+    type: String
+  },
   type: {
     type: String,
     required: true,
@@ -21,7 +30,10 @@ const fields = {
   path: {
     type: String,
     required: true
-  }
+  },
+  tags: [{
+    type: String
+  }]
 };
 
 const options = {

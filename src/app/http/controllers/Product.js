@@ -1,5 +1,8 @@
 import merge from 'lodash/merge';
 import Product from 'models/Product';
+import Upload from 'libraries/upload';
+import File from 'models/File';
+
 /**
  * Product Class Controller
  */
@@ -51,13 +54,32 @@ class ProductController {
    */
   static async createProduct(req, res) {
     try {
+      console.log('cats', req.body.category);
+      const uploads = [];
       const product = new Product({
         name: req.body.name,
-        price: req.body.price
+        price: req.body.price,
+        files: [],
+        categories: req.body.category
       });
-      await product.save();
-      res.send({
-        data: product
+      req.files.file.map((file) => uploads.push(Upload.file(file, 'image')));
+      Promise.all(uploads).then(async (results) => {
+        results.map(async (result) => {
+          const file = new File({
+            name: result.public_id,
+            signature: result.signature,
+            format: result.format,
+            type: result.resource_type,
+            etag: result.etag,
+            path: result.secure_url
+          });
+          product.files.push(file._id);
+          await file.save();
+        });
+        await product.save();
+        res.send({
+          data: product
+        });
       });
     } catch (err) {
       console.log(err);

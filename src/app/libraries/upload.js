@@ -30,12 +30,13 @@ export default class Upload {
   /**
    * Uploads file from stream to cloudinary
    * @param {Stream} file
+   * @param {String} type
    * @return {Promise}
    */
-  static image(file) {
+  static file(file, type) {
     return new Promise((resolve, reject) => {
       // eslint-disable-next-line max-len
-      const stream = cloudinary.v2.uploader.upload_stream({resource_type: 'image'}, (err, res) => {
+      const stream = cloudinary.v2.uploader.upload_stream({resource_type: type}, (err, res) => {
         if (err) {
           reject(err);
         } else {
