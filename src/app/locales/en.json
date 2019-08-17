@@ -18,5 +18,7 @@
 	"There was a problem while trying to resolve your request": "There was a problem while trying to resolve your request",
 	"The %s was not found,": "The %s was not found,",
 	"The %s was deleted successfully": "The %s was deleted successfully",
-	"The %s was not found": "The %s was not found"
+	"The %s was not found": "The %s was not found",
+	"not master and slaveOk=false": "not master and slaveOk=false",
+	"secretOrPrivateKey must have a value": "secretOrPrivateKey must have a value"
 }
