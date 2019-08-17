@@ -15,7 +15,7 @@ class UserController {
   static async getUsers(req, res) {
     try {
       // eslint-disable-next-line
-      const users = User.paginate({deleted: false}, {page: req.query.page || 1});
+      const users = await User.paginate({deleted: false}, {page: req.query.page || 1, populate: req.populate});
       res.send({
         data: users
       });
@@ -32,13 +32,13 @@ class UserController {
    */
   static async getUser(req, res) {
     try {
-      const user = User.findById(req.body.id);
+      const user = await User.findById(req.params.id).populate(req.populate);
       if (user) {
         res.send({
           data: user
         });
       } else {
-        res.boom.notFound(res.__('The %s was not found', 'product'));
+        res.boom.notFound(res.__('The %s was not found', 'user'));
       }
     } catch (err) {
       console.log(err);
