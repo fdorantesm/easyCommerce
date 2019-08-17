@@ -60,6 +60,8 @@
     "serve-favicon": "^2.5.0",
     "slug": "^0.9.4",
     "socket.io": "^2.2.0",
+    "utility": "^1.16.1",
+    "uuid": "^3.3.2",
     "winston": "^3.2.1"
   },
   "devDependencies": {

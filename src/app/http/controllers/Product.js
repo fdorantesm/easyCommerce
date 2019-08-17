@@ -54,15 +54,19 @@ class ProductController {
    */
   static async createProduct(req, res) {
     try {
+      console.log(req.files);
       console.log('cats', req.body.category);
+      // eslint-disable-next-line max-len
+      const files = Array.isArray(req.files.file) ? req.files.file : [req.files.file];
       const uploads = [];
       const product = new Product({
         name: req.body.name,
         price: req.body.price,
         files: [],
-        categories: req.body.category
+        // eslint-disable-next-line max-len
+        categories: Array.isArray(req.body.category) ? req.body.category : [req.body.category]
       });
-      req.files.file.map((file) => uploads.push(Upload.file(file, 'image')));
+      files.map((file) => uploads.push(Upload.file('products', file)));
       Promise.all(uploads).then(async (results) => {
         results.map(async (result) => {
           const file = new File({

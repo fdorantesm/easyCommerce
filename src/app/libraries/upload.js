@@ -1,4 +1,6 @@
 import cloudinary from 'cloudinary';
+import uuid from 'uuid/v4';
+import path from 'path';
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -29,14 +31,15 @@ export default class Upload {
 
   /**
    * Uploads file from stream to cloudinary
+   * @param {String} dir
    * @param {Stream} file
    * @param {String} type
    * @return {Promise}
    */
-  static file(file, type) {
+  static file(dir, file, type = 'image') {
     return new Promise((resolve, reject) => {
       // eslint-disable-next-line max-len
-      const stream = cloudinary.v2.uploader.upload_stream({resource_type: type}, (err, res) => {
+      const stream = cloudinary.v2.uploader.upload_stream({resource_type: type, public_id: path.join(dir, uuid())}, (err, res) => {
         if (err) {
           reject(err);
         } else {
