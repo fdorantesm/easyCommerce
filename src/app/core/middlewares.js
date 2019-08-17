@@ -14,6 +14,7 @@ import boom from 'express-boom';
 import fileUpload from 'express-fileupload';
 import path from 'path';
 import populate from 'middlewares/populate';
+import models from 'middlewares/models';
 
 const PWD = process.env.PWD;
 const APP_PATH = process.env.APP_PATH;
@@ -62,6 +63,8 @@ export default (app) => {
   app.use(boom());
 
   app.use(populate);
+
+  app.use(models);
 
   app.use(Auth.handshake, Auth.authorization);
 
