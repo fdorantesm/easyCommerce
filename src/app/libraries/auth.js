@@ -1,10 +1,21 @@
 import User from 'models/User';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import fs from 'fs';
+import path from 'path';
 
 const APP_SECURE_SALT = process.env.APP_SECURE_SALT;
 const APP_SECURE_KEY = process.env.APP_SECURE_KEY;
 const APP_SECURE_EXPIRATION = process.env.APP_SECURE_EXPIRATION;
+const ROOT_PATH = process.env.ROOT_PATH;
+
+let signature;
+
+try {
+  signature = fs.readFileSync(path.join(ROOT_PATH, APP_SECURE_KEY));
+} catch (err) {
+  signature = APP_SECURE_KEY || 'default';
+}
 
 /**
  * Class to handle authentication
@@ -19,12 +30,12 @@ export default class Auth {
   static async connect(params, password) {
     if ('email' in params && password) {
       // eslint-disable-next-line max-len
-      const user = await User.findOne(params).select(['+password', 'lastLogin', 'token']);
+      const user = await User.findOne({...params, deleted: false}).select(['+password', 'lastLogin', 'token']);
       console.log(user);
       if (!user) {
         throw new Error('UserAuthenticationException');
       }
-
+      // eslint-disable-next-line max-len
       const match = await Auth.compare(password || '', user.password);
 
       if (match) {
@@ -34,8 +45,8 @@ export default class Auth {
         const options = {
           expiresIn: APP_SECURE_EXPIRATION,
         };
-        const token = jwt.sign(data, APP_SECURE_KEY, options);
-        const payload = await jwt.verify(token, APP_SECURE_KEY);
+        const token = jwt.sign(data, signature, options);
+        const payload = await jwt.verify(token, signature);
         user.token = token;
         user.lastLogin = new Date();
         await user.save();
@@ -66,7 +77,7 @@ export default class Auth {
    */
   static async verify(token) {
     if (token) {
-      const payload = await jwt.verify(token, APP_SECURE_KEY);
+      const payload = await jwt.verify(token, signature);
       return payload;
     }
 

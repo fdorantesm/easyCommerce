@@ -1,5 +1,5 @@
 {
-	"watch": ["src/*", ".env", "package.json", "babel.config.js", ".nodemon"],
+	"watch": ["src/*", ".env", "package.json", "babel.config.js", ".nodemon", "storage/oauth.key", "storage/ssl/*"],
 	"extension": [".js", ".json", ".pug"],
 	"ignore": ["src/app/locales/*", "src/app/logs/*"]
 }
