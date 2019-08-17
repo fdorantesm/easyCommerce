@@ -11,4 +11,5 @@ node_modules
 app/*
 bin/*
 .DS_Store
-src/app/logs/*.log
+src/app/logs/*
+storage/*
