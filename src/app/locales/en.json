@@ -20,5 +20,10 @@
 	"The %s was deleted successfully": "The %s was deleted successfully",
 	"The %s was not found": "The %s was not found",
 	"not master and slaveOk=false": "not master and slaveOk=false",
-	"secretOrPrivateKey must have a value": "secretOrPrivateKey must have a value"
+	"secretOrPrivateKey must have a value": "secretOrPrivateKey must have a value",
+	"User already has %s role": "User already has %s role",
+	"User has not %s role": "User has not %s role",
+	"User has not %s": "User has not %s",
+	"The %s were deleted successfuly": "The %s were deleted successfuly",
+	"The user has not %s role": "The user has not %s role"
 }

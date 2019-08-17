@@ -1,10 +1,12 @@
 const casbin = require('casbin');
-import Adapter from 'casbin-mongoose-adapter';
+import Adapter from '@elastic.io/casbin-mongoose-adapter';
 import getConfig from 'config/database';
 import zipObject from 'lodash/zipObject';
+import Rule from 'models/Rule';
+// eslint-disable-next-line no-unused-vars
+import fs from 'fs';
 
 const db = getConfig();
-
 
 /**
  * Enforcer permissions
@@ -15,10 +17,13 @@ export default class Enforcer {
    * @return {Promise}
    */
   static async getInstance() {
-    const adapter = new Adapter(db.uri, db.config);
-    await adapter.init();
-    const model = `${process.env.APP_PATH}/config/casbin/rbac.conf`;
-    return await casbin.newEnforcer(model, adapter);
+    // eslint-disable-next-line max-len
+    const adapter = await Adapter.newAdapter(db.uri, {...db.config, debug: true});
+    const model = `${process.env.STORAGE_PATH}/casbin/rbac.conf`;
+    // const database = `${process.env.STORAGE_PATH}/casbin/rules.csv`;
+    // fs.existsSync(database) || fs.writeFileSync(database, '');
+    // return await casbin.newEnforcer(model, database);
+    return casbin.newEnforcer(model, adapter);
   }
   /**
    * Asign an entity to a role via enforcer
@@ -28,11 +33,39 @@ export default class Enforcer {
    * @param {String} domain
    * @return {Promise}
    */
-  static async assignRole(identifier, role, domain) {
+  static async assignRole(identifier, role, domain = '*') {
     const enforcer = await Enforcer.getInstance();
-    await enforcer.loadPolicy();
-    await enforcer.addGroupingPolicy(identifier, role, domain);
-    return enforcer.savePolicy();
+    // await enforcer.loadPolicy();
+    return enforcer.addRoleForUser(identifier, role, domain);
+    // return enforcer.savePolicy();
+  }
+
+  /**
+   * Revoke role user
+   * @param {String} identifier
+   * @param {String} role
+   * @param {String} domain
+   * @return {Promise}
+   */
+  static async revokeRole(identifier, role, domain = 'admin') {
+    // const enforcer = await Enforcer.getInstance();
+    // return enforcer.removeGroupingPolicy(identifier, role, domain);
+    // eslint-disable-next-line max-len
+    const result = await Rule.remove({p_type: 'g', v0: identifier, v1: role, v2: domain});
+    return !!result.ok;
+  }
+
+  /**
+   * Revoke all user domain roles
+   * @param {String} identifier
+   * @param {String} domain
+   * @return {Promise}
+   */
+  static async revokeRoles(identifier) {
+    // const enforcer = await Enforcer.getInstance();
+    // return enforcer.deleteRolesForUser(identifier);
+    const result = await Rule.remove({p_type: 'g', v0: identifier});
+    return !!result.ok;
   }
 
   /**
@@ -45,9 +78,7 @@ export default class Enforcer {
    */
   static async createPolicy(role, domain, resource, action) {
     const enforcer = await Enforcer.getInstance();
-    await enforcer.loadPolicy();
-    await enforcer.addPolicy(role, domain, resource, action);
-    return enforcer.savePolicy();
+    return enforcer.addPolicy(role, domain, resource, action);
   }
   /**
    * Return user role map object via enforcer
@@ -56,11 +87,10 @@ export default class Enforcer {
    */
   static async getRoles(identifier) {
     const enforcer = await Enforcer.getInstance();
-    await enforcer.loadPolicy();
-    const pol = await enforcer.getFilteredGroupingPolicy(0, identifier);
-    return pol.map((value) => {
-      value.splice(0, 1);
-      return zipObject(['role', 'domain'], value);
+    const policies = await enforcer.getFilteredGroupingPolicy(0, identifier);
+    return policies.map((policy) => {
+      policy.splice(0, 1);
+      return zipObject(['role', 'domain'], policy);
     });
   }
 
@@ -71,7 +101,6 @@ export default class Enforcer {
    */
   static async getPolicies(identifier = false) {
     const enforcer = await Enforcer.getInstance();
-    await enforcer.loadPolicy();
     if (identifier) {
       return enforcer.getFilteredPolicy(0, identifier);
     } else {
@@ -86,7 +115,6 @@ export default class Enforcer {
    */
   static async getGroupPolicies(role = false) {
     const enforcer = await Enforcer.getInstance();
-    await enforcer.loadPolicy();
     if (role) {
       return enforcer.getFilteredGroupingPolicy(0, role);
     } else {

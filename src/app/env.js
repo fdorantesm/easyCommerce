@@ -10,7 +10,7 @@ const SRC_PATH = path.join($root, 'src').split('/');
 
 process.env.ROOT_PATH = $root;
 process.env.SRC_PATH = SRC_PATH.join('/');
-
+process.env.STORAGE_PATH = path.join(process.env.SRC_PATH, 'storage');
 const envFile = getEnv(NODE_ENV);
 
 const file = fs.existsSync(envFile) ? envFile : getEnv();
