@@ -21,7 +21,7 @@ const logger = createLogger({
       timestamp: true,
     }),
     new (transports.File)({
-      filename: `${process.env.SRC_PATH}/app/logs/${process.env.APP_ALIAS}.log`,
+      filename: path.join(ROOT_PATH, APP_LOGS, `${process.env.APP_ALIAS}.log}`)
     }),
   ],
   format: combine(
