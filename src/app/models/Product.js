@@ -21,7 +21,11 @@ const fields = {
   deleted: {
     type: Boolean,
     default: false
-  }
+  },
+  categories: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category'
+  }]
 };
 
 const options = {
