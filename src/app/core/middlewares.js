@@ -13,6 +13,7 @@ import Auth from 'middlewares/auth';
 import boom from 'express-boom';
 import fileUpload from 'express-fileupload';
 import path from 'path';
+import populate from 'middlewares/populate';
 
 const PWD = process.env.PWD;
 const APP_PATH = process.env.APP_PATH;
@@ -59,6 +60,8 @@ export default (app) => {
   app.use(i18n.init);
 
   app.use(boom());
+
+  app.use(populate);
 
   app.use(Auth.handshake, Auth.authorization);
 
