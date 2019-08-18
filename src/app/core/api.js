@@ -1,12 +1,10 @@
+import 'libraries/mongoose';
 import middlewares from 'core/middlewares';
 import routes from 'core/routes';
-import permissions from 'config/acl';
 import path from 'path';
 import fs from 'fs';
 import config from 'core/config';
 import debug from 'debug';
-// eslint-disable-next-line no-unused-vars
-import mongoose from 'libraries/mongoose';
 
 const dbugger = debug('api:express');
 
@@ -32,8 +30,6 @@ export default (app) => {
 
       break;
   }
-
-  permissions();
 
   middlewares(app);
 

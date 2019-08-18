@@ -33,5 +33,6 @@
 	"The cart couldn't be retrieved": "The cart couldn't be retrieved",
 	"%s already exists": "%s already exists",
 	"The user has not %s": "The user has not %s",
-	"The %s is already taken": "The %s is already taken"
+	"The %s is already taken": "The %s is already taken",
+	"Your account is not allowed to %s": "Your account is not allowed to %s"
 }

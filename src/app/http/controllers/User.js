@@ -4,6 +4,7 @@ import Role from 'models/Role';
 import casbin from 'libraries/casbin';
 import {defineNickname} from 'helpers/users';
 import mapValues from 'lodash/mapValues';
+import Auth from 'libraries/Auth';
 /**
  * User Controller
  */
@@ -63,7 +64,7 @@ class UserController {
       const role = await Role.findOne({name: req.body.role});
       // Assign model properties
       user.email = req.body.email;
-      user.password = req.body.password;
+      user.password = await Auth.hash(req.body.password);
       user.roles = [];
       if (role._id) {
         user.roles.push(role._id);

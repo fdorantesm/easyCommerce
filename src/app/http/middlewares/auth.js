@@ -1,5 +1,6 @@
 import auth from 'libraries/auth';
 import User from 'models/User';
+import casbin from 'libraries/casbin';
 
 /**
  * Auth middleware class
@@ -42,18 +43,10 @@ export default class Auth {
       const authorized = await auth.verify(req.authorization);
       if (authorized) {
         // eslint-disable-next-line max-len
-        req.user = await User.findById(authorized.sub).populate(['role', 'profile']);
-        // await spatie.addUserRoles(req.user.id, req.user.role.name);
-        // req.permissions = await spatie.permissions(req.user.id);
-        // req.acl = {
-        //   user: req.user.id,
-        //   role: req.user.role.name,
-        //   level: req.user.role.level || 0,
-        //   // perms: req.permissions,
-        // };
+        req.user = await User.findById(authorized.sub).populate(['roles', 'profile']);
       }
-    } catch (e) {
-      console.log(e.name);
+    } catch (err) {
+      console.log(err);
       req.acl = {
         role: 'guest',
       };

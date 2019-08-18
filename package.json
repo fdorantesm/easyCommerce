@@ -28,6 +28,7 @@
     "body-parser": "^1.19.0",
     "boom": "^7.3.0",
     "casbin": "^3.0.3",
+    "casbin-mongoose-adapter": "^1.0.1",
     "cli-table": "^0.3.1",
     "cloudinary": "^1.14.0",
     "compression": "^1.7.4",

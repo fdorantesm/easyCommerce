@@ -6,6 +6,7 @@ import Delivery from 'models/Delivery';
 import deepPopulate from 'deep-populate';
 import OrderProducts from 'models/OrderProducts';
 import Coupon from 'models/Coupon';
+import casbin from 'libraries/casbin';
 
 /**
  * Order Controller
@@ -17,6 +18,7 @@ class OrderController {
    * @param {Response} res
    */
   static async create(req, res) {
+    console.log('order create');
     const cart = req.cart;
     const shipping = 150;
     const grantTotal = cart.total + shipping;
@@ -171,6 +173,27 @@ class OrderController {
       Object.keys(orderData).map((prop) => orderDB[prop] = orderData[prop]);
 
       await orderDB.save();
+
+      await casbin.assignRole(req.user.id, 'owner', `order:${orderDB._id}`);
+
+      // eslint-disable-next-line max-len
+      await casbin.createPolicy('admin', `order:${orderDB._id}`, 'order', 'read');
+      // eslint-disable-next-line max-len
+      await casbin.createPolicy('admin', `order:${orderDB._id}`, 'order', 'update');
+      // eslint-disable-next-line max-len
+      await casbin.createPolicy('admin', `order:${orderDB._id}`, 'order', 'delete');
+      // eslint-disable-next-line max-len
+      await casbin.createPolicy('admin', `order:${orderDB._id}`, 'payment', 'create');
+      // eslint-disable-next-line max-len
+      await casbin.createPolicy('admin', `order:${orderDB._id}`, 'payment', 'read');
+      // eslint-disable-next-line max-len
+      await casbin.createPolicy('admin', `order:${orderDB._id}`, 'payment', 'update');
+      // eslint-disable-next-line max-len
+      await casbin.createPolicy('admin', `order:${orderDB._id}`, 'delivery', 'create');
+      // eslint-disable-next-line max-len
+      await casbin.createPolicy('admin', `order:${orderDB._id}`, 'delivery', 'read');
+      // eslint-disable-next-line max-len
+      await casbin.createPolicy('admin', `order:${orderDB._id}`, 'delivery', 'update');
 
       const paymentData = {};
       if (gatewayable) {
