@@ -16,3 +16,10 @@ export function getModelNames() {
   });
   return models;
 }
+/**
+ * Get roles
+ * @return {Promise.<String[]>}
+ */
+export function getRoles() {
+  return Roles.find({deleted: false}).select(['name', '-_id']);
+}

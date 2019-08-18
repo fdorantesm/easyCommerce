@@ -100,6 +100,7 @@ class CouponController {
         public: req.body.public,
         enabled: req.body.enabled
       });
+      // eslint-disable-next-line max-len
       data.limits.maximumAmount = data.type === 'amount' ? data.value : data.limits.maximumAmount;
       await coupon.update(data);
       res.send({

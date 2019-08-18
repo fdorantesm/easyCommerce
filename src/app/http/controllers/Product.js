@@ -58,6 +58,7 @@ class ProductController {
         name: req.body.name,
         price: req.body.price,
         files: [],
+        // eslint-disable-next-line max-len
         categories: Array.isArray(req.body.category) ? req.body.category : [req.body.category]
       });
       req._files.map(async (result) => {
@@ -78,6 +79,7 @@ class ProductController {
       });
     } catch (err) {
       console.log(err);
+      // eslint-disable-next-line max-len
       res.boom.badRequest(res.__('There was a problem while trying to resolve your request'));
     }
   }
@@ -149,6 +151,7 @@ class ProductController {
       const file = await File.findById(req.params.file);
       if (file && product.files.length > 0) {
         for (let i =0; i < product.files.length; i++) {
+          // eslint-disable-next-line max-len
           const exists = product.files[i].toString() === req.params.file.toString();
           if (exists) {
             product.files.splice(i, 1);

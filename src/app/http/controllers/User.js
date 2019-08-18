@@ -15,8 +15,11 @@ class UserController {
    */
   static async getUsers(req, res) {
     try {
-      // eslint-disable-next-line
-      const users = await User.paginate({deleted: false}, {page: req.query.page || 1, populate: req.populate});
+      const options = {
+        page: req.query.page || 1,
+        populate: req.populate
+      };
+      const users = await User.paginate({deleted: false}, options);
       res.send({
         data: users
       });
@@ -93,6 +96,10 @@ class UserController {
       });
     } catch (err) {
       console.log(err);
+      // eslint-disable-next-line max-len
+      if (err.errors.email && err.errors.email.message === 'EmailAlreadyTakenException') {
+        res.boom.badData(res.__('The %s is already taken', 'email'));
+      }
       // eslint-disable-next-line max-len
       res.boom.badRequest(res.__('There was a problem while trying to resolve your request'));
     }

@@ -26,5 +26,7 @@ export const date = joi.date().format('YYYY-MM-DD');
 export const couponType = joi.string().valid('amount', 'percentage');
 export const binary = joi.binary();
 export const array = joi.array();
+// eslint-disable-next-line max-len
 export const arrayOrSingleObjectId = joi.alternatives().try(joi.array().items(objectId), objectId);
+// eslint-disable-next-line max-len
 export const arrayOrSingleFile = joi.alternatives().try(array.items(object), object);

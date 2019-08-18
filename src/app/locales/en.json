@@ -31,5 +31,7 @@
 	"Please check all form fields and try again": "Please check all form fields and try again",
 	"Cannot read property 'toObject' of null": "Cannot read property 'toObject' of null",
 	"The cart couldn't be retrieved": "The cart couldn't be retrieved",
-	"%s already exists": "%s already exists"
+	"%s already exists": "%s already exists",
+	"The user has not %s": "The user has not %s",
+	"The %s is already taken": "The %s is already taken"
 }

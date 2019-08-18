@@ -46,11 +46,13 @@ class CategoryController {
       });
     } catch (err) {
       console.log(err);
+      // eslint-disable-next-line max-len
       if (err.errors.name && err.errors.name.message === 'CategoryAlreadyExistsException') {
         res.boom.badData(res.__('%s already exists', 'Category'));
       } else if (err.message === 'ValidationError') {
         res.boom.badData(res.__('Please check all form fields and try again'));
       } else {
+        // eslint-disable-next-line max-len
         res.boom.badRequest(res.__('There was a problem while trying to resolve your request'));
       }
     }
