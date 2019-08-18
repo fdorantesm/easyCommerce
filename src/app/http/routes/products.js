@@ -7,10 +7,10 @@ import ProductController from 'controllers/Product';
 const router = Router();
 
 router.get('/', ProductController.getProducts);
-router.get('/:product', ProductController.getProduct);
-router.post('/:product', validator, upload, ProductController.updateProduct);
-router.delete('/:product', ProductController.deleteProduct);
+router.get('/:id', ProductController.getProduct);
+router.post('/:id', validator, upload, ProductController.updateProduct);
+router.delete('/:id', ProductController.deleteProduct);
 router.post('/', validator, upload, ProductController.createProduct);
-router.delete('/:product/:file', ProductController.deleteProductFile);
+router.delete('/:id/:file', ProductController.deleteProductFile);
 
 export default router;

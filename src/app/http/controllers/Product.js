@@ -37,7 +37,7 @@ class ProductController {
   static async getProduct(req, res) {
     try {
       // eslint-disable-next-line max-len
-      const product = await Product.findOne({_id: req.params.product, deleted: false}).populate(req.populate);
+      const product = await Product.findOne({_id: req.params.id, deleted: false}).populate(req.populate);
       res.send({
         data: product
       });
@@ -89,7 +89,7 @@ class ProductController {
    */
   static async updateProduct(req, res) {
     try {
-      const product = await Product.findById(req.params.product);
+      const product = await Product.findById(req.params.id);
       const data = merge(product, req.body);
       req._files.map(async (result) => {
         const file = new File({
@@ -121,7 +121,7 @@ class ProductController {
    */
   static async deleteProduct(req, res) {
     try {
-      const product = await Product.findById(req.params.product);
+      const product = await Product.findById(req.params.id);
       if (!product.deleted) {
         await product.softdelete();
         res.send({
@@ -145,7 +145,7 @@ class ProductController {
    */
   static async deleteProductFile(req, res) {
     try {
-      const product = await Product.findById(req.params.product);
+      const product = await Product.findById(req.params.id);
       const file = await File.findById(req.params.file);
       if (file && product.files.length > 0) {
         for (let i =0; i < product.files.length; i++) {

@@ -65,7 +65,7 @@ class CouponController {
    */
   static async getCoupon(req, res) {
     try {
-      const coupon = await Coupon.findById(req.params.coupon);
+      const coupon = await Coupon.findById(req.params.id);
       res.send({
         data: coupon
       });
@@ -83,7 +83,7 @@ class CouponController {
    */
   static async updateCoupon(req, res) {
     try {
-      const coupon = await Coupon.findById(req.params.coupon);
+      const coupon = await Coupon.findById(req.params.id);
       const data = merge(coupon, {
         code: req.body.code,
         from: moment(req.body.from),
@@ -118,7 +118,7 @@ class CouponController {
    */
   static async deleteCoupon(req, res) {
     try {
-      const coupon = await Coupon.findById(req.params.coupon);
+      const coupon = await Coupon.findById(req.params.id);
       if (coupon && !coupon.deleted) {
         coupon.softdelete();
         res.send({

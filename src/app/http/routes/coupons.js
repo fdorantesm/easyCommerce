@@ -6,9 +6,9 @@ import CouponController from 'controllers/Coupon';
 const router = Router();
 
 router.get('/', CouponController.getCoupons);
-router.get('/:coupon', CouponController.getCoupon);
-router.post('/:coupon', validator, CouponController.updateCoupon);
-router.delete('/:coupon', CouponController.deleteCoupon);
+router.get('/:id', CouponController.getCoupon);
+router.post('/:id', validator, CouponController.updateCoupon);
+router.delete('/:id', CouponController.deleteCoupon);
 router.post('/', validator, CouponController.createCoupon);
 
 export default router;
