@@ -30,12 +30,27 @@ export default (req, res, next) => {
   if (includes(methods, req.method.toLowerCase()) && has(Schemas, key)) {
     const schema = get(Schemas, key);
     if (schema) {
-      return Joi.validate(req.body, schema, validationOptions, (err, data) => {
+      const isGet = req.method.toLowerCase() === 'get';
+      const source = isGet ? req.query : req.body;
+      if (req.files) {
+        Object.keys(req.files).map((field) => {
+          req.body[field] = req.files[field];
+          console.log(typeof req.files[field]);
+        });
+      }
+
+      console.log({body: req.body});
+
+      return Joi.validate(source, schema, validationOptions, (err, data) => {
         if (err) {
           // eslint-disable-next-line max-len
           return res.boom.badData('Invalid request data. Please review request and try again.', {errors: err.details});
         } else {
-          req.body = data;
+          if (isGet) {
+            req.query = data;
+          } else {
+            req.body = data;
+          }
           next();
         }
       });

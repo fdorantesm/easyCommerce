@@ -17,7 +17,7 @@ const fields = {
   },
   email: {
     type: mongoose.SchemaTypes.Email,
-    unique: true
+    unique: 'EmailAlreadyTakenException'
   },
   password: {
     type: String,

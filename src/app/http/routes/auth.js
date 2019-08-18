@@ -6,7 +6,7 @@ import validator from 'middlewares/validator';
 // eslint-disable-next-line new-cap
 const router = Router();
 
-router.post('/login', AuthController.login);
+router.post('/login', validator, AuthController.login);
 router.post('/facebook', AuthController.facebook);
 router.post('/google', AuthController.google);
 router.post('/register', validator, AuthController.register);

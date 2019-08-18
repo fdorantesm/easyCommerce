@@ -7,7 +7,7 @@ import mongoosePaginate from 'mongoose-paginate-v2';
 const fields = {
   name: {
     type: String,
-    unique: true,
+    unique: 'RoleAlreadyExistsException',
     sparse: true,
     required: true
   },

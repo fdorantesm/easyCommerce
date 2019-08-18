@@ -84,7 +84,23 @@ class CouponController {
   static async updateCoupon(req, res) {
     try {
       const coupon = await Coupon.findById(req.params.coupon);
-      const data = merge(coupon, req.body);
+      const data = merge(coupon, {
+        code: req.body.code,
+        from: moment(req.body.from),
+        to: moment(req.body.to),
+        type: req.body.type,
+        value: req.body.value,
+        limits: {
+          user: req.body.user,
+          uses: req.body.uses,
+          expiration: req.body.expiration,
+          minimumAmount: req.body.min_amount,
+          maximumAmount: req.body.max_amount
+        },
+        public: req.body.public,
+        enabled: req.body.enabled
+      });
+      data.limits.maximumAmount = data.type === 'amount' ? data.value : data.limits.maximumAmount;
       await coupon.update(data);
       res.send({
         data: data

@@ -25,5 +25,11 @@
 	"User has not %s role": "User has not %s role",
 	"User has not %s": "User has not %s",
 	"The %s were deleted successfuly": "The %s were deleted successfuly",
-	"The user has not %s role": "The user has not %s role"
+	"The user has not %s role": "The user has not %s role",
+	"Email and password are required fields": "Email and password are required fields",
+	"The %s is already taken.": "The %s is already taken.",
+	"Please check all form fields and try again": "Please check all form fields and try again",
+	"Cannot read property 'toObject' of null": "Cannot read property 'toObject' of null",
+	"The cart couldn't be retrieved": "The cart couldn't be retrieved",
+	"%s already exists": "%s already exists"
 }

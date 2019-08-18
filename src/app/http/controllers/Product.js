@@ -99,11 +99,24 @@ class ProductController {
    */
   static async updateProduct(req, res) {
     try {
+      console.log('_files', req._files);
       const product = await Product.findById(req.params.product);
       const data = merge(product, req.body);
+      req._files.map(async (result) => {
+        const file = new File({
+          name: result.public_id,
+          signature: result.signature,
+          format: result.format,
+          type: result.resource_type,
+          etag: result.etag,
+          path: result.secure_url
+        });
+        data.files.push(file._id);
+        await file.save();
+      });
       await product.update(data);
       res.send({
-        data
+        data: product
       });
     } catch (err) {
       console.log(err);

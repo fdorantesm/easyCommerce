@@ -44,9 +44,13 @@ class RoleController {
         data: role
       });
     } catch (err) {
-      console.log(err);
-      // eslint-disable-next-line max-len
-      res.boom.badRequest(res.__('There was a problem while trying to resolve your request'));
+      if ('name' in err.errors && err.errors.name.message === 'RoleAlreadyExistsException') {
+        res.boom.badData(res.__('%s already exists', 'Role'));
+      } else if (err.name === 'ValidationError') {
+        res.boom.badData(res.__('Please check all form fields and try again'));
+      } else {
+        res.boom.badRequest(res.__('There was a problem while trying to resolve your request'));
+      }
     }
   }
 

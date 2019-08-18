@@ -18,19 +18,14 @@ class AuthController {
   * @param {Response} res
   */
   static async login(req, res) {
-    if (req.body.email && req.body.password) {
-      try {
-        const params = {email: req.body.email};
-        console.log(req.body);
-        const accessToken = await auth.connect(params, req.body.password);
-        const user = await User.findOne(params).populate('profile');
-        res.send({...user.toObject(), ...accessToken});
-      } catch (err) {
-        console.log(err);
-        res.boom.badRequest(res.__(err.message));
-      }
-    } else {
-      res.boom.badRequest(res.__('Email and password are required fields'));
+    try {
+      const params = {email: req.body.email};
+      const accessToken = await auth.connect(params, req.body.password);
+      const user = await User.findOne(params).populate(['profile', 'roles']);
+      res.send({...user.toObject(), ...accessToken});
+    } catch (err) {
+      console.log(err);
+      res.boom.badRequest(res.__(err.message));
     }
   }
 
@@ -170,12 +165,13 @@ class AuthController {
         message: res.__('Your account was created succesfully'),
       });
     } catch (err) {
-      console.log({err});
+      // eslint-disable-next-line max-len
+      if ('email' in err.errors && err.errors.email.message === 'EmailAlreadyTakenException') {
+        res.boom.badData(res.__('The %s is already taken.', 'email'));
+      }
       if (err.name && err.name === 'ValidationError') {
-        res.boom.badData(null, {
-          ...err,
-          message: req.__('Please check all form fields'),
-        });
+        // eslint-disable-next-line max-len
+        res.boom.badData(null, {...err, message: res.__('Please check all form fields and try again')});
       } else {
         res.status(err.status || 400).send(err);
       }

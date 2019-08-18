@@ -1,5 +1,6 @@
 import Category from 'models/Category';
 import merge from 'lodash/merge';
+import {slug} from 'helpers/common';
 
 /**
  * Category Controller
@@ -35,7 +36,7 @@ class CategoryController {
     try {
       const category = new Category({
         name: req.body.name,
-        slug: req.body.slug,
+        slug: slug(req.body.name),
         parent: req.body.parent || null,
         order: req.body.order
       });
@@ -45,8 +46,13 @@ class CategoryController {
       });
     } catch (err) {
       console.log(err);
-      // eslint-disable-next-line max-len
-      res.boom.badRequest(res.__('There was a problem while trying to resolve your request'));
+      if (err.errors.name && err.errors.name.message === 'CategoryAlreadyExistsException') {
+        res.boom.badData(res.__('%s already exists', 'Category'));
+      } else if (err.message === 'ValidationError') {
+        res.boom.badData(res.__('Please check all form fields and try again'));
+      } else {
+        res.boom.badRequest(res.__('There was a problem while trying to resolve your request'));
+      }
     }
   }
 
@@ -78,7 +84,12 @@ class CategoryController {
     try {
       const category = await Category.findById(req.params.id);
       if (category) {
-        const data = merge(category, req.body);
+        const data = merge(category, {
+          name: req.body.name,
+        });
+        if (req.body.name) {
+          data.slug = slug(req.body.name);
+        }
         await category.update(data);
         res.send({
           data: data
