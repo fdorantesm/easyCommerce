@@ -11,5 +11,6 @@ router.get('/:product', ProductController.getProduct);
 router.post('/:product', validator, upload, ProductController.updateProduct);
 router.delete('/:product', ProductController.deleteProduct);
 router.post('/', validator, upload, ProductController.createProduct);
+router.delete('/:product/:file', ProductController.deleteProductFile);
 
 export default router;

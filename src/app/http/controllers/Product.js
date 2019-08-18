@@ -54,40 +54,30 @@ class ProductController {
    */
   static async createProduct(req, res) {
     try {
-      console.log(req.files);
-      console.log('cats', req.body.category);
-      // eslint-disable-next-line max-len
-      const files = Array.isArray(req.files.file) ? req.files.file : [req.files.file];
-      const uploads = [];
       const product = new Product({
         name: req.body.name,
         price: req.body.price,
         files: [],
-        // eslint-disable-next-line max-len
         categories: Array.isArray(req.body.category) ? req.body.category : [req.body.category]
       });
-      files.map((file) => uploads.push(Upload.file('products', file)));
-      Promise.all(uploads).then(async (results) => {
-        results.map(async (result) => {
-          const file = new File({
-            name: result.public_id,
-            signature: result.signature,
-            format: result.format,
-            type: result.resource_type,
-            etag: result.etag,
-            path: result.secure_url
-          });
-          product.files.push(file._id);
-          await file.save();
+      req._files.map(async (result) => {
+        const file = new File({
+          name: result.public_id,
+          signature: result.signature,
+          format: result.format,
+          type: result.resource_type,
+          etag: result.etag,
+          path: result.secure_url
         });
-        await product.save();
-        res.send({
-          data: product
-        });
+        product.files.push(file._id);
+        await file.save();
+      });
+      await product.save();
+      res.send({
+        data: product
       });
     } catch (err) {
       console.log(err);
-      // eslint-disable-next-line max-len
       res.boom.badRequest(res.__('There was a problem while trying to resolve your request'));
     }
   }
@@ -99,7 +89,6 @@ class ProductController {
    */
   static async updateProduct(req, res) {
     try {
-      console.log('_files', req._files);
       const product = await Product.findById(req.params.product);
       const data = merge(product, req.body);
       req._files.map(async (result) => {
@@ -147,6 +136,38 @@ class ProductController {
       console.log(err);
       // eslint-disable-next-line max-len
       res.boom.badRequest(res.__('There was a problem while trying to resolve your request'));
+    }
+  }
+  /**
+   * Delete product file
+   * @param {Request} req
+   * @param {Response} res
+   */
+  static async deleteProductFile(req, res) {
+    try {
+      const product = await Product.findById(req.params.product);
+      const file = await File.findById(req.params.file);
+      if (file && product.files.length > 0) {
+        for (let i =0; i < product.files.length; i++) {
+          const exists = product.files[i].toString() === req.params.file.toString();
+          if (exists) {
+            product.files.splice(i, 1);
+            const destroy = await Upload.destroy(file.name);
+            await product.save();
+            if (destroy.result === 'not found') {
+              res.boom.notFound(res.__('The %s was not found', 'image'));
+            }
+            return res.send({
+              data: product
+            });
+          }
+        }
+      } else {
+        res.boom.notFound(res.__('The %s was not found', 'image'));
+      }
+    } catch (err) {
+      console.log(err);
+      res.boom.badRequest(err.message);
     }
   }
 }

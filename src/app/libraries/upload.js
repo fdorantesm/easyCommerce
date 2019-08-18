@@ -50,4 +50,18 @@ export default class Upload {
       stream.end(file.data);
     });
   }
+  /**
+   * Destroy image from cloudinary
+   * @param {String} publicId
+   * @return {Promise.<JSON>}
+   */
+  static destroy(publicId) {
+    return new Promise((resolve, reject) => {
+      console.dir(cloudinary);
+      cloudinary.v2.uploader.destroy(publicId, function(err, response) {
+        if (err) reject(err);
+        resolve(response);
+      });
+    });
+  }
 }
