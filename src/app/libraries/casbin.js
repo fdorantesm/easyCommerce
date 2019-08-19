@@ -229,4 +229,37 @@ export default class Casbin {
     });
     return rules > 0;
   }
+
+  /**
+   * Can shorthand
+   * This is a shorthand to handle permission queries to casbin
+   * via mongoose adapter. It's using RBAC with domains
+   * more info about domains at:
+   * @see https://casbin.org/docs/en/rbac-with-domains
+   *
+   * @param {String} identifier
+   * @param {String} domain
+   * @param {String} resource
+   * @param {String} action
+   * @return {Object}
+   */
+  static async can(identifier, domain, resource, action) {
+    const e = await Casbin.getInstance();
+    const acl = {};
+    // Load the policy from DB.
+    await e.loadPolicy();
+
+    // Check the permission.
+    acl.granted = await e.enforce(identifier, domain, resource, action);
+    // get roles
+    if (acl.granted) {
+      const pol = await e.getFilteredGroupingPolicy(0, identifier);
+      acl.roles_map = pol.map((value) => {
+        value.splice(0, 1);
+        return zipObject(['role', 'domain'], value);
+      });
+    }
+
+    return acl;
+  }
 }
