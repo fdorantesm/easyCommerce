@@ -23,9 +23,13 @@ export async function canAccessToAdmin(req, res, next) {
  * @param {Function} next
  */
 export async function canListCoupons(req, res, next) {
-  const roles = await casbin.getRolesArray(req.user.id);
-  if (roles.includes('admin')) {
-    req.permissions = await casbin.getRolePolicies('admin');
+  // eslint-disable-next-line max-len
+  const permission = await casbin.canUser(req.user.id, 'read', 'order');
+  const permission2 = await casbin.can(req.user.id, 'coupon:*', 'read', 'coupon');
+  console.log({permission2})
+  if (permission) {
+    req.permissions = await casbin.getRolePolicies(req.user.id);
+    console.log(req.permission);
     next();
   } else {
     res.boom.forbidden();
@@ -40,8 +44,8 @@ export async function canListCoupons(req, res, next) {
  */
 export async function canReadAnyOrder(req, res, next) {
   // eslint-disable-next-line max-len
-  const permission = await casbin.can(req.user.id, `order:${req.params.order}`, 'order', 'read');
-  if (permission.granted) {
+  const permission = await casbin.canUser(req.user.id, 'read', 'order', `order:${req.params.order}`);
+  if (permission) {
     next();
   } else {
     // eslint-disable-next-line max-len

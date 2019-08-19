@@ -42,7 +42,6 @@ class CategoryController {
         order: req.body.order
       });
       await category.save();
-      await product.save();
       await casbin.createPolicy('admin', `category:${category._id}`, 'category', 'read');
       await casbin.createPolicy('admin', `category:${category._id}`, 'category', 'update');
       await casbin.createPolicy('admin', `category:${category._id}`, 'category', 'delete');

@@ -89,8 +89,6 @@ export default class Casbin {
    */
   static async getPolicies(identifier = false) {
     const e = await Casbin.getInstance();
-    // Load the policy from DB.
-    await e.loadPolicy();
     if (identifier) {
       return e.getFilteredPolicy(0, identifier);
     } else {
@@ -104,7 +102,6 @@ export default class Casbin {
    */
   static async getGroupPolicies(role = false) {
     const e = await Casbin.getInstance();
-    await e.loadPolicy();
     if (role) {
       const perms = e.getFilteredGroupingPolicy(0, role);
       return perms;
@@ -121,10 +118,7 @@ export default class Casbin {
    */
   static async removeRoleFromUser(identifier, role) {
     const e = await Casbin.getInstance();
-    // Load the policy from DB.
-    await e.loadPolicy();
     return await e.removeGroupingPolicy(identifier, role);
-    await e.savePolicy();
   }
 
   /**
@@ -159,11 +153,12 @@ export default class Casbin {
    * @param {String} role
    * @param {String} action
    * @param {String} resource
+   * @param {String} domain
    * @return {Boolean}
    */
-  static async canRole(role, action, resource) {
+  static async canRole(role, action, resource, domain) {
     // eslint-disable-next-line max-len
-    const policy = await Rule.findOne({p_type: 'p', v0: role, v1: resource, v2: action});
+    const policy = await Rule.findOne({p_type: 'p', v0: role, v1: resource, v2: action, v3: domain});
     return !!policy;
   }
 
@@ -246,8 +241,6 @@ export default class Casbin {
   static async can(identifier, domain, resource, action) {
     const e = await Casbin.getInstance();
     const acl = {};
-    // Load the policy from DB.
-    await e.loadPolicy();
 
     // Check the permission.
     acl.granted = await e.enforce(identifier, domain, resource, action);
@@ -261,5 +254,16 @@ export default class Casbin {
     }
 
     return acl;
+  }
+  /**
+   * Can enforcer
+   * @param {String} identifier
+   * @param {String} domain
+   * @param {String} resource
+   * @param {String} action
+   */
+  static async enforce(identifier, domain, resource, action) {
+    const e = await Casbin.getInstance();
+    return await e.enforce(identifier, domain, resource, action);
   }
 }

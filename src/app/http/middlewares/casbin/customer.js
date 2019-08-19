@@ -23,8 +23,12 @@ export async function canBuy(req, res, next) {
  */
 export async function canReadOrder(req, res, next) {
   // eslint-disable-next-line max-len
-  const permission = await casbin.can(req.user.id, `order:${req.params.order}`, 'order', 'create');
-  if (permission.granted) {
+  const x = await casbin.can(req.user.id, `order:${req.params.order}`, 'order', 'read');
+  console.log({x})
+  // eslint-disable-next-line max-len
+  const permission = await casbin.canUser(req.user.id, 'read', 'order', `order:${req.params.order}`);
+  console.log({permission})
+  if (permission) {
     next();
   } else {
     // eslint-disable-next-line max-len
