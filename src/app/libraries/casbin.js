@@ -1,10 +1,10 @@
-import Adapter from '@elastic.io/casbin-mongoose-adapter'
-import getConfig from 'config/database'
+import Adapter from '@elastic.io/casbin-mongoose-adapter';
+import getConfig from 'config/database';
 import mapValues from 'lodash/mapValues';
 import zipObject from 'lodash/zipObject';
 import Rule from 'models/Rule';
 
-const casbin = require('casbin')
+const casbin = require('casbin');
 
 /**
  * Enforcer class
@@ -28,8 +28,8 @@ export default class Casbin {
    * @return {Promise}
    */
   static async assignRole(identifier, role, domain) {
-    const e = await EnforcerHelper.getInstance();
-    return await e.addGroupingPolicy(identifier, role, domain)
+    const e = await Casbin.getInstance();
+    return await e.addGroupingPolicy(identifier, role, domain);
   }
 
   /**
@@ -65,7 +65,7 @@ export default class Casbin {
    * @return {Promise}
    */
   static async createPolicy(role, domain, resource, action) {
-    const e = await EnforcerHelper.getInstance();
+    const e = await Casbin.getInstance();
     return e.addPolicy(role, domain, resource, action);
   }
   /**
@@ -74,10 +74,10 @@ export default class Casbin {
    * @return {Promise}
    */
   static async getRoles(identifier) {
-    const e = await EnforcerHelper.getInstance();
+    const e = await Casbin.getInstance();
     const pol = await e.getFilteredGroupingPolicy(0, identifier);
     return pol.map((value) => {
-      value.splice(0, 1)
+      value.splice(0, 1);
       return zipObject(['role', 'domain'], value);
     });
   }
@@ -88,7 +88,7 @@ export default class Casbin {
    * @return {Promise}
    */
   static async getPolicies(identifier = false) {
-    const e = await EnforcerHelper.getInstance();
+    const e = await Casbin.getInstance();
     // Load the policy from DB.
     await e.loadPolicy();
     if (identifier) {
@@ -103,7 +103,7 @@ export default class Casbin {
    * @return {Promise}
    */
   static async getGroupPolicies(role = false) {
-    const e = await EnforcerHelper.getInstance();
+    const e = await Casbin.getInstance();
     await e.loadPolicy();
     if (role) {
       const perms = e.getFilteredGroupingPolicy(0, role);
@@ -120,11 +120,11 @@ export default class Casbin {
    * @return {Promise}
    */
   static async removeRoleFromUser(identifier, role) {
-    const e = await EnforcerHelper.getInstance();
+    const e = await Casbin.getInstance();
     // Load the policy from DB.
-    await e.loadPolicy()
+    await e.loadPolicy();
     return await e.removeGroupingPolicy(identifier, role);
-    await e.savePolicy()
+    await e.savePolicy();
   }
 
   /**
@@ -133,7 +133,7 @@ export default class Casbin {
    * @return {Promise<String[]>}
    */
   static async getRolesArray(identifier) {
-    const policies = await EnforcerHelper.getRoles(identifier);
+    const policies = await Casbin.getRoles(identifier);
     // eslint-disable-next-line max-len
     const roles = Array.from(new Set(Object.values(mapValues(policies, 'role'))));
     return roles;
@@ -176,6 +176,7 @@ export default class Casbin {
    * @return {Boolean}
    */
   static async canUser(identifier, action, resource, domain) {
+    // eslint-disable-next-line max-len
     const roles = await Rule.find({v0: identifier, v1: {$nin: ['customer', 'guest']}}).select(['-_id', 'v1', 'v2']);
     const policies = await Rule.find({
       p_type: 'p',
@@ -187,6 +188,7 @@ export default class Casbin {
     }).select(['-_id', '-p_type']);
 
     for (const rule of [].concat(roles, policies)) {
+      // eslint-disable-next-line max-len
       const isAdmin = (rule.v0 === 'admin' && rule.v1 === domain && rule.v2 == resource && rule.v3 === action) || rule.v1 === 'admin' && rule.v2 === '*';
       const isOwner = rule.v1 === 'owner' && rule.v2 === domain;
       if (isAdmin || isOwner) {
@@ -227,6 +229,4 @@ export default class Casbin {
     });
     return rules > 0;
   }
-
-
 }

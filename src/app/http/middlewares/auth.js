@@ -1,6 +1,5 @@
 import auth from 'libraries/auth';
 import User from 'models/User';
-import casbin from 'libraries/casbin';
 
 /**
  * Auth middleware class

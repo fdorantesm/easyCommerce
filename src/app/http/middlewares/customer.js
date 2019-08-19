@@ -1,5 +1,4 @@
 import casbin from 'libraries/casbin';
-import Rule from 'models/Rule';
 
 /**
  * Grant access if user can buy
@@ -23,11 +22,13 @@ export async function canBuy(req, res, next) {
  * @param {Function} next
  */
 export async function canReadOrder(req, res, next) {
+  // eslint-disable-next-line max-len
   const can = await casbin.canUser(req.user.id, 'read', 'order', 'order:' + req.params.order);
   if (can) {
     next();
   } else {
-    res.boom.forbidden(res.__('Your account is not allowed to %s', 'view this order'))
+    // eslint-disable-next-line max-len
+    res.boom.forbidden(res.__('Your account is not allowed to %s', 'view this order'));
   }
 }
 
