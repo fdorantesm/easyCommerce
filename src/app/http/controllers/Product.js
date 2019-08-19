@@ -2,6 +2,7 @@ import merge from 'lodash/merge';
 import Product from 'models/Product';
 import Upload from 'libraries/upload';
 import File from 'models/File';
+import casbin from 'libraries/casbin';
 
 /**
  * Product Class Controller
@@ -74,6 +75,10 @@ class ProductController {
         await file.save();
       });
       await product.save();
+      await casbin.assignRole(req.user.id, 'owner', `product:${product._id}`);
+      await casbin.createPolicy('admin', `product:${product._id}`, 'product', 'read');
+      await casbin.createPolicy('admin', `product:${product._id}`, 'product', 'update');
+      await casbin.createPolicy('admin', `product:${product._id}`, 'product', 'delete');
       res.send({
         data: product
       });

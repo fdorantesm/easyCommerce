@@ -3,15 +3,14 @@ import OrderController from 'controllers/Order';
 import CartMiddlewares from 'middlewares/cart';
 import AuthMiddlewares from 'middlewares/auth';
 import validator from 'middlewares/validator';
-import {canAccessToAdmin, canReadAnyOrder} from 'middlewares/admin';
-import {canBuy, canReadOrder} from 'middlewares/customer';
+import {canAccessToAdmin, canReadAnyOrder} from 'middlewares/casbin/admin';
+import {canBuy, canReadOrder} from 'middlewares/casbin/customer';
 
 // eslint-disable-next-line new-cap
 const router = Router();
 
 router.post('/',
-    AuthMiddlewares.authentication,
-    AuthMiddlewares.authenticated,
+    AuthMiddlewares.authorization,
     validator,
     canBuy,
     CartMiddlewares.bindCart,
@@ -20,15 +19,13 @@ router.post('/',
 );
 
 router.get('/:order',
-    AuthMiddlewares.authentication,
-    AuthMiddlewares.authenticated,
+    AuthMiddlewares.authorization,
     canReadOrder,
     OrderController.getOrder
 );
 
 router.get('/',
-    AuthMiddlewares.authentication,
-    AuthMiddlewares.authenticated,
+    AuthMiddlewares.authorization,
     canAccessToAdmin,
     canReadAnyOrder,
     OrderController.getAll

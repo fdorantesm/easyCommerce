@@ -11,6 +11,6 @@ router.post('/facebook', AuthController.facebook);
 router.post('/google', AuthController.google);
 router.post('/register', validator, AuthController.register);
 
-router.get('/me', middleware.authenticated, AuthController.whoami);
+router.get('/me', middleware.authorization, AuthController.whoami);
 
 export default router;

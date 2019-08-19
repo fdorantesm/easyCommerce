@@ -1,6 +1,7 @@
 import Coupon from 'models/Coupon';
 import moment from 'libraries/moment';
 import merge from 'lodash/merge';
+import casbin from 'libraries/casbin';
 
 /**
  * Coupon Controller
@@ -48,6 +49,9 @@ class CouponController {
         enabled: req.body.enabled
       });
       await coupon.save();
+      await casbin.createPolicy('admin', `coupon:${coupon._id}`, 'coupon', 'read');
+      await casbin.createPolicy('admin', `coupon:${coupon._id}`, 'coupon', 'update');
+      await casbin.createPolicy('admin', `coupon:${coupon._id}`, 'coupon', 'delete');
       res.send({
         data: coupon
       });

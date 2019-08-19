@@ -22,17 +22,7 @@ export default class Auth {
   }
 
   /**
-   * Binds authorized user to request
-   * @void
-   * @param {Request} req
-   * @param {Response} res
-   * @param {Function} next
-   */
-  static async authorization(req, res, next) {
-    next();
-  }
-
-  /**
+   * Binds user to request
    * @param {Request} req
    * @param {Response} res
    * @param {Function} next
@@ -55,13 +45,14 @@ export default class Auth {
   }
 
   /**
-   * Grants or denies access if authenticated
+   * Grants access to next middleware if user is
+   * authenticated
    * @void
    * @param {Request} req
    * @param {Response} res
    * @param {Function} next
    */
-  static async authenticated(req, res, next) {
+  static async authorization(req, res, next) {
     try {
       if (req.user) {
         next();

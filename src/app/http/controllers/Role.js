@@ -40,6 +40,9 @@ class RoleController {
         order: req.body.order
       });
       await role.save();
+      await casbin.createPolicy('admin', `role:${role._id}`, 'role', 'read');
+      await casbin.createPolicy('admin', `role:${role._id}`, 'role', 'update');
+      await casbin.createPolicy('admin', `role:${role._id}`, 'role', 'delete');
       res.send({
         data: role
       });

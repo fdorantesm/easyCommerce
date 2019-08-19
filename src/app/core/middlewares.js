@@ -67,7 +67,7 @@ export default (app) => {
 
   app.use(models);
 
-  app.use(Auth.handshake, Auth.authorization);
+  app.use(Auth.handshake, Auth.authentication);
 
   app.use(compression());
 

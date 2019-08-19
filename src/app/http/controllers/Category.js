@@ -1,6 +1,7 @@
 import Category from 'models/Category';
 import merge from 'lodash/merge';
 import {slug} from 'helpers/common';
+import casbin from 'libraries/casbin';
 
 /**
  * Category Controller
@@ -41,6 +42,10 @@ class CategoryController {
         order: req.body.order
       });
       await category.save();
+      await product.save();
+      await casbin.createPolicy('admin', `category:${category._id}`, 'category', 'read');
+      await casbin.createPolicy('admin', `category:${category._id}`, 'category', 'update');
+      await casbin.createPolicy('admin', `category:${category._id}`, 'category', 'delete');
       res.send({
         data: category
       });
