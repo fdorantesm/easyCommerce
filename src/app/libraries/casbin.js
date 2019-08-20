@@ -3,6 +3,7 @@ import getConfig from 'config/database';
 import mapValues from 'lodash/mapValues';
 import zipObject from 'lodash/zipObject';
 import Rule from 'models/Rule';
+import {Enforcer} from 'casbin';
 
 const casbin = require('casbin');
 
@@ -265,5 +266,40 @@ export default class Casbin {
   static async enforce(identifier, domain, resource, action) {
     const e = await Casbin.getInstance();
     return await e.enforce(identifier, domain, resource, action);
+  }
+
+  /**
+   * Get users by role
+   * @param {String} role
+   * @param {String} domain
+   * @return {Promise<Object[]>}
+   */
+  static async getUserByRole(role, domain) {
+    const e = await Casbin.getInstance();
+    await e.loadPolicy();
+    return e.getUsersForRole(role, domain);
+  }
+
+  /**
+   * Get roles by user
+   * @param {String} identifier
+   * @param {String} domain
+   * @return {Promise<Object[]>}
+   */
+  static async getRolesForUser(identifier, domain) {
+    const e = await Casbin.getInstance();
+    await e.loadPolicy();
+    return e.getRolesForUser(identifier, domain);
+  }
+
+  /**
+   * Shorthand to find if user has a given role
+   * @param {String} identifier
+   * @param {String} role
+   * @param {String} domain
+   */
+  static async is(identifier, role, domain) {
+    const e = await casbin.getInstance();
+    return await e.hasRoleForUser('5d59d348118d9c0e8b4741cb', 'admin', '*');
   }
 }
