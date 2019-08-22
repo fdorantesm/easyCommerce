@@ -80,7 +80,7 @@ export default class Auth {
       const payload = await jwt.verify(token, signature);
       return payload;
     }
-
+    const err = new Error()
     err.status = 400;
     err.text = 'Token is not valid or was expirated';
     throw err;

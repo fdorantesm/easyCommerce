@@ -52,3 +52,19 @@ export async function canReadAnyOrder(req, res, next) {
     res.boom.forbidden(res.__('Your account is not allowed to %s', 'view this order'));
   }
 }
+
+/**
+ * Grant or deny access to create categories
+ * @param {Request} req
+ * @param {Response} res
+ * @param {Function} next
+ */
+export async function canCreateCategories(req, res, next) {
+  const permission = await casbin.globalResource(req.user.id, 'coupon', 'create');
+  if (permission.granted) {
+    next();
+  } else {
+    // eslint-disable-next-line max-len
+    res.boom.forbidden(res.__('Your account is not allowed to %s', 'view this order'));
+  }
+}

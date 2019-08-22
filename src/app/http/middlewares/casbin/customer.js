@@ -23,12 +23,12 @@ export async function canBuy(req, res, next) {
  */
 export async function canReadOrder(req, res, next) {
   // eslint-disable-next-line max-len
-  const x = await casbin.can(req.user.id, `order:${req.params.order}`, 'order', 'read');
-  console.log({x})
+  const e = await casbin.getInstance();
+  const y = await e.hasRoleForUser('5d59d348118d9c0e8b4741cb', 'admin', '*');
+  console.log({y});
   // eslint-disable-next-line max-len
-  const permission = await casbin.canUser(req.user.id, 'read', 'order', `order:${req.params.order}`);
-  console.log({permission})
-  if (permission) {
+  const permission = await casbin.can(req.user.id, `order:${req.params.order}`, 'order', 'read');
+  if (permission.granted) {
     next();
   } else {
     // eslint-disable-next-line max-len

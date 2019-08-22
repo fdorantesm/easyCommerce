@@ -300,6 +300,16 @@ export default class Casbin {
    */
   static async is(identifier, role, domain) {
     const e = await casbin.getInstance();
-    return await e.hasRoleForUser('5d59d348118d9c0e8b4741cb', 'admin', '*');
+    return await e.hasRoleForUser(identifier, role, domain);
+  }
+
+  /**
+   * 
+   * @param {String} identifier
+   * @param {String} resource
+   * @param {String} action
+   */
+  static async globalResource(identifier, resource, action) {
+    return Casbin.can(identifier, '*', resource, action);
   }
 }
