@@ -1,5 +1,5 @@
 import moment from 'libraries/moment';
-import {Order as ConektaOrder} from 'libraries/conekta';
+import {Order as ConektaOrder} from 'libraries/fake/conekta';
 import Order from 'models/Order';
 import Payment from 'models/Payment';
 import Delivery from 'models/Delivery';
@@ -175,25 +175,27 @@ class OrderController {
       await orderDB.save();
 
       await casbin.assignRole(req.user.id, 'owner', `order:${orderDB._id}`);
-
-      // eslint-disable-next-line max-len
+      await casbin.createPolicy('owner', `order:${orderDB._id}`, 'order', 'read');
       await casbin.createPolicy('admin', `order:${orderDB._id}`, 'order', 'read');
-      // eslint-disable-next-line max-len
       await casbin.createPolicy('admin', `order:${orderDB._id}`, 'order', 'update');
-      // eslint-disable-next-line max-len
       await casbin.createPolicy('admin', `order:${orderDB._id}`, 'order', 'delete');
-      // eslint-disable-next-line max-len
       await casbin.createPolicy('admin', `order:${orderDB._id}`, 'payment', 'create');
-      // eslint-disable-next-line max-len
       await casbin.createPolicy('admin', `order:${orderDB._id}`, 'payment', 'read');
-      // eslint-disable-next-line max-len
       await casbin.createPolicy('admin', `order:${orderDB._id}`, 'payment', 'update');
-      // eslint-disable-next-line max-len
       await casbin.createPolicy('admin', `order:${orderDB._id}`, 'delivery', 'create');
-      // eslint-disable-next-line max-len
       await casbin.createPolicy('admin', `order:${orderDB._id}`, 'delivery', 'read');
-      // eslint-disable-next-line max-len
       await casbin.createPolicy('admin', `order:${orderDB._id}`, 'delivery', 'update');
+      await casbin.createPolicy('logistics', `order:${orderDB._id}`, 'order', 'read');
+      await casbin.createPolicy('logistics', `order:${orderDB._id}`, 'order', 'update');
+      await casbin.createPolicy('logistics', `order:${orderDB._id}`, 'delivery', 'read');
+      await casbin.createPolicy('logistics', `order:${orderDB._id}`, 'delivery', 'update');
+      await casbin.createPolicy('logistics', `order:${orderDB._id}`, 'payment', 'read');
+
+      const wilds = await casbin.assignRoleWildcardUsers(['admin', 'root', 'logistics'], `order:${orderDB._id}`);
+
+      Promise.all(wilds).then((data) => {
+        console.log({data});
+      });
 
       const paymentData = {};
       if (gatewayable) {

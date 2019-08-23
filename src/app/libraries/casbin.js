@@ -281,6 +281,39 @@ export default class Casbin {
   }
 
   /**
+   * Get users by roles
+   * @param {String[]} roles
+   * @param {String} domain
+   * @return {Promise<Object[]>}
+   */
+  static async getUsersByRoles(roles, domain = '*') {
+    const e = await Casbin.getInstance();
+    await e.loadPolicy();
+    const users = {};
+    for (const role of roles) {
+      users[role] = await e.getUsersForRole(role, domain);
+    }
+    return users;
+  }
+
+  /**
+   * Create bulk policies for wildcard users
+   * @param {String[]} roles
+   * @param {String} domain
+   * @return {Promise[]}
+   */
+  static async assignRoleWildcardUsers(roles, domain) {
+    const results = [];
+    const admins = await Casbin.getUsersByRoles(roles);
+    for (const role of Object.keys(admins)) {
+      for (const admin of admins[role]) {
+        results.push(Casbin.assignRole(admin, role, domain));
+      }
+    }
+    return results;
+  }
+
+  /**
    * Get roles by user
    * @param {String} identifier
    * @param {String} domain
@@ -304,7 +337,7 @@ export default class Casbin {
   }
 
   /**
-   * 
+   * Return true if user has perms to global resource
    * @param {String} identifier
    * @param {String} resource
    * @param {String} action

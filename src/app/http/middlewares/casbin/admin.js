@@ -17,26 +17,6 @@ export async function canAccessToAdmin(req, res, next) {
 };
 
 /**
- * Grant or deny user access to list coupons
- * @param {Request} req
- * @param {Response} res
- * @param {Function} next
- */
-export async function canListCoupons(req, res, next) {
-  // eslint-disable-next-line max-len
-  const permission = await casbin.canUser(req.user.id, 'read', 'order');
-  const permission2 = await casbin.can(req.user.id, 'coupon:*', 'read', 'coupon');
-  console.log({permission2})
-  if (permission) {
-    req.permissions = await casbin.getRolePolicies(req.user.id);
-    console.log(req.permission);
-    next();
-  } else {
-    res.boom.forbidden();
-  }
-};
-
-/**
  * Grant or deny access to read orders
  * @param {Request} req
  * @param {Response} res
@@ -44,8 +24,8 @@ export async function canListCoupons(req, res, next) {
  */
 export async function canReadAnyOrder(req, res, next) {
   // eslint-disable-next-line max-len
-  const permission = await casbin.canUser(req.user.id, 'read', 'order', `order:${req.params.order}`);
-  if (permission) {
+  const permission = await casbin.can(req.user.id, `order:${req.params.order}`, 'order', 'read');
+  if (permission.granted) {
     next();
   } else {
     // eslint-disable-next-line max-len
