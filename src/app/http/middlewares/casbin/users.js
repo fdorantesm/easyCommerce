@@ -1,7 +1,8 @@
 import casbin from 'libraries/casbin';
 
 /**
- * Role middlewares
+ * User middlewares
+ * @memberof Middlewares
  */
 class UserMiddleware {
   /**
@@ -18,7 +19,8 @@ class UserMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'read users.'));
     }
   };
 
@@ -35,7 +37,8 @@ class UserMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'read users.'));
     }
   };
 
@@ -52,7 +55,8 @@ class UserMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'update users.'));
     }
   };
 
@@ -69,7 +73,8 @@ class UserMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'delete users.'));
     }
   };
 
@@ -86,7 +91,8 @@ class UserMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'create users.'));
     }
   };
 
@@ -103,7 +109,8 @@ class UserMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'grant roles.'));
     }
   };
 
@@ -120,7 +127,8 @@ class UserMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'rovoke roles.'));
     }
   };
 
@@ -137,7 +145,8 @@ class UserMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'read user roles.'));
     }
   };
 }
