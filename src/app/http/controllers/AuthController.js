@@ -160,9 +160,12 @@ class AuthController {
       user = await user.save();
       profile = await profile.save();
       casbin.assignRole(user._id, 'customer', '*');
-
       res.send({
         message: res.__('Your account was created succesfully'),
+        data: {
+          ...user.toObject(),
+          profile: profile.toObject()
+        }
       });
     } catch (err) {
       // eslint-disable-next-line max-len
