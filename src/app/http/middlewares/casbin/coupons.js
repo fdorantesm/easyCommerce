@@ -17,16 +17,17 @@ class CouponMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'read coupons.'));
     }
   };
 
   /**
-     * Grant or deny user access to read coupons
-     * @param {Request} req
-     * @param {Response} res
-     * @param {Function} next
-     */
+   * Grant or deny user access to read coupons
+   * @param {Request} req
+   * @param {Response} res
+   * @param {Function} next
+   */
   static async canReadCoupon(req, res, next) {
     // eslint-disable-next-line max-len
     const permission = await casbin.can(req.user.id, '*', 'coupon', 'read');
@@ -34,16 +35,17 @@ class CouponMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'read coupons.'));
     }
   };
 
   /**
-     * Grant or deny user access to update coupons
-     * @param {Request} req
-     * @param {Response} res
-     * @param {Function} next
-     */
+   * Grant or deny user access to update coupons
+   * @param {Request} req
+   * @param {Response} res
+   * @param {Function} next
+   */
   static async canUpdateCoupon(req, res, next) {
     // eslint-disable-next-line max-len
     const permission = await casbin.can(req.user.id, '*', 'coupon', 'update');
@@ -51,16 +53,17 @@ class CouponMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'update coupons.'));
     }
   };
 
   /**
-     * Grant or deny user access to delete coupons
-     * @param {Request} req
-     * @param {Response} res
-     * @param {Function} next
-     */
+   * Grant or deny user access to delete coupons
+   * @param {Request} req
+   * @param {Response} res
+   * @param {Function} next
+   */
   static async canDeleteCoupon(req, res, next) {
     // eslint-disable-next-line max-len
     const permission = await casbin.can(req.user.id, '*', 'coupon', 'delete');
@@ -68,16 +71,17 @@ class CouponMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'delete coupons.'));
     }
   };
 
   /**
-     * Grant or deny user access to create coupons
-     * @param {Request} req
-     * @param {Response} res
-     * @param {Function} next
-     */
+   * Grant or deny user access to create coupons
+   * @param {Request} req
+   * @param {Response} res
+   * @param {Function} next
+   */
   static async canCreateCoupon(req, res, next) {
     // eslint-disable-next-line max-len
     const permission = await casbin.can(req.user.id, '*', 'coupon', 'delete');
@@ -85,7 +89,8 @@ class CouponMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'create coupons.'));
     }
   };
 }
