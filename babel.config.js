@@ -17,7 +17,7 @@ module.exports = function(api) {
     'helpers': './src/app/helpers',
     'views': './src/app/views',
     'app': './src/app/index',
-    'env': './src/app/env',
+    'env': './src/app/core/env',
     'events': './src/app/events',
     'loader': './src/app/loader',
     'router': './src/app/libraries/router',

@@ -2,6 +2,7 @@ import path from 'path';
 import dotenv from 'dotenv';
 import fs from 'fs';
 
+
 const NODE_ENV = process.env.NODE_ENV;
 const PWD = process.env.PWD;
 
@@ -23,7 +24,7 @@ dotenv.config({
   path: file
 });
 
-process.env.APP_PATH = __dirname;
+process.env.APP_PATH = path.join(process.env.SRC_PATH, 'app');
 
 /**
  * Get env path

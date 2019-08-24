@@ -11,6 +11,8 @@ const router = Router();
 const ROOT_PATH = process.env.ROOT_PATH;
 const APP_PATH = process.env.APP_PATH;
 
+console.log(ROOT_PATH, APP_PATH)
+
 // eslint-disable-next-line no-unused-vars
 const table = new CliTable({
   head: ['Method', 'Path'],
@@ -21,18 +23,25 @@ const table = new CliTable({
  * Load subrouters and log each route into file
  */
 glob.sync(APP_PATH + '/http/routes/*.js').forEach((file) => {
-  if (file !== __filename) {
-    const routes = require(file).default;
-    const base = `/${path.basename(file).replace('.js', '')}`;
-    router.use(base, routes);
-    // eslint-disable-next-line max-len
-    routes.stack.filter((r) => r.route).map((r) => {
-      // eslint-disable-next-line max-len
-      Object.keys(r.route.methods).map((method) => {
+  if (file.split('/').pop() !== __filename.split('/').pop()) {
+    try {
+      const module = require(file);
+      if (Object.prototype.hasOwnProperty.call(module, 'default')) {
+        const routes = require(file).default;
+        const base = `/${path.basename(file).replace('.js', '')}`;
+        router.use(base, routes);
         // eslint-disable-next-line max-len
-        table.push([method.toUpperCase(), trimEnd(base.concat(r.route.path), '/')]);
-      });
-    });
+        routes.stack.filter((r) => r.route).map((r) => {
+          // eslint-disable-next-line max-len
+          Object.keys(r.route.methods).map((method) => {
+            // eslint-disable-next-line max-len
+            table.push([method.toUpperCase(), trimEnd(base.concat(r.route.path), '/')]);
+          });
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
   // eslint-disable-next-line max-len
   fs.writeFileSync(path.join(ROOT_PATH, '.env.routes'), table.toString().replace(/\x1b\[[0-9;]*m/g, ''));
