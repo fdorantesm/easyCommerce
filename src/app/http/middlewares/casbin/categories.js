@@ -18,16 +18,17 @@ class CategoryMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'read categories.'));
     }
   };
 
   /**
-     * Grant or deny user access to read categories
-     * @param {Request} req
-     * @param {Response} res
-     * @param {Function} next
-     */
+   * Grant or deny user access to read categories
+   * @param {Request} req
+   * @param {Response} res
+   * @param {Function} next
+   */
   static async canReadCategory(req, res, next) {
     // eslint-disable-next-line max-len
     const permission = await casbin.can(req.user.id, '*', 'category', 'read');
@@ -35,16 +36,17 @@ class CategoryMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'read categories.'));
     }
   };
 
   /**
-     * Grant or deny user access to update categories
-     * @param {Request} req
-     * @param {Response} res
-     * @param {Function} next
-     */
+   * Grant or deny user access to update categories
+   * @param {Request} req
+   * @param {Response} res
+   * @param {Function} next
+   */
   static async canUpdateCategory(req, res, next) {
     // eslint-disable-next-line max-len
     const permission = await casbin.can(req.user.id, '*', 'category', 'update');
@@ -52,16 +54,17 @@ class CategoryMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'update categories.'));
     }
   };
 
   /**
-     * Grant or deny user access to delete categories
-     * @param {Request} req
-     * @param {Response} res
-     * @param {Function} next
-     */
+   * Grant or deny user access to delete categories
+   * @param {Request} req
+   * @param {Response} res
+   * @param {Function} next
+   */
   static async canDeleteCategory(req, res, next) {
     // eslint-disable-next-line max-len
     const permission = await casbin.can(req.user.id, '*', 'category', 'delete');
@@ -69,16 +72,17 @@ class CategoryMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'delete categories.'));
     }
   };
 
   /**
-     * Grant or deny user access to create categories
-     * @param {Request} req
-     * @param {Response} res
-     * @param {Function} next
-     */
+   * Grant or deny user access to create categories
+   * @param {Request} req
+   * @param {Response} res
+   * @param {Function} next
+   */
   static async canCreateCategory(req, res, next) {
     // eslint-disable-next-line max-len
     const permission = await casbin.can(req.user.id, '*', 'category', 'delete');
@@ -86,7 +90,8 @@ class CategoryMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'create categories.'));
     }
   };
 }
