@@ -1,6 +1,6 @@
 import joi, * as type from 'libraries/joi';
 
-export const registerSchema = joi.object().keys({
+const registerSchema = joi.object().keys({
   first_name: type.fullname.required(),
   last_name: type.fullname.required(),
   phone: type.phone.required(),
@@ -10,7 +10,7 @@ export const registerSchema = joi.object().keys({
   // confirm_password: type.password.valid(joi.ref('password')).required().strict()
 });
 
-export const loginSchema = joi.object().keys({
+const loginSchema = joi.object().keys({
   email: type.email.required(),
   password: type.password.required()
 });
