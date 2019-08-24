@@ -1,7 +1,7 @@
 import Router from 'router';
 import AuthMiddlewares from 'middlewares/auth';
 import validator from 'middlewares/validator';
-import CouponController from 'controllers/Coupon';
+import CouponController from 'controllers/CouponController';
 import CouponPermission from 'middlewares/casbin/coupons';
 
 // eslint-disable-next-line new-cap

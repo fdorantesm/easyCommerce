@@ -1,5 +1,5 @@
 import Router from 'router';
-import AuthController from 'controllers/Auth';
+import AuthController from 'controllers/AuthController';
 import middleware from 'middlewares/auth';
 import validator from 'middlewares/validator';
 

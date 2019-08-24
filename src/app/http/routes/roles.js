@@ -1,7 +1,7 @@
 import Router from 'router';
 import AuthMiddlewares from 'middlewares/auth';
 import validator from 'middlewares/validator';
-import RoleController from 'controllers/Role';
+import RoleController from 'controllers/RoleController';
 import RoleMiddleware from 'middlewares/casbin/roles';
 // eslint-disable-next-line new-cap
 const router = Router();

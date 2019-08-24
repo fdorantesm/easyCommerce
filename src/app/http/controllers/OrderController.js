@@ -7,6 +7,7 @@ import deepPopulate from 'deep-populate';
 import OrderProducts from 'models/OrderProducts';
 import Coupon from 'models/Coupon';
 import casbin from 'libraries/casbin';
+import merge from 'lodash/merge';
 
 /**
  * Order Controller
@@ -357,6 +358,24 @@ class OrderController {
       const orders = await Order.paginate({}, options);
       res.send({
         data: orders
+      });
+    } catch (err) {
+      res.boom.badData(err);
+    }
+  }
+
+  /**
+   * Update order
+   * @param {Request} req
+   * @param {Response} res
+   */
+  static async updateOrder(req, res) {
+    try {
+      const order = await Order.findById(req.params.order);
+      const data = merge(order, req.body);
+      await order.update(data);
+      res.send({
+        data: order
       });
     } catch (err) {
       res.boom.badData(err);

@@ -1,5 +1,5 @@
 import Router from 'router';
-import CartController from 'controllers/Cart';
+import CartController from 'controllers/CartController';
 // import CartMiddlewares from 'middlewares/cart';
 import validator from 'middlewares/validator';
 // eslint-disable-next-line new-cap
