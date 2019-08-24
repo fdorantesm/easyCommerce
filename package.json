@@ -6,11 +6,11 @@
   "private": true,
   "scripts": {
     "test": "echo 'no tests ready",
-    "clean": "rm -rf ./app ./bin",
+    "clean": "rm -rf ./dist",
     "start": "nodemon --config .nodemon --exec 'npm run lint && babel-node src/bin/server'",
     "start:dev": "nodemon --config .nodemon --exec 'babel-node src/bin/server'",
     "start:es5": "forever start -c \"babel-node --presets env,stage-2\" bin/www.js",
-    "build": "npm run clean && babel src -d . -D",
+    "build": "npm run clean && babel src -d dist -D",
     "start:forever": "forever start bin/www.js",
     "release": "npm run build && npm run start:forever",
     "lint": "eslint src/.",

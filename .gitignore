@@ -8,8 +8,7 @@ static/*
 private/*
 node_modules
 .hidden
-app/*
-bin/*
+dist/*
 .DS_Store
 src/app/logs/*
 storage/*
