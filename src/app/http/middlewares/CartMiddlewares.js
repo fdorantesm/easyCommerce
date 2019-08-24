@@ -3,7 +3,7 @@ import ShoppingCart from 'libraries/shoppingCart';
 /**
  * Cart middleware class
  */
-export default class CartMiddleware {
+export default class CartMiddlewares {
   /**
    * Bind cart to request
    * @void

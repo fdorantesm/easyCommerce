@@ -9,7 +9,7 @@ import rfs from 'rotating-file-stream';
 import serve from 'serve-static';
 import i18n from 'i18n';
 import locales from 'config/i18n';
-import Auth from 'middlewares/auth';
+import Auth from 'middlewares/AuthMiddlewares';
 import boom from 'express-boom';
 import fileUpload from 'express-fileupload';
 import path from 'path';

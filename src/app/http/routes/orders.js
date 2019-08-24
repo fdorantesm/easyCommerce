@@ -1,9 +1,9 @@
 import Router from 'router';
 import OrderController from 'controllers/OrderController';
-import CartMiddlewares from 'middlewares/cart';
-import AuthMiddlewares from 'middlewares/auth';
+import CartMiddlewares from 'middlewares/CartMiddlewares';
+import AuthMiddlewares from 'middlewares/AuthMiddlewares';
 import validator from 'middlewares/validator';
-import OrderMiddlewares from 'middlewares/casbin/orders';
+import OrderMiddlewares from 'middlewares/casbin/OrderMiddlewares';
 
 // eslint-disable-next-line new-cap
 const router = Router();

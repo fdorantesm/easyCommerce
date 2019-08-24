@@ -4,7 +4,7 @@ import User from 'models/User';
 /**
  * Auth middleware class
  */
-export default class Auth {
+export default class AuthMiddleware {
   /**
    * Binds token to request if exists
    * @void

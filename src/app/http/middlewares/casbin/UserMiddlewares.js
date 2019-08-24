@@ -4,7 +4,7 @@ import casbin from 'libraries/casbin';
  * User middlewares
  * @memberof Middlewares
  */
-class UserMiddleware {
+class UserMiddlewares {
   /**
    * Grant or deny user access to list users
    * @param {Request} req
@@ -151,4 +151,4 @@ class UserMiddleware {
   };
 }
 
-export default UserMiddleware;
+export default UserMiddlewares;

@@ -1,6 +1,6 @@
 import Router from 'router';
 import AuthController from 'controllers/AuthController';
-import middleware from 'middlewares/auth';
+import AuthMiddlewares from 'middlewares/AuthMiddlewares';
 import validator from 'middlewares/validator';
 
 // eslint-disable-next-line new-cap
@@ -11,6 +11,6 @@ router.post('/facebook', AuthController.facebook);
 router.post('/google', AuthController.google);
 router.post('/register', validator, AuthController.register);
 
-router.get('/me', middleware.authorization, AuthController.whoami);
+router.get('/me', AuthMiddlewares.authorization, AuthController.whoami);
 
 export default router;

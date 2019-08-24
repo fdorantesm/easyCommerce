@@ -3,7 +3,7 @@ import casbin from 'libraries/casbin';
 /**
  * Order middlewares
  */
-class OrderMiddleware {
+class OrderMiddlewares {
   /**
    * Grant or deny user access to list orders
    * @param {Request} req
@@ -95,4 +95,4 @@ class OrderMiddleware {
   };
 }
 
-export default OrderMiddleware;
+export default OrderMiddlewares;

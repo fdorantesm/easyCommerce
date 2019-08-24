@@ -1,99 +1,98 @@
 import casbin from 'libraries/casbin';
 
 /**
- * Role middlewares
+ * Coupon middlewares
  */
-class RoleMiddleware {
+class CouponMiddlewares {
   /**
-   * Grant or deny user access to list roles
+   * Grant or deny user access to list coupons
    * @param {Request} req
    * @param {Response} res
    * @param {Function} next
    */
-  static async canListRoles(req, res, next) {
+  static async canListCoupons(req, res, next) {
     // eslint-disable-next-line max-len
-    const permission = await casbin.can(req.user.id, '*', 'role', 'list');
-    console.log({permission});
+    const permission = await casbin.can(req.user.id, '*', 'coupon', 'list');
     if (permission.granted) {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
       // eslint-disable-next-line max-len
-      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'read roles.'));
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'read coupons.'));
     }
   };
 
   /**
-   * Grant or deny user access to read roles
+   * Grant or deny user access to read coupons
    * @param {Request} req
    * @param {Response} res
    * @param {Function} next
    */
-  static async canReadRole(req, res, next) {
+  static async canReadCoupon(req, res, next) {
     // eslint-disable-next-line max-len
-    const permission = await casbin.can(req.user.id, '*', 'role', 'read');
+    const permission = await casbin.can(req.user.id, '*', 'coupon', 'read');
     if (permission.granted) {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
       // eslint-disable-next-line max-len
-      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'read roles.'));
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'read coupons.'));
     }
   };
 
   /**
-   * Grant or deny user access to update roles
+   * Grant or deny user access to update coupons
    * @param {Request} req
    * @param {Response} res
    * @param {Function} next
    */
-  static async canUpdateRole(req, res, next) {
+  static async canUpdateCoupon(req, res, next) {
     // eslint-disable-next-line max-len
-    const permission = await casbin.can(req.user.id, '*', 'role', 'update');
+    const permission = await casbin.can(req.user.id, '*', 'coupon', 'update');
     if (permission.granted) {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
       // eslint-disable-next-line max-len
-      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'update roles.'));
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'update coupons.'));
     }
   };
 
   /**
-   * Grant or deny user access to delete roles
+   * Grant or deny user access to delete coupons
    * @param {Request} req
    * @param {Response} res
    * @param {Function} next
    */
-  static async canDeleteRole(req, res, next) {
+  static async canDeleteCoupon(req, res, next) {
     // eslint-disable-next-line max-len
-    const permission = await casbin.can(req.user.id, '*', 'role', 'delete');
+    const permission = await casbin.can(req.user.id, '*', 'coupon', 'delete');
     if (permission.granted) {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
       // eslint-disable-next-line max-len
-      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'delete roles.'));
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'delete coupons.'));
     }
   };
 
   /**
-   * Grant or deny user access to create roles
+   * Grant or deny user access to create coupons
    * @param {Request} req
    * @param {Response} res
    * @param {Function} next
    */
-  static async canCreateRole(req, res, next) {
+  static async canCreateCoupon(req, res, next) {
     // eslint-disable-next-line max-len
-    const permission = await casbin.can(req.user.id, '*', 'role', 'delete');
+    const permission = await casbin.can(req.user.id, '*', 'coupon', 'create');
     if (permission.granted) {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
       // eslint-disable-next-line max-len
-      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'create roles.'));
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'create coupons.'));
     }
   };
 }
 
-export default RoleMiddleware;
+export default CouponMiddlewares;

@@ -11,8 +11,6 @@ const router = Router();
 const ROOT_PATH = process.env.ROOT_PATH;
 const APP_PATH = process.env.APP_PATH;
 
-console.log(ROOT_PATH, APP_PATH)
-
 // eslint-disable-next-line no-unused-vars
 const table = new CliTable({
   head: ['Method', 'Path'],

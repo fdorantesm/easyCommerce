@@ -1,5 +1,5 @@
 import moment from 'libraries/moment';
-import {Order as ConektaOrder} from 'libraries/fake/conekta';
+import {Order as ConektaOrder} from 'libraries/conekta';
 import Order from 'models/Order';
 import Payment from 'models/Payment';
 import Delivery from 'models/Delivery';
