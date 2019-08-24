@@ -60,6 +60,7 @@
     "mongoose-softdelete": "^0.6.3",
     "mongoose-type-email": "^1.0.11",
     "morgan": "^1.9.1",
+    "objectid": "^3.2.1",
     "pug": "^2.0.4",
     "request-promise": "^4.2.4",
     "rotating-file-stream": "^1.4.3",

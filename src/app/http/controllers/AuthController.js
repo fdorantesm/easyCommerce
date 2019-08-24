@@ -5,7 +5,7 @@ import Conekta from 'libraries/conekta'; // eslint-disable-line
 import request from 'request-promise';
 import md5 from 'md5';
 import {createCustomer, defineNickname} from 'helpers/users';
-import {ObjectId} from 'mongodb';
+import objectid from 'objectid';
 import casbin from 'libraries/casbin';
 
 /**
@@ -150,7 +150,7 @@ class AuthController {
       });
 
       // eslint-disable-next-line new-cap
-      user.roles = [ObjectId('5d579ff9f761e4bd14ce08c5')];
+      user.roles = [objectid('5d579ff9f761e4bd14ce08c5')];
 
       // eslint-disable-next-line max-len
       profile.conekta = Object.prototype.hasOwnProperty.call(customer, '_id') ? customer._id : null;
