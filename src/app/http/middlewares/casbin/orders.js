@@ -30,7 +30,7 @@ class OrderMiddleware {
    */
   static async canReadOrder(req, res, next) {
     // eslint-disable-next-line max-len
-    const permission = await casbin.can(req.user.id, '*', 'order', 'read');
+    const permission = await casbin.can(req.user.id, `order:${req.params.order}`, 'order', 'read');
     if (permission.granted) {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
@@ -48,7 +48,7 @@ class OrderMiddleware {
    */
   static async canUpdateOrder(req, res, next) {
     // eslint-disable-next-line max-len
-    const permission = await casbin.can(req.user.id, '*', 'order', 'update');
+    const permission = await casbin.can(req.user.id, `order:${req.params.order}`, 'order', 'update');
     if (permission.granted) {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
@@ -66,7 +66,7 @@ class OrderMiddleware {
    */
   static async canDeleteOrder(req, res, next) {
     // eslint-disable-next-line max-len
-    const permission = await casbin.can(req.user.id, '*', 'order', 'delete');
+    const permission = await casbin.can(req.user.id, `order:${req.params.order}`, 'order', 'delete');
     if (permission.granted) {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
