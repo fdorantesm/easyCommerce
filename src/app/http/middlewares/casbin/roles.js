@@ -18,16 +18,17 @@ class RoleMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'read roles.'));
     }
   };
 
   /**
-     * Grant or deny user access to read roles
-     * @param {Request} req
-     * @param {Response} res
-     * @param {Function} next
-     */
+   * Grant or deny user access to read roles
+   * @param {Request} req
+   * @param {Response} res
+   * @param {Function} next
+   */
   static async canReadRole(req, res, next) {
     // eslint-disable-next-line max-len
     const permission = await casbin.can(req.user.id, '*', 'role', 'read');
@@ -35,16 +36,17 @@ class RoleMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'read roles.'));
     }
   };
 
   /**
-     * Grant or deny user access to update roles
-     * @param {Request} req
-     * @param {Response} res
-     * @param {Function} next
-     */
+   * Grant or deny user access to update roles
+   * @param {Request} req
+   * @param {Response} res
+   * @param {Function} next
+   */
   static async canUpdateRole(req, res, next) {
     // eslint-disable-next-line max-len
     const permission = await casbin.can(req.user.id, '*', 'role', 'update');
@@ -52,16 +54,17 @@ class RoleMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'update roles.'));
     }
   };
 
   /**
-     * Grant or deny user access to delete roles
-     * @param {Request} req
-     * @param {Response} res
-     * @param {Function} next
-     */
+   * Grant or deny user access to delete roles
+   * @param {Request} req
+   * @param {Response} res
+   * @param {Function} next
+   */
   static async canDeleteRole(req, res, next) {
     // eslint-disable-next-line max-len
     const permission = await casbin.can(req.user.id, '*', 'role', 'delete');
@@ -69,16 +72,17 @@ class RoleMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'delete roles.'));
     }
   };
 
   /**
-     * Grant or deny user access to create roles
-     * @param {Request} req
-     * @param {Response} res
-     * @param {Function} next
-     */
+   * Grant or deny user access to create roles
+   * @param {Request} req
+   * @param {Response} res
+   * @param {Function} next
+   */
   static async canCreateRole(req, res, next) {
     // eslint-disable-next-line max-len
     const permission = await casbin.can(req.user.id, '*', 'role', 'delete');
@@ -86,7 +90,8 @@ class RoleMiddleware {
       req.permissions = await casbin.getRolePolicies(req.user.id);
       next();
     } else {
-      res.boom.forbidden();
+      // eslint-disable-next-line max-len
+      res.boom.forbidden(res.__(`You don't have permissions to %s`, 'create roles.'));
     }
   };
 }
