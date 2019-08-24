@@ -6,12 +6,14 @@ import http from 'http';
 import https from 'https';
 import app from 'app';
 import socket from 'libraries/io';
+import path from 'path';
 
 const APP_SSL_KEY = process.env.APP_SSL_KEY;
 const APP_SSL_CERT = process.env.APP_SSL_CERT;
 const APP_SSL_PASSPHRASE = process.env.APP_SSL_PASSPHRASE;
 const APP_PORT = process.env.APP_PORT;
 const APP_SSL_PORT = process.env.APP_SSL_PORT;
+const SRC_PATH = process.env.SRC_PATH;
 
 // eslint-disable-next-line max-len
 const isAppSSL = APP_SSL_KEY && APP_SSL_CERT && APP_SSL_PASSPHRASE && APP_SSL_PORT;
@@ -29,8 +31,8 @@ const sockets = {
 };
 
 if (isAppSSL) {
-  const key = fs.readFileSync(APP_SSL_KEY);
-  const cert = fs.readFileSync(APP_SSL_CERT);
+  const key = fs.readFileSync(path.join(SRC_PATH, APP_SSL_KEY));
+  const cert = fs.readFileSync(path.join(SRC_PATH, APP_SSL_CERT));
   const secure = {
     key,
     cert,

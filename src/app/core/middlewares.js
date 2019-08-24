@@ -17,13 +17,13 @@ import populate from 'middlewares/populate';
 import models from 'middlewares/models';
 
 const PWD = process.env.PWD;
-const ROOT_PATH = process.env.ROOT_PATH;
+const SRC_PATH = process.env.SRC_PATH;
 const APP_PUBLIC = process.env.APP_PUBLIC;
 const APP_STATIC = process.env.APP_STATIC;
 const APP_LOGS = process.env.APP_LOGS;
 
 export default (app) => {
-  const logDirectory = path.join(ROOT_PATH, APP_LOGS);
+  const logDirectory = path.join(SRC_PATH, APP_LOGS);
 
   fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
 
