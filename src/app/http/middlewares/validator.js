@@ -39,8 +39,6 @@ export default (req, res, next) => {
         });
       }
 
-      console.log({body: req.body});
-
       return Joi.validate(source, schema, validationOptions, (err, data) => {
         if (err) {
           // eslint-disable-next-line max-len

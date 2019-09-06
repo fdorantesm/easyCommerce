@@ -27,6 +27,24 @@ class OrderController {
     let gatewayable = true;
     let conekta;
     let coupon;
+
+    req.body.from_latitude = 19.4328333
+    req.body.from_longitude = -99.1331602
+    req.body.from_address_line1 = 'Juárez 701'
+    req.body.from_address_line3 = 'Centro'
+    req.body.from_address_city = 'Cuantémoc'
+    req.body.from_address_state = 'Ciudad de México'
+    req.body.from_address_country = 'Mexico'
+    req.body.from_address_references = 'Edificio verde'
+    req.body.from_address_between_streets = 'Oxxo y / 7 eleven'
+    req.body.from_address_zip = '02100'
+    req.body.from_sender_name = 'Juan Hernandez'
+    req.body.from_sender_phone = '+525555555555'
+    req.body.amount = 150
+    req.body.carrier = 'redpack'
+    req.body.type = '2 day'
+    req.body.secured = false
+
     // eslint-disable-next-line max-len
     const payBefore = moment().startOf('hour').add(1, 'hour').add(7, 'day').hours(20);
     try {

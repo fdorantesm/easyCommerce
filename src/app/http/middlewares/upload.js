@@ -9,6 +9,7 @@ import trimStart from 'lodash/trimStart';
  * @param {Function} next
  */
 export default function upload(req, res, next) {
+  console.log('uploads');
   req._files = [];
   if (req.files) {
     // eslint-disable-next-line max-len
@@ -16,10 +17,15 @@ export default function upload(req, res, next) {
     const uploads = [];
     // eslint-disable-next-line max-len
     files.map((file) => uploads.push(Upload.file(trimStart(req.baseUrl, '/'), file)));
+    console.log({uploads});
     Promise.all(uploads).then(async (results) => {
+      console.log({results});
       req._files = results;
       next();
-    }).catch((err) => next);
+    }).catch((err) => {
+      console.log(err);
+      return res.boom.serverUnavailable(res.__('There was a problem while trying to resolve your request. Try again in a few minutes.'));
+    });
   } else {
     next();
   }
