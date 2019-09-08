@@ -39,13 +39,21 @@ class ProductController {
     try {
       // eslint-disable-next-line max-len
       const product = await Product.findOne({_id: req.params.id, deleted: false}).populate(req.populate);
-      res.send({
-        data: product
-      });
+      if (product) {
+        res.send({
+          data: product
+        });
+      } else {
+        throw new Error('NotFoundException');
+      }
     } catch (err) {
       console.log(err);
       // eslint-disable-next-line max-len
-      res.boom.badRequest(res.__('There was a problem while trying to resolve your request'));
+      if (err.message === 'NotFoundException') {
+        res.boom.notFound(res.__('The %s was not found', 'product'));
+      } else {
+        res.boom.badRequest(res.__(err.message));
+      }
     }
   }
   /**
