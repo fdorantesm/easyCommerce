@@ -78,11 +78,21 @@ class CartController {
       const cart = new ShoppingCart({key: req.body.key});
       await cart.restore();
       const product = await Product.findById(req.body.product);
-      await cart.removeProduct(product._id);
-      await cart.store();
-      res.send(cart.json());
+      if (product) {
+        await cart.removeProduct(product._id);
+        await cart.store();
+        res.send(cart.json());
+      } else {
+        throw new Error('NotFoundException');
+      }
     } catch (err) {
-      res.status(400).send(err);
+      console.log(err);
+      // eslint-disable-next-line max-len
+      if (err.message === 'NotFoundException') {
+        res.boom.notFound(res.__('The %s was not found', 'product'));
+      } else {
+        res.boom.badRequest(res.__(err.message));
+      }
     }
   }
 }
