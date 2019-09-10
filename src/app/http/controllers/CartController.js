@@ -35,12 +35,15 @@ class CartController {
     try {
       const cart = new ShoppingCart({key: req.body.key});
       await cart.restore();
-      const product = await Product.findById(req.body.product);
-      console.log(product);
+      const product = await Product.findById(req.body.product).populate(['files', 'categories']);
+      console.log(product)
       await cart.addProduct({
         id: product._id,
         price: product.price,
-        name: product.name
+        name: product.name,
+        files: product.files,
+        categories: product.categories,
+        sku: product.sku
       }, req.body.qty);
       await cart.store();
       res.send(cart.json());

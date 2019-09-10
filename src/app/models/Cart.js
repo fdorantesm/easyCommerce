@@ -40,7 +40,8 @@ const fields = {
 
 const options = {
   discriminatorKey: '_type',
-  timestamps: true
+  timestamps: true,
+  strict: false
 };
 
 const Cart = new mongoose.Schema(fields, options);
