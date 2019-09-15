@@ -4,11 +4,13 @@ import mongoose from 'mongoose';
 import mongooseBeautifulUniqueValidation from 'mongoose-beautiful-unique-validation';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import mongooseSoftdelete from 'mongoose-softdelete';
+import mongooseSlugGenerator from 'mongoose-slug-generator';
 
 const fields = {
   name: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   price: {
     type: Number,
@@ -28,7 +30,12 @@ const fields = {
   categories: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category'
-  }]
+  }],
+  slug: {
+    type: String,
+    slug: ['name'],
+    unique: true
+  }
 };
 
 const options = {
@@ -41,5 +48,6 @@ const Product = new mongoose.Schema(fields, options);
 Product.plugin(mongoosePaginate);
 Product.plugin(mongooseBeautifulUniqueValidation);
 Product.plugin(mongooseSoftdelete);
+Product.plugin(mongooseSlugGenerator);
 
 export default mongoose.model('Product', Product);

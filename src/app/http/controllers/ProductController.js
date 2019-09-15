@@ -63,6 +63,7 @@ class ProductController {
    */
   static async createProduct(req, res) {
     try {
+      console.log('hmmm')
       const product = new Product({
         name: req.body.name,
         price: req.body.price,

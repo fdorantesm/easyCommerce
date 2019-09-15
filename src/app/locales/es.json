@@ -1,1 +1,4 @@
-{}
+{
+	"UserAuthenticationException": "El usuario o la contraseña son incorrectos.",
+	"There was a problem while trying to resolve your request": "There was a problem while trying to resolve your request"
+}
