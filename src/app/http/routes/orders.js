@@ -16,5 +16,5 @@ router.get('/:order', AuthMiddlewares.authorization, OrderMiddlewares.canReadOrd
 router.post('/:order', AuthMiddlewares.authorization, OrderMiddlewares.canUpdateOrder, OrderController.updateOrder);
 // eslint-disable-next-line max-len
 router.get('/', AuthMiddlewares.authorization, OrderMiddlewares.canListOrders, OrderController.getAll);
-
+router.get('/:order/receipt', AuthMiddlewares.authorization, OrderMiddlewares.canReadOrder, OrderController.receipt);
 export default router;

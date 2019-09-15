@@ -1,4 +1,4 @@
-import moment from 'libraries/moment';
+import moment, {dateformat} from 'libraries/moment';
 import {Order as ConektaOrder} from 'libraries/conekta';
 import Order from 'models/Order';
 import Payment from 'models/Payment';
@@ -8,6 +8,8 @@ import OrderProducts from 'models/OrderProducts';
 import Coupon from 'models/Coupon';
 import casbin from 'libraries/casbin';
 import merge from 'lodash/merge';
+import Barcode from 'libraries/Barcode';
+import PDF from 'libraries/PDF';
 
 /**
  * Order Controller
@@ -397,6 +399,34 @@ class OrderController {
       });
     } catch (err) {
       res.boom.badData(err);
+    }
+  }
+  /**
+   * Get pdf recepipt
+   * @param {Request} req
+   * @param {Response} res
+   */
+  static async receipt(req, res) {
+    try {
+      // eslint-disable-next-line max-len
+      const order = await Order.findById(req.params.order).populate(['payments', 'deliveries']);
+      const data = {};
+      if (['spei', 'oxxo'].includes(order.payments[0].method)) {
+        const barcode = new Barcode({'text': order.payments[0].reference});
+        data.code = barcode.image;
+      }
+      data.moment = moment;
+      data.dateformat = dateformat;
+      data.order = order;
+      const options = {format: 'Letter'};
+      const pdf = new PDF('receipt', data, options);
+      const file = pdf.render();
+      res.set('Content-Disposition', `attachment;filename=order-${order._id}.pdf`);
+      res.set('Content-Type', 'application/octet-stream');
+      res.end(await file, 'binary');
+    } catch (err) {
+      console.log(err);
+      res.boom.badRequest(err);
     }
   }
 }

@@ -1,0 +1,53 @@
+extends pdf
+
+block styles
+  style.
+    .receipt {
+      padding: 1.5cm;
+    }
+    .barcode {
+      margin-top: 10mm;
+      text-align: center;
+    }
+    .barcode-img {
+      width: 76px;
+      height: 54px;
+    }
+    .reference {
+      letter-spacing: 0.5rem;
+      padding: 1em;
+    }
+    .expiration {
+      padding: 5mm;
+      font-weight: bold;
+      color: red;
+    }
+
+block content
+  .page
+    .content
+      .container
+        .float-left.col-6.
+          # Orden #{order._id}
+        .float-right.col-6.text-right.
+          #{moment(order.createdAt).format(dateformat.human)}
+        .receipt
+          table.table.table-bordered
+            tfoot
+              tr
+                td Subtotal
+                td $ #{Number(order.total).toFixed(2)} MXN
+              tr
+                td Envìo
+                td $ #{Number(order.deliveries[0].amount).toFixed(2)} MXN
+              tr
+                td Total
+                td $ #{Number(order.payments[0].amount).toFixed(2)} MXN
+        .barcode
+            div REFERENCIA DE PAGO
+              .reference #{order.payments[0].reference}
+            div
+              img.barcode-img(src=code)
+            .expiration
+              div Referencia válida antes de:
+              div #{moment(order.payments[0].referenceExpiration).format(dateformat.human)}
