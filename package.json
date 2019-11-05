@@ -51,7 +51,7 @@
     "md5": "^2.2.1",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.26",
-    "mongoose": "^5.6.9",
+    "mongoose": "^5.7.5",
     "mongoose-beautiful-unique-validation": "^7.1.1",
     "mongoose-double": "0.0.1",
     "mongoose-findorcreate": "^3.0.0",
