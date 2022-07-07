@@ -49,7 +49,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.19",
     "md5": "^2.2.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "moment-timezone": "^0.5.26",
     "mongoose": "^5.7.5",
     "mongoose-beautiful-unique-validation": "^7.1.1",
